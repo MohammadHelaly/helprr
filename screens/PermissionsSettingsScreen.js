@@ -21,15 +21,39 @@ const PermissionsSettingsScreen = (props) => {
 			</Text>
 			<View style={styles.option}>
 				<Text style={styles.setting}>Camera</Text>
-				<Switch value={true} />
+				<Ionicons
+					name={
+						Platform.OS === "android"
+							? "checkmark-sharp"
+							: "checkmark-sharp"
+					}
+					size={24}
+					color={theme.colors.black}
+				/>
 			</View>
 			<View style={styles.option}>
 				<Text style={styles.setting}>Microphone</Text>
-				<Switch value={true} />
+				<Ionicons
+					name={
+						Platform.OS === "android"
+							? "checkmark-sharp"
+							: "checkmark-sharp"
+					}
+					size={24}
+					color={theme.colors.black}
+				/>
 			</View>
 			<View style={styles.option}>
 				<Text style={styles.setting}>Speech Recognition</Text>
-				<Switch value={true} />
+				<Ionicons
+					name={
+						Platform.OS === "android"
+							? "checkmark-sharp"
+							: "checkmark-sharp"
+					}
+					size={24}
+					color={theme.colors.black}
+				/>
 			</View>
 			{/* </ScrollView> */}
 		</View>
