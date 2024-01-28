@@ -26,7 +26,6 @@ const SettingsScreen = (props) => {
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
-				style={styles.option}
 				onPress={() => {
 					navigation.navigate("PermissionsSettings");
 				}}>
@@ -44,7 +43,6 @@ const SettingsScreen = (props) => {
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
-				style={styles.option}
 				onPress={() => {
 					navigation.navigate("LanguageSettings");
 				}}>
@@ -62,7 +60,6 @@ const SettingsScreen = (props) => {
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
-				style={styles.option}
 				onPress={() => {
 					navigation.navigate("MoreSettings");
 				}}>
