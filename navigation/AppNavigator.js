@@ -68,6 +68,8 @@ const AppNavigator = () => {
 			<Tab.Screen
 				name="See"
 				options={{
+					headerShown: true, // Header needs to shown for camera not to glitch out, see workaround in stylesheet below. Look into this later.
+					headerStyle: styles.header,
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons
 							name={
@@ -106,19 +108,17 @@ const AppNavigator = () => {
 
 const styles = StyleSheet.create({
 	tabBar: {
-		// backgroundColor: Platform.OS === "android" ? "#000000" : "#ffffff",
 		backgroundColor: theme.colors.white,
 		height: 100,
 		paddingVertical: 10,
 		borderTopWidth: 0,
 	},
 	header: {
-		backgroundColor:
-			Platform.OS === "android" ? theme.colors.black : theme.colors.white,
+		backgroundColor: theme.colors.black,
+		height: 0, // Workaround for hiding header, header needs to shown for camera not to glitch out. Look into this later.
 	},
 	headerTitle: {
-		color:
-			Platform.OS === "android" ? theme.colors.white : theme.colors.black,
+		color: theme.colors.black,
 		fontSize: theme.sizes.xxLarge,
 		fontWeight: "bold",
 	},

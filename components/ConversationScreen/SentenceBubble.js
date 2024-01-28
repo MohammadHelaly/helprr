@@ -29,7 +29,11 @@ const SentenceBubble = (props) => {
 
 	const textStyles =
 		sentence.type === "speechToText"
-			? { ...styles.speechToTextText, ...textAlignment }
+			? {
+					...styles.speechToTextText,
+					...styles.textPink,
+					...textAlignment,
+			  }
 			: { ...styles.textToSpeechText, ...textAlignment };
 
 	const handleTextChange = () => {
@@ -51,16 +55,14 @@ const SentenceBubble = (props) => {
 				{isEditing ? (
 					<TextInput
 						autoFocus
+						// multiline
 						style={textStyles}
 						returnKeyType="done"
 						defaultValue={sentence.text}
 						onChangeText={(text) => {
 							setCurrentText(text);
 						}}
-						onEndEditing={() => {
-							handleTextChange();
-							setIsEditing(false);
-						}}
+						onEndEditing={handleTextChange}
 					/>
 				) : sentence.type === "textToSpeech" ? (
 					<Text style={textStyles}>{sentence?.text}</Text>
@@ -134,6 +136,9 @@ const styles = StyleSheet.create({
 	textRight: {
 		textAlign: "right",
 	},
+	textPink: {
+		color: theme.colors.pink,
+	},
 	speechToTextBubble: {
 		// backgroundColor: theme.colors.pink,
 		alignSelf: "flex-start",
@@ -152,6 +157,8 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		// marginLeft: 4,
+		padding: 0,
+		height: 20,
 	},
 	timestamp: {
 		fontSize: theme.sizes.xSmall,

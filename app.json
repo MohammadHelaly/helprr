@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "helprr",
+		"name": "Helprr",
 		"slug": "helprr",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -30,6 +30,15 @@
 				"expo-camera",
 				{
 					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+				}
+			],
+			[
+				"react-native-vision-camera",
+				{
+					"cameraPermissionText": "Allow $(PRODUCT_NAME) to access your camera.",
+
+					"enableMicrophonePermission": true,
+					"microphonePermissionText": "Allow $(PRODUCT_NAME) to access your microphone."
 				}
 			],
 			[
