@@ -84,17 +84,17 @@ const ObjectDetectionCamera = (props) => {
 			// 	console.log("I'm running synchronously at 15 FPS!");
 			// });
 
-			// console.log(`Running inference on ${frame}`);
-			// const resizedFrame = resize(frame, {
-			// 	size: {
-			// 		width: 224, // 320
-			// 		height: 224,
-			// 	},
-			// 	pixelFormat: "rgb",
-			// 	dataType: "uint8",
-			// });
+			console.log(`Running inference on ${frame}`);
+			const resizedFrame = resize(frame, {
+				size: {
+					width: 224, // 320
+					height: 224,
+				},
+				pixelFormat: "rgb",
+				dataType: "float32", // uint8
+			});
 
-			// console.log(`Running inference on ${resizedFrame}`);
+			console.log(`Running inference on ${resizedFrame}`);
 			// const outputLogits = actualModel.runSync([resizedFrame]);
 			// console.log("Result: " + outputLogits);
 
@@ -125,6 +125,7 @@ const ObjectDetectionCamera = (props) => {
 			device={device}
 			isActive={isFocused}
 			frameProcessor={frameProcessor}
+			pixelFormat="yuv"
 		/>
 	);
 };
