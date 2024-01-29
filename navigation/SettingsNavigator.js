@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 		// marginBottom: 16,
 	},
 	headerBackIcon: {
-		marginLeft: 8,
+		// marginLeft: 8,
 	},
 });
 

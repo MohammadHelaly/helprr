@@ -16,44 +16,50 @@ const PermissionsSettingsScreen = (props) => {
 	return (
 		<View style={styles.container}>
 			{/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
-			<Text style={styles.settingsHeading}>
+			<Text style={styles.permissionsHeading}>
 				Allow Helprr to access your:
 			</Text>
-			<View style={styles.option}>
-				<Text style={styles.setting}>Camera</Text>
-				<Ionicons
-					name={
-						Platform.OS === "android"
-							? "checkmark-sharp"
-							: "checkmark-sharp"
-					}
-					size={24}
-					color={theme.colors.black}
-				/>
+			<View style={styles.optionContainer}>
+				<View style={styles.option}>
+					<Text style={styles.permission}>Camera</Text>
+					<Ionicons
+						name={
+							Platform.OS === "android"
+								? "checkmark-sharp"
+								: "checkmark-sharp"
+						}
+						size={24}
+						color={theme.colors.black}
+					/>
+				</View>
 			</View>
-			<View style={styles.option}>
-				<Text style={styles.setting}>Microphone</Text>
-				<Ionicons
-					name={
-						Platform.OS === "android"
-							? "checkmark-sharp"
-							: "checkmark-sharp"
-					}
-					size={24}
-					color={theme.colors.black}
-				/>
+			<View style={styles.optionContainer}>
+				<View style={styles.option}>
+					<Text style={styles.permission}>Microphone</Text>
+					<Ionicons
+						name={
+							Platform.OS === "android"
+								? "checkmark-sharp"
+								: "checkmark-sharp"
+						}
+						size={24}
+						color={theme.colors.black}
+					/>
+				</View>
 			</View>
-			<View style={styles.option}>
-				<Text style={styles.setting}>Speech Recognition</Text>
-				<Ionicons
-					name={
-						Platform.OS === "android"
-							? "checkmark-sharp"
-							: "checkmark-sharp"
-					}
-					size={24}
-					color={theme.colors.black}
-				/>
+			<View style={styles.optionContainer}>
+				<View style={styles.option}>
+					<Text style={styles.permission}>Speech Recognition</Text>
+					<Ionicons
+						name={
+							Platform.OS === "android"
+								? "checkmark-sharp"
+								: "checkmark-sharp"
+						}
+						size={24}
+						color={theme.colors.black}
+					/>
+				</View>
 			</View>
 			{/* </ScrollView> */}
 		</View>
@@ -66,30 +72,33 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.colors.white,
 		// alignItems: "center",
 		justifyContent: "center",
-		paddingHorizontal: 16,
 		textAlign: "left",
+		paddingHorizontal: 16,
 	},
 	scrollContainer: {
 		maxWidth: "100%",
+	},
+	optionContainer: {
+		width: "100%",
+		// paddingHorizontal: 16,
 	},
 	option: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		width: "100%",
-		borderBottomWidth: 1,
 		paddingVertical: 32,
-		borderBottomColor: theme.colors.lightGrey,
+		borderBottomWidth: 1,
+		borderColor: theme.colors.lightGrey,
 	},
-	setting: {
+	permission: {
 		fontSize: theme.sizes.medium,
 	},
-	settingsHeading: {
+	permissionsHeading: {
 		fontSize: theme.sizes.large,
 		fontWeight: "bold",
 		marginBottom: 32,
 	},
-	settingsHeading: {
+	permissionsHeading: {
 		fontSize: theme.sizes.small,
 		color: theme.colors.grey,
 	},

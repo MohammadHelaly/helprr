@@ -10,9 +10,10 @@ const GeneralSettingsScreen = (props) => {
 		<View style={styles.container}>
 			{/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 			<TouchableComponent onPress={() => {}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>Appearance</Text>
-					{/* <Ionicons
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>Appearance</Text>
+						{/* <Ionicons
 					name={
 						Platform.OS === "android"
 							? "md-checkmark-sharp"
@@ -21,14 +22,16 @@ const GeneralSettingsScreen = (props) => {
 					size={24}
 					color={Platform.OS === "android" ? "#ffffff" : "#000000"}
 				/> */}
-					<Text style={styles.comingSoon}>Coming Soon!</Text>
+						<Text style={styles.comingSoon}>Coming Soon!</Text>
+					</View>
 				</View>
 			</TouchableComponent>
 			<TouchableComponent onPress={() => {}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>Tutorials</Text>
-					<Text style={styles.comingSoon}>Coming Soon!</Text>
-					{/* <Ionicons
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>Tutorials</Text>
+						<Text style={styles.comingSoon}>Coming Soon!</Text>
+						{/* <Ionicons
 					name={
 						Platform.OS === "android"
 							? "md-chevron-forward-sharp"
@@ -37,6 +40,7 @@ const GeneralSettingsScreen = (props) => {
 					size={24}
 					color={Platform.OS === "android" ? "#ffffff" : "#000000"}
 				/> */}
+					</View>
 				</View>
 			</TouchableComponent>
 			{/* </ScrollView> */}
@@ -50,19 +54,21 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.colors.white,
 		alignItems: "center",
 		justifyContent: "center",
-		paddingHorizontal: 16,
 	},
 	scrollContainer: {
 		maxWidth: "100%",
+	},
+	optionContainer: {
+		width: "100%",
+		paddingHorizontal: 16,
 	},
 	option: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		width: "100%",
-		borderBottomWidth: 1,
 		paddingVertical: 32,
-		borderBottomColor: theme.colors.lightGrey,
+		borderBottomWidth: 1,
+		borderColor: theme.colors.lightGrey,
 	},
 	setting: {
 		fontSize: theme.sizes.medium,
