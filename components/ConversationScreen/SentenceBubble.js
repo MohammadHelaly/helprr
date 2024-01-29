@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 	button: {
 		// marginLeft: 4,
 		padding: 0,
-		height: 20,
+		// height: 20,
 	},
 	timestamp: {
 		fontSize: theme.sizes.xSmall,
