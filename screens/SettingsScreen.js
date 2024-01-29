@@ -12,68 +12,76 @@ const SettingsScreen = (props) => {
 				onPress={() => {
 					navigation.navigate("GeneralSettings");
 				}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>General</Text>
-					<Ionicons
-						name={
-							Platform.OS === "android"
-								? "chevron-forward-sharp"
-								: "chevron-forward-sharp"
-						}
-						size={24}
-						color={theme.colors.black}
-					/>
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>General</Text>
+						<Ionicons
+							name={
+								Platform.OS === "android"
+									? "chevron-forward-sharp"
+									: "chevron-forward-sharp"
+							}
+							size={24}
+							color={theme.colors.black}
+						/>
+					</View>
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
 				onPress={() => {
 					navigation.navigate("PermissionsSettings");
 				}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>Permissions</Text>
-					<Ionicons
-						name={
-							Platform.OS === "android"
-								? "chevron-forward-sharp"
-								: "chevron-forward-sharp"
-						}
-						size={24}
-						color={theme.colors.black}
-					/>
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>Permissions</Text>
+						<Ionicons
+							name={
+								Platform.OS === "android"
+									? "chevron-forward-sharp"
+									: "chevron-forward-sharp"
+							}
+							size={24}
+							color={theme.colors.black}
+						/>
+					</View>
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
 				onPress={() => {
 					navigation.navigate("LanguageSettings");
 				}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>Language</Text>
-					<Ionicons
-						name={
-							Platform.OS === "android"
-								? "chevron-forward-sharp"
-								: "chevron-forward-sharp"
-						}
-						size={24}
-						color={theme.colors.black}
-					/>
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>Language</Text>
+						<Ionicons
+							name={
+								Platform.OS === "android"
+									? "chevron-forward-sharp"
+									: "chevron-forward-sharp"
+							}
+							size={24}
+							color={theme.colors.black}
+						/>
+					</View>
 				</View>
 			</TouchableComponent>
 			<TouchableComponent
 				onPress={() => {
 					navigation.navigate("MoreSettings");
 				}}>
-				<View style={styles.option}>
-					<Text style={styles.setting}>More</Text>
-					<Ionicons
-						name={
-							Platform.OS === "android"
-								? "chevron-forward-sharp"
-								: "chevron-forward-sharp"
-						}
-						size={24}
-						color={theme.colors.black}
-					/>
+				<View style={styles.optionContainer}>
+					<View style={styles.option}>
+						<Text style={styles.setting}>More</Text>
+						<Ionicons
+							name={
+								Platform.OS === "android"
+									? "chevron-forward-sharp"
+									: "chevron-forward-sharp"
+							}
+							size={24}
+							color={theme.colors.black}
+						/>
+					</View>
 				</View>
 			</TouchableComponent>
 		</View>
@@ -86,16 +94,19 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.colors.white,
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	optionContainer: {
+		width: "100%",
 		paddingHorizontal: 16,
 	},
 	option: {
+		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		width: "100%",
-		borderBottomWidth: 1,
 		paddingVertical: 32,
-		borderBottomColor: theme.colors.lightGrey,
+		borderBottomWidth: 1,
+		borderColor: theme.colors.lightGrey,
 	},
 	setting: {
 		fontSize: theme.sizes.medium,

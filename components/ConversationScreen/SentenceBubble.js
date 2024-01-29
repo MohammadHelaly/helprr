@@ -16,7 +16,7 @@ const SentenceBubble = (props) => {
 	const dispatch = useDispatch();
 
 	const textAlignment =
-		sentence.language === "ar-SA"
+		sentence.language === "ar"
 			? styles.textRight
 			: sentence.language === "en-US"
 			? styles.textLeft

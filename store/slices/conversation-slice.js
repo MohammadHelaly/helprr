@@ -11,7 +11,7 @@ const conversationSlice = createSlice({
 	reducers: {
 		toggleLanguage(state, action) {
 			if (state.language === "en-US") {
-				state.language = "ar-SA";
+				state.language = "ar";
 			} else {
 				state.language = "en-US";
 			}
