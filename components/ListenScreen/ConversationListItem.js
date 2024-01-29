@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 	},
 	conversationItemContainer: {
 		paddingBottom: 20,
-		borderBottomWidth: 0.5,
+		borderBottomWidth: 1,
 		borderColor: theme.colors.lightGrey,
 	},
 	conversationItemInformationContainer: {
