@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 	option: {
+		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
