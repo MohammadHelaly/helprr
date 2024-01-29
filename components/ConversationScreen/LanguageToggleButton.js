@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.colors.lightGrey,
 		padding: 10,
 		borderRadius: 40,
-		width: 42,
-		// height: 40,
+		width: 40,
+		height: 40,
 		alignItems: "center",
 	},
 	buttonText: {
 		color: theme.colors.black,
 		// fontWeight: "bold",
-		fontSize: theme.sizes.small,
+		fontSize: theme.sizes.xSmall,
 	},
 });
 

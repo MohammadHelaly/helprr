@@ -35,7 +35,7 @@ const ConversationScreen = (props) => {
 		<SafeAreaView style={styles.container}>
 			<KeyboardAvoidingView
 				behavior={Platform.OS === "ios" ? "padding" : undefined}
-				keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 40}
+				keyboardVerticalOffset={90}
 				style={styles.container}>
 				<FlatList
 					ref={flatListRef}
@@ -47,6 +47,7 @@ const ConversationScreen = (props) => {
 						Platform.OS === "ios" &&
 						flatListRef.current?.scrollToEnd({ animated: true })
 					}
+					removeClippedSubviews={false}
 					data={conversation?.sentences}
 					keyExtractor={(item) => item.id}
 					renderItem={(itemData) => (

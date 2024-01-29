@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
 		height: 100,
 		paddingVertical: 10,
 		borderTopWidth: 0,
+		elevation: 0,
 	},
 	header: {
 		backgroundColor: theme.colors.black,
