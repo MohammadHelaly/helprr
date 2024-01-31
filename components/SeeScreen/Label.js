@@ -34,11 +34,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignSelf: "center",
 		marginTop: 100,
-		width: 168,
-		paddingVertical: 16,
-		paddingHorizontal: 32,
+		minWidth: 168,
+
+		padding: 16,
+		// paddingHorizontal: 32,
 		borderRadius: 8,
 		backgroundColor: theme.colors.white,
+		zIndex: 10,
 		// backgroundColor: theme.colors.pink,
 	},
 	label: {

@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 		maxWidth: "100%",
 	},
 	optionContainer: {
-		width: "100%",
+		maxWidth: "100%",
 		// paddingHorizontal: 16,
 	},
 	option: {

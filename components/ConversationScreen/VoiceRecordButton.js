@@ -119,12 +119,10 @@ const styles = StyleSheet.create({
 		bottom: 80,
 		width: 50,
 		height: 50,
+		paddingLeft: 2,
 		borderRadius: 100,
-		// backgroundColor: theme.colors.black,
 		justifyContent: "center",
 		alignItems: "center",
-		// borderWidth: 2,
-		// borderColor: theme.colors.black,
 	},
 	normal: {
 		backgroundColor: theme.colors.black,

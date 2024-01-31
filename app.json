@@ -5,7 +5,7 @@
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
-		"userInterfaceStyle": "automatic",
+		"userInterfaceStyle": "light",
 		"splash": {
 			"image": "./assets/splash.png",
 			"resizeMode": "contain",
@@ -20,6 +20,10 @@
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
+			"permissions": [
+				"android.permission.CAMERA",
+				"android.permission.RECORD_AUDIO"
+			],
 			"package": "com.mohammadhelaly.helprr"
 		},
 		"web": {
@@ -30,15 +34,6 @@
 				"expo-camera",
 				{
 					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
-				}
-			],
-			[
-				"react-native-vision-camera",
-				{
-					"cameraPermissionText": "Allow $(PRODUCT_NAME) to access your camera.",
-
-					"enableMicrophonePermission": true,
-					"microphonePermissionText": "Allow $(PRODUCT_NAME) to access your microphone."
 				}
 			],
 			[
