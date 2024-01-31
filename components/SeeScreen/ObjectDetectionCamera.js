@@ -1,132 +1,72 @@
-import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import {
-	useCameraPermission,
-	useMicrophonePermission,
-	useCameraDevice,
-	useFrameProcessor,
-	runAtTargetFps,
-	Camera,
-} from "react-native-vision-camera";
-import {
-	Tensor,
-	TensorflowModel,
-	useTensorflowModel,
-} from "react-native-fast-tflite";
-import { useResizePlugin } from "vision-camera-resize-plugin";
+import React, { useState, useEffect } from "react";
+import { Platform, StyleSheet } from "react-native";
+import { Camera } from "expo-camera";
+import * as tf from "@tensorflow/tfjs";
+import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import theme from "../../constants/theme";
-import labelJsonData from "../../assets/models/google_mobile_object_labeler_v1/mobile_object_labeler_v1_labelmap.json";
 
-const fetchData = async () => {
-	try {
-		const labelArray = Object.values(labelJsonData).map(
-			(item) => item.name
-		);
-		console.log("Loaded labels successfully!");
-		return labelArray;
-	} catch (error) {
-		console.error("Error reading or parsing JSON file:", error.message);
-	}
-};
-
-const labelMap = fetchData();
+const TensorCamera = cameraWithTensors(Camera);
 
 const ObjectDetectionCamera = (props) => {
 	const { setLabel, isFocused } = props;
-	// const { hasPermission, requestPermission } = useMicrophonePermission();
-	const { hasPermission, requestPermission } = useCameraPermission();
-	const device = useCameraDevice("back");
-
-	const model = useTensorflowModel(
-		require("../../assets/models/google_mobile_object_labeler_v1/1.tflite")
-	);
-	const actualModel = model.state === "loaded" ? model.model : undefined;
+	const [model, setModel] = useState();
+	let textureDimensions =
+		Platform.OS === "ios"
+			? { height: 1920, width: 1080 }
+			: { height: 1200, width: 1600 };
 
 	useEffect(() => {
-		if (actualModel == null) return;
-		console.log("Model loaded!");
-	}, [actualModel]);
+		(async () => {
+			const { status } = await Camera.requestCameraPermissionsAsync();
+			await tf.ready();
+			const model = await cocoSsd.load();
+			setModel(model);
+		})();
+	}, []);
 
-	const { resize } = useResizePlugin();
+	// 	const cameraPermission = Camera.getCameraPermissionStatus();
+	// 	const device = useCameraDevices().back;
 
-	const frameProcessor = useFrameProcessor(
-		(frame) => {
-			"worklet";
+	// 	if (!device) {
+	// 		return null;
+	// 	}
 
-			if (actualModel == null) return;
-
-			// runAtTargetFps(15, () => {
-			// 	"worklet";
-			// 	console.log(`Running inference on ${frame}`);
-			// 	const resizedFrame = resize(frame, {
-			// 		size: {
-			// 			width: 224, // 320
-			// 			height: 224,
-			// 		},
-			// 		pixelFormat: "rgb",
-			// 		dataType: "uint8",
-			// 	});
-
-			// 	// const resizedFrame = frame.toArrayBuffer();
-
-			// 	console.log(`Running inference on ${resizedFrame}`);
-			// 	const outputLogits = actualModel.run([resizedFrame]);
-			// 	console.log("Result: " + outputLogits);
-
-			// 	const logits = outputLogits.dataSync(); // Convert tensor to a regular array
-
-			// 	const maxConfidenceIndex = logits.indexOf(Math.max(...logits));
-
-			// 	const result = labelMap[maxConfidenceIndex];
-
-			// 	console.log("Detected Label:", result);
-			// 	setLabel(result);
-			// 	console.log("I'm running synchronously at 15 FPS!");
-			// });
-
-			console.log(`Running inference on ${frame}`);
-			const resizedFrame = resize(frame, {
-				size: {
-					width: 224, // 320
-					height: 224,
-				},
-				pixelFormat: "rgb",
-				dataType: "float32", // uint8
+	const handleCameraStream = (images) => {
+		const loop = async () => {
+			const nextImageTensor = images.next().value;
+			if (!model || !nextImageTensor) {
+				return;
+			}
+			model.detect(nextImageTensor).then((predictions) => {
+				if (predictions.length > 0) {
+					const prediction = predictions[0].class;
+					const label =
+						prediction.charAt(0).toUpperCase() +
+						prediction.slice(1);
+					setLabel(label);
+				}
 			});
-
-			console.log(`Running inference on ${resizedFrame}`);
-			// const outputLogits = actualModel.runSync([resizedFrame]);
-			// console.log("Result: " + outputLogits);
-
-			// const logits = outputLogits.dataSync(); // Convert tensor to a regular array
-
-			// const maxConfidenceIndex = logits.indexOf(Math.max(...logits));
-
-			// const result = labelMap[maxConfidenceIndex];
-
-			// console.log("Detected Label:", result);
-			// setLabel(result);
-		},
-		[actualModel]
-	);
-
-	useEffect(() => {
-		// if (!hasMicrophonePermission) {
-		// 	requestMicrophonePermission();
-		// }
-		if (!hasPermission) {
-			requestPermission();
-		}
-	}, [hasPermission]);
+			requestAnimationFrame(loop);
+		};
+		loop();
+	};
 
 	return (
-		<Camera
-			style={styles.camera}
-			device={device}
-			isActive={isFocused}
-			frameProcessor={frameProcessor}
-			pixelFormat="yuv"
-		/>
+		isFocused && (
+			<TensorCamera
+				style={styles.camera}
+				type={Camera.Constants.Type.back}
+				autorender={true}
+				cameraTextureHeight={textureDimensions.height}
+				cameraTextureWidth={textureDimensions.width}
+				resizeHeight={200}
+				resizeWidth={152}
+				resizeDepth={3}
+				useCustomShadersToResize={false}
+				onReady={handleCameraStream}
+			/>
+		)
 	);
 };
 

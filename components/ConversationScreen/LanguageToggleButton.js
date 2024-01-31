@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
 		width: 40,
 		height: 40,
 		alignItems: "center",
+		justifyContent: "center",
 	},
 	buttonText: {
 		color: theme.colors.black,

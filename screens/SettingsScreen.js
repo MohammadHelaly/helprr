@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	optionContainer: {
-		width: "100%",
+		maxWidth: "100%",
 		paddingHorizontal: 16,
 	},
 	option: {
