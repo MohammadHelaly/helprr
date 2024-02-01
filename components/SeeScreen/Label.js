@@ -7,7 +7,16 @@ const Label = (props) => {
 	const { label, isFocused } = props;
 
 	useEffect(() => {
-		if (label !== undefined && isFocused) {
+		if (!isFocused) {
+			return;
+		}
+		if (label === undefined) {
+			Speech.speak("Loading", {
+				language: "en-US",
+				pitch: 1,
+				rate: 1,
+			});
+		} else {
 			Speech.speak(label, {
 				language: "en-US",
 				pitch: 1,

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Platform, StyleSheet, LogBox } from "react-native";
+import { Platform, StyleSheet, Alert, LogBox } from "react-native";
 import { Camera } from "expo-camera";
 import * as tf from "@tensorflow/tfjs";
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
+import PermissionWarning from "../UI/PermissionWarning";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import theme from "../../constants/theme";
 
@@ -13,18 +14,57 @@ const TensorCamera = cameraWithTensors(Camera);
 const ObjectDetectionCamera = (props) => {
 	const { setLabel, isFocused } = props;
 	const [model, setModel] = useState();
-	let textureDimensions =
+	const [hasPermission, setHasPermission] = useState(true);
+	const predictEveryNFrames = 30;
+	let frameCount = 0;
+
+	const textureDimensions =
 		Platform.OS === "ios"
 			? { height: 1920, width: 1080 }
 			: { height: 1200, width: 1600 };
 
 	useEffect(() => {
-		(async () => {
-			const { status } = await Camera.requestCameraPermissionsAsync();
-			await tf.ready();
-			const model = await cocoSsd.load();
-			setModel(model);
-		})();
+		const handlePermissions = async () => {
+			try {
+				const permission = await Camera.getCameraPermissionsAsync();
+				if (
+					permission.granted ||
+					(permission.canAskAgain &&
+						(await Camera.requestCameraPermissionsAsync()).granted)
+				) {
+					setHasPermission(true);
+				} else {
+					setHasPermission(false);
+				}
+			} catch (error) {
+				console.error("Error getting camera permission:", error);
+			}
+		};
+
+		const loadModel = async () => {
+			try {
+				await tf.ready();
+				const loadedModel = await cocoSsd.load();
+				setModel(loadedModel);
+			} catch (error) {
+				console.error("Error loading model:", error);
+				Alert.alert(
+					"Error Loading Model",
+					"There was an issue loading the model. Please check your internet connection and try again.",
+					[
+						{ text: "Cancel", style: "cancel" },
+						{
+							text: "Retry",
+							style: "default",
+							onPress: () => loadModel(),
+						},
+					]
+				);
+			}
+		};
+
+		handlePermissions();
+		loadModel();
 	}, []);
 
 	const handleCameraStream = (images) => {
@@ -33,7 +73,14 @@ const ObjectDetectionCamera = (props) => {
 			if (!model || !nextImageTensor) {
 				return;
 			}
-			model.detect(nextImageTensor).then((predictions) => {
+			if (frameCount % predictEveryNFrames !== 0) {
+				frameCount += 1;
+				tf.dispose([nextImageTensor]);
+				requestAnimationFrame(loop);
+				return;
+			}
+			try {
+				const predictions = await model.detect(nextImageTensor);
 				if (predictions.length > 0 && predictions[0].score > 0.7) {
 					const prediction = predictions[0].class;
 					const label =
@@ -41,14 +88,24 @@ const ObjectDetectionCamera = (props) => {
 						prediction.slice(1);
 					setLabel(label);
 				}
-			});
+				tf.dispose([nextImageTensor]);
+			} catch (error) {
+				console.error("Error detecting objects:", error);
+			}
+			frameCount += 1;
 			requestAnimationFrame(loop);
 		};
 		loop();
 	};
 
 	if (!isFocused) {
+		frameCount = 0;
+		setLabel(undefined);
 		return null;
+	}
+
+	if (!hasPermission) {
+		return <PermissionWarning utility="camera" />;
 	}
 
 	if (!model) {
