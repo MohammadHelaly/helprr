@@ -20,6 +20,9 @@ const conversationSlice = createSlice({
 			state.conversations = action.payload.conversations;
 		},
 		addNewConversation(state, action) {
+			if (state.conversations.length === 10) {
+				state.conversations.shift();
+			}
 			state.conversations.push(action.payload.conversation);
 		},
 		editConversation(state, action) {
