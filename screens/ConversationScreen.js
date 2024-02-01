@@ -34,9 +34,9 @@ const ConversationScreen = (props) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : undefined}
+				behavior={Platform.OS === "ios" ? "height" : undefined}
 				keyboardVerticalOffset={90}
-				style={styles.container}>
+				style={styles.conversationContainer}>
 				<FlatList
 					ref={flatListRef}
 					contentContainerStyle={styles.conversation}
@@ -63,6 +63,10 @@ const ConversationScreen = (props) => {
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
+		backgroundColor: theme.colors.white,
+	},
+	conversationContainer: {
 		flex: 1,
 		justifyContent: "flex-start",
 		backgroundColor: theme.colors.lightGrey,
