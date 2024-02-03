@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TextInput } from "react-native";
+import GradientText from "./GradientText";
 
 const EditableText = (props) => {
 	const {
