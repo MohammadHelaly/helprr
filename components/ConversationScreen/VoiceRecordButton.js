@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import theme from "../../constants/theme";
+import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationActions } from "../../store/slices/conversation-slice";
-import TouchableComponent from "../UI/TouchableComponent";
+import { Ionicons } from "@expo/vector-icons";
+import Voice from "@react-native-voice/voice";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-import Voice from "@react-native-voice/voice";
-import { LinearGradient } from "expo-linear-gradient";
+import TouchableComponent from "../UI/TouchableComponent";
+import theme from "../../constants/theme";
 
 const VoiceRecordButton = (props) => {
 	const { conversationId } = props;
+
 	const dispatch = useDispatch();
-	const language = useSelector((state) => state.conversations.language);
+
+	const language = useSelector(
+		(state) => state.conversations.conversationLanguage
+	);
 	const [isListening, setIsListening] = useState(false);
 	const [error, setError] = useState(false);
 
@@ -48,7 +51,7 @@ const VoiceRecordButton = (props) => {
 	};
 
 	const onSpeechStartHandler = (event) => {
-		// console.log("Speech started");
+		console.log("Speech started");
 		setError(false);
 	};
 
@@ -78,13 +81,13 @@ const VoiceRecordButton = (props) => {
 				sentence: newSentence,
 			})
 		);
+
 		setError(false);
 	};
 
 	const onSpeechErrorHandler = (error) => {
-		// console.log(error.error);
-		// console.log(error.error.code);
-		error.error.code == 7 && setError(true);
+		console.log(error.error);
+		if (error.error.code === 7 || error.error.code === 2) setError(true);
 	};
 
 	useEffect(() => {
@@ -101,10 +104,10 @@ const VoiceRecordButton = (props) => {
 	return (
 		<View style={buttonStyles}>
 			<TouchableComponent
-				onPressIn={startListening}
+				onLongPress={startListening}
 				onPressOut={stopListening}>
 				<Ionicons
-					name={Platform.OS === "android" ? "mic-sharp" : "mic-sharp"}
+					name="mic-sharp"
 					size={36}
 					color={theme.colors.white}
 				/>

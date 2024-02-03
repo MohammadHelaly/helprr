@@ -37,19 +37,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
-// const store = configureStore({
-// 	reducer: {
-// 		conversations: conversationReducer,
-// 	},
-// });
-
-// const rootReducer = combineReducers({
-// 	conversations: conversationReducer,
-// });
-
-// const store = configureStore({
-// 	reducer: rootReducer,
-// });
-
-// export default store;

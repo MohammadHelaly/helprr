@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, View, ScrollView } from "react-native";
+import SettingsOption from "../components/UI/SettingsOption";
 import theme from "../constants/theme";
-import TouchableComponent from "../components/UI/TouchableComponent";
 
 const MoreSettingsScreen = (props) => {
 	const { navigation } = props;
@@ -9,120 +8,41 @@ const MoreSettingsScreen = (props) => {
 	return (
 		<View style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContainer}>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>About Helprr</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>Contact us</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>Support us</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>Rate Helprr</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>Share Helprr</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>
-								Privacy Policy and Terms of Service
-							</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
-				<TouchableComponent onPress={() => {}}>
-					<View style={styles.optionContainer}>
-						<View style={styles.option}>
-							<Text style={styles.setting}>Acknowledgements</Text>
-							<Ionicons
-								name={
-									Platform.OS === "android"
-										? "chevron-forward-sharp"
-										: "chevron-forward-sharp"
-								}
-								size={24}
-								color={theme.colors.black}
-							/>
-						</View>
-					</View>
-				</TouchableComponent>
+				<SettingsOption
+					onPress={() => {}}
+					text="About Helprr"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Contact us"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Support us"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Rate Helprr"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Share Helprr"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Privacy Policy and Terms of Service"
+					endIcon="chevron-forward-sharp"
+				/>
+				<SettingsOption
+					onPress={() => {}}
+					text="Acknowledgements"
+					endIcon="chevron-forward-sharp"
+				/>
 			</ScrollView>
 		</View>
 	);
@@ -135,22 +55,6 @@ const styles = StyleSheet.create({
 	},
 	scrollContainer: {
 		maxWidth: "100%",
-	},
-	optionContainer: {
-		maxWidth: "100%",
-		paddingHorizontal: 16,
-	},
-	option: {
-		width: "100%",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		paddingVertical: 32,
-		borderBottomWidth: 1,
-		borderColor: theme.colors.lightGrey,
-	},
-	setting: {
-		fontSize: theme.sizes.medium,
 	},
 });
 

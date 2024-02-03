@@ -1,23 +1,32 @@
-import {
-	View,
-	Text,
-	StyleSheet,
-	TextInput,
-	Platform,
-	Alert,
-} from "react-native";
-import SmallButton from "../UI/SmallButton";
-import TouchableComponent from "../UI/TouchableComponent";
-import theme from "../../constants/theme";
 import React, { useState } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { conversationActions } from "../../store/slices/conversation-slice";
+import SmallButton from "../UI/SmallButton";
+import TouchableComponent from "../UI/TouchableComponent";
+import EditableText from "../UI/EditableText";
+import theme from "../../constants/theme";
 
 const ConversationListItem = (props) => {
 	const { id, title, date, lastSentence, onSelect } = props;
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [currentTitle, setCurrentTitle] = useState(title);
+
 	const dispatch = useDispatch();
+
+	const displayedSentence =
+		lastSentence?.length > 46
+			? lastSentence?.substring(0, 46) + "..."
+			: lastSentence;
+
+	const handleConversationSelect = () => {
+		onSelect(id);
+	};
+
+	const handleEditButtonPress = () => {
+		setIsEditing(true);
+	};
 
 	const handleTitleChange = () => {
 		dispatch(
@@ -56,70 +65,34 @@ const ConversationListItem = (props) => {
 	};
 
 	return (
-		<TouchableComponent
-			onPress={() => {
-				onSelect(id);
-			}}>
+		<TouchableComponent onPress={handleConversationSelect}>
 			<View style={styles.conversationItem}>
 				<View style={styles.conversationItemContainer}>
 					<View style={styles.conversationItemInformationContainer}>
 						<View style={styles.conversationItemTitleContainer}>
-							{isEditing ? (
-								<TextInput
-									autoFocus
-									style={styles.conversationItemTitle}
-									returnKeyType="done"
-									defaultValue={title}
-									onChangeText={(text) => {
-										setCurrentTitle(text);
-									}}
-									onEndEditing={handleTitleChange}
-								/>
-							) : (
-								<Text style={styles.conversationItemTitle}>
-									{title?.length > 32
-										? title?.substring(0, 32) + "..."
-										: title}
-								</Text>
-							)}
+							<EditableText
+								defaultValue={title}
+								maxLength={32}
+								isEditing={isEditing}
+								style={styles.conversationItemTitle}
+								onEndEditing={handleTitleChange}
+								setCurrentText={setCurrentTitle}
+							/>
 							<SmallButton
 								style={styles.button}
-								icon={
-									Platform.OS === "android"
-										? "create-outline"
-										: "create-outline"
-								}
-								onPress={() => {
-									setIsEditing(true);
-								}}
+								icon="create-outline"
+								onPress={handleEditButtonPress}
 							/>
 						</View>
-						{/* <SmallButton
-							style={styles.menuButton}
-							icon={
-								Platform.OS === "android"
-									? "md-ellipsis-vertical"
-									: "ios-ellipsis-vertical"
-							}
-							onPress={() => {
-								console.log("menu pressed");
-							}}
-						/> */}
 						<SmallButton
 							style={styles.menuButton}
-							icon={
-								Platform.OS === "android"
-									? "trash-outline"
-									: "trash-outline"
-							}
+							icon="trash-outline"
 							onPress={handleDelete}
 						/>
 					</View>
 					<Text style={styles.conversationItemDate}>{date}</Text>
 					<Text style={styles.conversationItemLastSentence}>
-						{lastSentence?.length > 46
-							? lastSentence?.substring(0, 46) + "..."
-							: lastSentence}
+						{displayedSentence}
 					</Text>
 				</View>
 			</View>
@@ -132,15 +105,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		width: "100%",
 		paddingHorizontal: 16,
-		// paddingVertical: 20,
 		paddingTop: 20,
 		flexDirection: "column",
 		justifyContent: "space-between",
 		alignItems: "flex-start",
 		gap: 2,
-		// borderTopWidth: 1,
-		// borderBottomWidth: 0.5,
-		// borderColor: theme.colors.lightGrey,
 		backgroundColor: theme.colors.white,
 	},
 	conversationItemContainer: {
@@ -164,11 +133,12 @@ const styles = StyleSheet.create({
 	conversationItemTitle: {
 		fontSize: theme.sizes.medium,
 		fontWeight: "bold",
-		// minWidth: 140,
 	},
 	conversationItemDate: {
 		fontSize: theme.sizes.xxSmall,
 		color: theme.colors.grey,
+		justifyContent: "flex-start",
+		alignSelf: "flex-start",
 	},
 	conversationItemLastSentence: {
 		marginTop: 10,

@@ -1,19 +1,23 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import TouchableComponent from "./TouchableComponent";
 import { Ionicons } from "@expo/vector-icons";
+import TouchableComponent from "./TouchableComponent";
 
 const SmallButton = (props) => {
 	const { style, icon, onPress, size } = props;
+
+	const buttonSize = size ? size : 14;
+
+	const buttonStyles = {
+		...style,
+		...styles.button,
+	};
+
 	return (
-		<View style={{ ...style, ...styles.button }}>
+		<View style={buttonStyles}>
 			<TouchableComponent onPress={onPress}>
 				<View style={styles.buttonContent}>
-					<Ionicons
-						name={icon}
-						size={size ? size : 14}
-						color="grey"
-					/>
+					<Ionicons name={icon} size={buttonSize} color="grey" />
 				</View>
 			</TouchableComponent>
 		</View>
@@ -22,13 +26,10 @@ const SmallButton = (props) => {
 
 const styles = StyleSheet.create({
 	button: {
-		// height: 50,
 		borderRadius: 4,
-		// width: 200,
 		overflow: "hidden",
 	},
 	buttonContent: {
-		// flex: 1,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",

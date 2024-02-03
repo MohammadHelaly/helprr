@@ -6,7 +6,10 @@ import theme from "../../constants/theme";
 
 const LanguageToggleButton = () => {
 	const dispatch = useDispatch();
-	const language = useSelector((state) => state.conversations.language);
+
+	const language = useSelector(
+		(state) => state.conversations.conversationLanguage
+	);
 
 	const buttonLanguage = language === "en-US" ? "EN" : "ع";
 
@@ -33,7 +36,6 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: theme.colors.black,
-		// fontWeight: "bold",
 		fontSize: theme.sizes.xSmall,
 	},
 });

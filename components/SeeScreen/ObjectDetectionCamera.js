@@ -1,71 +1,80 @@
 import React, { useState, useEffect } from "react";
-import { Platform, StyleSheet, Alert, LogBox } from "react-native";
+import { Platform, StyleSheet, Alert } from "react-native";
 import { Camera } from "expo-camera";
 import * as tf from "@tensorflow/tfjs";
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
-import PermissionWarning from "../UI/PermissionWarning";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import Warning from "../UI/Warning";
 import theme from "../../constants/theme";
-
-LogBox.ignoreAllLogs();
 
 const TensorCamera = cameraWithTensors(Camera);
 
 const ObjectDetectionCamera = (props) => {
 	const { setLabel, isFocused } = props;
+
 	const [model, setModel] = useState();
+	const [predictedLabel, setPredictedLabel] = useState();
 	const [hasPermission, setHasPermission] = useState(true);
-	const predictEveryNFrames = 30;
-	let frameCount = 0;
 
 	const textureDimensions =
 		Platform.OS === "ios"
 			? { height: 1920, width: 1080 }
 			: { height: 1200, width: 1600 };
+	const predictEveryNFrames = 30;
+	let frameCount = 0;
+
+	const loadModel = async () => {
+		try {
+			await tf.ready();
+			const loadedModel = await cocoSsd.load({
+				base: "lite_mobilenet_v2",
+			});
+			return loadedModel;
+		} catch (error) {
+			console.error("Error loading model:", error);
+			Alert.alert(
+				"Error Loading Model",
+				"There was an issue loading the model. Please check your internet connection and try again.",
+				[
+					{ text: "Cancel", style: "cancel" },
+					{
+						text: "Retry",
+						style: "default",
+						onPress: () => loadModel(),
+					},
+				]
+			);
+		}
+	};
+
+	const handlePermissions = async () => {
+		try {
+			const permission = await Camera.getCameraPermissionsAsync();
+			if (
+				permission.granted ||
+				(permission.canAskAgain &&
+					(await Camera.requestCameraPermissionsAsync()).granted)
+			) {
+				setHasPermission(true);
+			} else {
+				setHasPermission(false);
+			}
+		} catch (error) {
+			console.error("Error getting camera permission:", error);
+		}
+	};
 
 	useEffect(() => {
-		const handlePermissions = async () => {
-			try {
-				const permission = await Camera.getCameraPermissionsAsync();
-				if (
-					permission.granted ||
-					(permission.canAskAgain &&
-						(await Camera.requestCameraPermissionsAsync()).granted)
-				) {
-					setHasPermission(true);
-				} else {
-					setHasPermission(false);
-				}
-			} catch (error) {
-				console.error("Error getting camera permission:", error);
-			}
+		const init = async () => {
+			await handlePermissions();
+			setModel(await loadModel());
 		};
-
-		const loadModel = async () => {
-			try {
-				await tf.ready();
-				const loadedModel = await cocoSsd.load();
-				setModel(loadedModel);
-			} catch (error) {
-				console.error("Error loading model:", error);
-				Alert.alert(
-					"Error Loading Model",
-					"There was an issue loading the model. Please check your internet connection and try again.",
-					[
-						{ text: "Cancel", style: "cancel" },
-						{
-							text: "Retry",
-							style: "default",
-							onPress: () => loadModel(),
-						},
-					]
-				);
-			}
-		};
-
-		handlePermissions();
-		loadModel();
+		init();
 	}, []);
+
+	useEffect(() => {
+		setLabel(predictedLabel);
+	}, [predictedLabel]);
 
 	const handleCameraStream = (images) => {
 		const loop = async () => {
@@ -80,17 +89,22 @@ const ObjectDetectionCamera = (props) => {
 				return;
 			}
 			try {
-				const predictions = await model.detect(nextImageTensor);
-				if (predictions.length > 0 && predictions[0].score > 0.7) {
+				const predictions = await model.detect(
+					nextImageTensor,
+					undefined,
+					0.7
+				);
+				if (predictions.length > 0) {
 					const prediction = predictions[0].class;
-					const label =
+					const capitalizedPrediction =
 						prediction.charAt(0).toUpperCase() +
 						prediction.slice(1);
-					setLabel(label);
+					setPredictedLabel(capitalizedPrediction);
 				}
-				tf.dispose([nextImageTensor]);
 			} catch (error) {
 				console.error("Error detecting objects:", error);
+			} finally {
+				tf.dispose([nextImageTensor]);
 			}
 			frameCount += 1;
 			requestAnimationFrame(loop);
@@ -105,7 +119,8 @@ const ObjectDetectionCamera = (props) => {
 	}
 
 	if (!hasPermission) {
-		return <PermissionWarning utility="camera" />;
+		setLabel("Uh oh!");
+		return <Warning variant="permission" utility="camera" />;
 	}
 
 	if (!model) {
