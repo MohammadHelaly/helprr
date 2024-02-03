@@ -5,13 +5,24 @@ import MaskedView from "@react-native-masked-view/masked-view";
 
 const GradientText = (props) => {
 	const { style, children, colors } = props;
+
+	const textStyles = {
+		...style,
+		opacity: 0,
+	};
+
+	const gradientCoordinates = {
+		start: { x: 0, y: 0 },
+		end: { x: 1, y: 1 },
+	};
+
 	return (
 		<MaskedView maskElement={<Text style={style}>{children}</Text>}>
 			<LinearGradient
-				start={{ x: 0, y: 0 }}
-				end={{ x: 1, y: 1 }}
+				start={gradientCoordinates.start}
+				end={gradientCoordinates.end}
 				colors={colors}>
-				<Text style={{ ...style, opacity: 0 }}>{children}</Text>
+				<Text style={textStyles}>{children}</Text>
 			</LinearGradient>
 		</MaskedView>
 	);

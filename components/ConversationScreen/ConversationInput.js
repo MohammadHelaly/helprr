@@ -1,33 +1,50 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Platform } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { conversationActions } from "../../store/slices/conversation-slice";
-import { Ionicons } from "@expo/vector-icons";
-import theme from "../../constants/theme";
-import TouchableComponent from "../UI/TouchableComponent";
-// import Sentence from "../../models/Sentence";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import * as Speech from "expo-speech";
+import { Ionicons } from "@expo/vector-icons";
+import TouchableComponent from "../UI/TouchableComponent";
+// import Sentence from "../../models/Sentence";
 import LanguageToggleButton from "./LanguageToggleButton";
 import VoiceRecordButton from "./VoiceRecordButton";
+import theme from "../../constants/theme";
 
 const ConversationTextInput = (props) => {
 	const { conversationId } = props;
+
 	const [message, setMessage] = useState("");
 
 	const dispatch = useDispatch();
 
-	const language = useSelector((state) => state.conversations.language);
+	const language = useSelector(
+		(state) => state.conversations.conversationLanguage
+	);
+
+	const placeholder =
+		language === "en-US" ? "Type a message..." : "اكتب رسالة...";
 
 	const textAlignment =
 		language === "en-US" ? styles.textLeft : styles.textRight;
+
+	const textInputStyles = {
+		...styles.input,
+		...textAlignment,
+	};
+
+	const handleTextChange = (text) => {
+		setMessage(text);
+	};
 
 	const handleSend = () => {
 		if (message.trim() === "") {
 			return;
 		}
+
+		const timestamp = moment(Date.now()).format("hh:mm a");
 
 		const newSentence = {
 			id: uuidv4(),
@@ -35,7 +52,7 @@ const ConversationTextInput = (props) => {
 			conversation: conversationId,
 			type: "textToSpeech",
 			language: language,
-			timestamp: moment(Date.now()).format("hh:mm a"),
+			timestamp: timestamp,
 		};
 
 		// const newSentence = new Sentence(
@@ -65,21 +82,15 @@ const ConversationTextInput = (props) => {
 			<VoiceRecordButton conversationId={conversationId} />
 			<LanguageToggleButton />
 			<TextInput
-				style={{ ...styles.input, ...textAlignment }}
-				placeholder={
-					language === "en-US" ? "Type a message..." : "اكتب رسالة..."
-				}
+				style={textInputStyles}
+				placeholder={placeholder}
 				value={message}
-				onChangeText={(text) => setMessage(text)}
+				onChangeText={handleTextChange}
 				multiline
 			/>
 			<TouchableComponent style={styles.sendButton} onPress={handleSend}>
 				<Ionicons
-					name={
-						Platform.OS === "android"
-							? "arrow-forward-circle-sharp"
-							: "arrow-forward-circle-sharp"
-					}
+					name="arrow-forward-circle-sharp"
 					size={42}
 					color={theme.colors.black}
 				/>
@@ -93,8 +104,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		// borderBottomWidth: 1,
-		// borderBottomColor: theme.colors.lightGrey,
 		paddingVertical: 4,
 		paddingHorizontal: 16,
 		height: 64,
@@ -120,8 +129,6 @@ const styles = StyleSheet.create({
 		textAlign: "right",
 	},
 	sendButton: {
-		// width: 40,
-		// height: 40,
 		borderRadius: 32,
 		justifyContent: "center",
 		alignItems: "center",

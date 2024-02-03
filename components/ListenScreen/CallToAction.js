@@ -1,50 +1,39 @@
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import LargeButton from "../UI/LargeButton";
 import theme from "../../constants/theme";
 
 const CallToAction = (props) => {
 	const { onButtonPress } = props;
 
+	const lightTextStyles = {
+		...styles.callToActionText,
+		...styles.callToActionTextLight,
+	};
+
+	const darkTextStyles = {
+		...styles.callToActionText,
+		...styles.callToActionTextDark,
+	};
+
+	const highlightTextStyles = {
+		...styles.callToActionText,
+		...styles.callToActionTextHighlight,
+	};
+
 	return (
 		<View style={styles.callToActionContainer}>
-			<Text
-				style={{
-					...styles.callToActionText,
-					...styles.callToActionTextLight,
-				}}>
-				Start a
-				<Text
-					style={{
-						...styles.callToActionText,
-						...styles.callToActionTextHighlight,
-					}}>
-					{" "}
-					conversation{" "}
-				</Text>
+			<Text style={lightTextStyles}>
+				Start a<Text style={highlightTextStyles}> conversation </Text>
 				with someone. Have them speak and we'll
-				<Text
-					style={{
-						...styles.callToActionText,
-						...styles.callToActionTextDark,
-					}}>
-					{" "}
-					transcribe{" "}
-				</Text>
+				<Text style={darkTextStyles}> transcribe </Text>
 				it for you. You can also type what you want to say and we'll
-				<Text
-					style={{
-						...styles.callToActionText,
-						...styles.callToActionTextDark,
-					}}>
-					{" "}
-					speak{" "}
-				</Text>
+				<Text style={darkTextStyles}> speak </Text>
 				it for you. We'll hold on to your last few conversations.
 			</Text>
 			<LargeButton
 				title="Listen"
 				style={styles.button}
-				icon={Platform.OS === "android" ? "ear-sharp" : "ear-sharp"}
+				icon="ear-sharp"
 				onPress={onButtonPress}
 			/>
 		</View>
@@ -53,20 +42,13 @@ const CallToAction = (props) => {
 
 const styles = StyleSheet.create({
 	callToActionContainer: {
-		// flex: 1,
-		// width: "100%",
-		minHeight: "50%", //TODO: make this dynamic
+		minHeight: "50%",
 		justifyContent: "center",
 		gap: 24,
 		alignItems: "center",
 		paddingHorizontal: 16,
 		paddingVertical: 0,
-		// borderTopColor: theme.colors.lightGrey,
-		// borderTopWidth: 0.5,
 		backgroundColor: theme.colors.white,
-		// borderRadius: 8,
-		// marginHorizontal: 16,
-		// marginBottom: 32,
 	},
 	callToActionText: {
 		textAlign: "left",

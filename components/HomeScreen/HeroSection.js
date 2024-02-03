@@ -1,11 +1,18 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import LargeButton from "../UI/LargeButton";
-import GradientText from "../UI/GradientText";
 import theme from "../../constants/theme";
 
 const HeroSection = (props) => {
 	const { navigation } = props;
+
+	const handleListenButtonPress = () => {
+		navigation.navigate("Listen");
+	};
+
+	const handleSeeButtonPress = () => {
+		navigation.navigate("See");
+	};
 
 	return (
 		<View style={styles.heroSection}>
@@ -15,63 +22,24 @@ const HeroSection = (props) => {
 					style={styles.logo}
 				/>
 				<View style={styles.titleContainer}>
-					<Text style={styles.title}>
-						Helprr
-						{/* is your hand held */}
-					</Text>
-					{/* <GradientText
-					style={styles.title}
-					colors={theme.colors.pinkAndCyanGradient}>
-					guide dog.{" "}
-				</GradientText> */}
+					<Text style={styles.title}>Helprr</Text>
 				</View>
-				<Text
-					style={{
-						...styles.descriptionText,
-						...styles.descriptionTextLight,
-					}}>
-					{/* It helps you navigate the world around you. */}
-					Your hand held guide dog.{" "}
-					{/* <Text
-					style={{
-						...styles.descriptionText,
-						...styles.descriptionTextDark,
-					}}>
-					{" "}
-					eyes and ears.{" "}
-				</Text> */}
-					{/* It is your best friend. It is your
-				<Text
-					style={{
-						...styles.descriptionText,
-						...styles.descriptionTextHighlight,
-					}}>
-					{" "}
-					Helprr.
-				</Text> */}
+				<Text style={styles.descriptionText}>
+					Your hand held guide dog.
 				</Text>
-				{/* <GradientText
-				style={styles.descriptionText}
-				colors={theme.colors.darkPinkAndCyanGradient}>
-				guide dog.{" "}
-			</GradientText> */}
 			</View>
 			<View style={styles.heroSectionButtonContainer}>
 				<LargeButton
 					title="Listen"
-					icon={Platform.OS === "ios" ? "ear-sharp" : "ear-sharp"}
+					icon="ear-sharp"
 					style={styles.heroSectionButton}
-					onPress={() => {
-						navigation.navigate("Listen");
-					}}
+					onPress={handleListenButtonPress}
 				/>
 				<LargeButton
 					title="See"
-					icon={Platform.OS === "ios" ? "eye-sharp" : "eye-sharp"}
+					icon="eye-sharp"
 					style={styles.heroSectionButton}
-					onPress={() => {
-						navigation.navigate("See");
-					}}
+					onPress={handleSeeButtonPress}
 				/>
 			</View>
 		</View>
@@ -83,7 +51,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		// alignItems: "flex-start",
 		margin: 16,
 		gap: 16,
 	},
@@ -100,36 +67,15 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 		borderWidth: 4,
 		borderColor: theme.colors.black,
-		// marginBottom: 16,
 	},
-	titleContainer: {
-		// flexDirection: "row",
-		// flexWrap: "wrap",
-		// marginBottom: 16,
-	},
-
 	title: {
 		fontSize: theme.sizes.xxxLarge,
 		fontWeight: "bold",
 		textAlign: "center",
-		// textAlign: "left",
 	},
 	descriptionText: {
 		textAlign: "center",
-		// textAlign: "left",
-		// fontSize: theme.sizes.large,
 		fontSize: theme.sizes.medium,
-		// marginBottom: 16,
-	},
-	descriptionTextHighlight: {
-		color: theme.colors.pink,
-		fontWeight: "bold",
-	},
-	descriptionTextDark: {
-		color: theme.colors.black,
-		fontWeight: "bold",
-	},
-	descriptionTextLight: {
 		color: theme.colors.grey,
 	},
 	heroSectionButtonContainer: {

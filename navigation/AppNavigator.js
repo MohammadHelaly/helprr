@@ -1,6 +1,6 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet, Platform, Image } from "react-native";
+import { StyleSheet, Image } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import ListenNavigator from "./ListenNavigator";
@@ -17,17 +17,14 @@ const AppNavigator = () => {
 				tabBarHideOnKeyboard: true,
 				headerShown: false,
 				tabBarActiveTintColor: theme.colors.black,
-				// Platform.OS === "android" ? "#ffffff" : "#000000",
 				tabBarStyle: styles.tabBar,
 				headerStyle: styles.header,
 				headerTitleStyle: styles.headerTitle,
 				headerTitleAlign: "left",
-				// headerShadowVisible: false,
 			}}>
 			<Tab.Screen
 				name="Home"
 				options={{
-					// headerShown: true,
 					headerTitle: () => (
 						<Image
 							source={require("../assets/logo.jpg")}
@@ -35,15 +32,7 @@ const AppNavigator = () => {
 						/>
 					),
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons
-							name={
-								Platform.OS === "android"
-									? "home-sharp"
-									: "home-sharp"
-							}
-							color={color}
-							size={size}
-						/>
+						<Ionicons name="home-sharp" color={color} size={size} />
 					),
 				}}
 				component={HomeScreen}
@@ -52,15 +41,7 @@ const AppNavigator = () => {
 				name="Listen"
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons
-							name={
-								Platform.OS === "android"
-									? "ear-sharp"
-									: "ear-sharp"
-							}
-							color={color}
-							size={size}
-						/>
+						<Ionicons name="ear-sharp" color={color} size={size} />
 					),
 				}}
 				component={ListenNavigator}
@@ -71,15 +52,7 @@ const AppNavigator = () => {
 					headerShown: true, // Header needs to shown for camera not to glitch out, see workaround in stylesheet below. Look into this later.
 					headerStyle: styles.header,
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons
-							name={
-								Platform.OS === "android"
-									? "eye-sharp"
-									: "eye-sharp"
-							}
-							color={color}
-							size={size}
-						/>
+						<Ionicons name="eye-sharp" color={color} size={size} />
 					),
 				}}
 				component={SeeScreen}
@@ -89,17 +62,12 @@ const AppNavigator = () => {
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons
-							name={
-								Platform.OS === "android"
-									? "settings-sharp"
-									: "settings-sharp"
-							}
+							name="settings-sharp"
 							color={color}
 							size={size}
 						/>
 					),
 				}}
-				ta
 				component={SettingsNavigator}
 			/>
 		</Tab.Navigator>
@@ -124,8 +92,8 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	logo: {
-		width: 40, // 38
-		height: 40, // 38
+		width: 40,
+		height: 40,
 		resizeMode: "cover",
 		borderRadius: 8,
 	},

@@ -12,30 +12,20 @@ const ListenNavigator = () => {
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				// headerShown: false,
-				// tabBarActiveTintColor: "#000000",
-				// Platform.OS === "android" ? "#ffffff" : "#000000",
-				// tabBarStyle: styles.tabBar,
 				headerStyle: styles.header,
 				headerShadowVisible: false,
-				// headerShown: false,
 				headerTitleStyle: styles.headerTitle,
 				headerTitleAlign: "left",
 				headerBackTitleVisible: false,
 				headerLeftLabelVisible: false,
 				headerBackImage: () => (
 					<Ionicons
-						name={
-							Platform.OS === "android"
-								? "chevron-back-sharp"
-								: "chevron-back-sharp"
-						}
+						name="chevron-back-sharp"
 						size={24}
 						color={theme.colors.black}
 						style={styles.headerBackIcon}
 					/>
 				),
-				// headerShadowVisible: false,
 			}}>
 			<Stack.Screen
 				name="ListenScreen"
@@ -56,9 +46,8 @@ const styles = StyleSheet.create({
 	},
 	headerTitle: {
 		color: theme.colors.black,
-		fontSize: theme.sizes.xxLarge, // 28
+		fontSize: theme.sizes.xxLarge,
 		fontWeight: "bold",
-		// marginBottom: 16,
 	},
 	headerBackIcon: {
 		marginLeft: Platform.OS === "ios" ? 8 : 0,

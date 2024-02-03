@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	conversations: [],
-	language: "en-US",
+	conversationLanguage: "en-US",
 };
 
 const conversationSlice = createSlice({
@@ -10,10 +10,10 @@ const conversationSlice = createSlice({
 	initialState,
 	reducers: {
 		toggleLanguage(state, action) {
-			if (state.language === "en-US") {
-				state.language = "ar";
+			if (state.conversationLanguage === "en-US") {
+				state.conversationLanguage = "ar";
 			} else {
-				state.language = "en-US";
+				state.conversationLanguage = "en-US";
 			}
 		},
 		setConversations(state, action) {

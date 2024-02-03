@@ -44,13 +44,10 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginTop: 100,
 		minWidth: 168,
-
 		padding: 16,
-		// paddingHorizontal: 32,
 		borderRadius: 8,
 		backgroundColor: theme.colors.white,
 		zIndex: 10,
-		// backgroundColor: theme.colors.pink,
 	},
 	label: {
 		color: theme.colors.black,

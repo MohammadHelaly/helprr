@@ -9,6 +9,7 @@ const TouchableComponent = (props) => {
 		Platform.OS === "android" && Platform.Version >= 21
 			? TouchableNativeFeedback
 			: TouchableOpacity;
+
 	return <Component {...props}>{props.children}</Component>;
 };
 
