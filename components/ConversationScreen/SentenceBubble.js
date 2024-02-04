@@ -80,7 +80,6 @@ const SentenceBubble = (props) => {
 			<View style={styles.textContainer}>
 				<EditableText
 					defaultValue={text}
-					maxLength={100}
 					isEditing={isEditing}
 					style={textStyles}
 					onEndEditing={handleTextChange}
