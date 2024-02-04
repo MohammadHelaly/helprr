@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, ScrollView, Text } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import ConversationList from "../components/ListenScreen/ConversationList";
 import CallToAction from "../components/ListenScreen/CallToAction";
 import theme from "../constants/theme";
@@ -53,14 +53,11 @@ const ListenScreen = (props) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			{/* <Text style={styles.title}>Your Conversations</Text> */}
 			<ConversationList
 				conversations={conversations}
 				onConversationPress={selectExistingConversationHandler}
 			/>
-			{/* <ScrollView> */}
 			<CallToAction onButtonPress={startNewConversationHandler} />
-			{/* </ScrollView> */}
 		</SafeAreaView>
 	);
 };
@@ -69,10 +66,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: theme.colors.light,
-		// backgroundColor: theme.colors.lightGrey,
 		alignItems: "center",
 		justifyContent: "center",
-		// gap: 16,
 	},
 	title: {
 		fontSize: theme.sizes.large,

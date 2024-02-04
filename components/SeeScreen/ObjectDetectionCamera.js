@@ -50,17 +50,27 @@ const ObjectDetectionCamera = (props) => {
 	const handlePermissions = async () => {
 		try {
 			const permission = await Camera.getCameraPermissionsAsync();
-			if (
-				permission.granted ||
-				(permission.canAskAgain &&
-					(await Camera.requestCameraPermissionsAsync()).granted)
-			) {
-				setHasPermission(true);
-			} else {
-				setHasPermission(false);
+			setHasPermission(permission.granted);
+			if (permission.canAskAgain && !permission.granted) {
+				const newPermission =
+					await Camera.requestCameraPermissionsAsync();
+				setHasPermission(newPermission.granted);
 			}
+			setLabel(undefined);
 		} catch (error) {
 			console.error("Error getting camera permission:", error);
+			Alert.alert(
+				"Error Getting Camera Permission",
+				"An error occurred while trying to get camera permissions. Please try again.",
+				[
+					{ text: "Cancel", style: "cancel" },
+					{
+						text: "Retry",
+						style: "default",
+						onPress: () => handlePermissions(),
+					},
+				]
+			);
 		}
 	};
 

@@ -15,12 +15,12 @@ const MoreSettingsScreen = (props) => {
 				/>
 				<SettingsOption
 					onPress={() => {}}
-					text="Contact us"
+					text="Support"
 					endIcon="chevron-forward-sharp"
 				/>
 				<SettingsOption
 					onPress={() => {}}
-					text="Support us"
+					text="Contact"
 					endIcon="chevron-forward-sharp"
 				/>
 				<SettingsOption
