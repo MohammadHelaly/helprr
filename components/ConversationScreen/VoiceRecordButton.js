@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationActions } from "../../store/slices/conversation-slice";
 import { Ionicons } from "@expo/vector-icons";
+import { Camera } from "expo-camera"; // Used to handle microphone permissions, as @react-native-voice/voice is not an expo package
+import * as Linking from "expo-linking";
 import Voice from "@react-native-voice/voice";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -18,6 +20,8 @@ const VoiceRecordButton = (props) => {
 	const language = useSelector(
 		(state) => state.conversations.conversationLanguage
 	);
+
+	const [hasPermission, setHasPermission] = useState(false);
 	const [isListening, setIsListening] = useState(false);
 	const [error, setError] = useState(false);
 
@@ -27,10 +31,58 @@ const VoiceRecordButton = (props) => {
 		? { ...styles.recordButton, ...styles.error }
 		: { ...styles.recordButton, ...styles.normal };
 
+	const handlePermissions = async () => {
+		try {
+			const permission = await Camera.getMicrophonePermissionsAsync();
+			setHasPermission(permission.granted);
+			if (permission.canAskAgain && !permission.granted) {
+				const newPermission =
+					await Camera.requestMicrophonePermissionsAsync();
+				setHasPermission(newPermission.granted);
+			}
+		} catch (error) {
+			console.error("Error getting microphone permission:", error);
+			Alert.alert(
+				"Error Getting Microphone Permission",
+				"An error occurred while trying to get microphone permissions. Please try again.",
+				[
+					{ text: "Cancel", style: "cancel" },
+					{
+						text: "Retry",
+						style: "default",
+						onPress: () => handlePermissions(),
+					},
+				]
+			);
+		}
+	};
+
+	const permissionAlert = () => {
+		Alert.alert(
+			"Microphone Permission Required",
+			"Helprr needs access to your microphone.",
+			[
+				{
+					text: "Cancel",
+					style: "cancel",
+				},
+				{
+					text: "Allow",
+					style: "default",
+					onPress: async () => await Linking.openSettings(),
+				},
+			]
+		);
+	};
+
 	const startListening = async () => {
 		setError(false);
-		setIsListening(true);
+		if (!hasPermission) {
+			permissionAlert();
+			return;
+		}
 		try {
+			setIsListening(true);
 			await Voice.start(language);
 		} catch (error) {
 			console.error(error);
@@ -89,6 +141,10 @@ const VoiceRecordButton = (props) => {
 		console.log(error.error);
 		if (error.error.code === 7 || error.error.code === 2) setError(true);
 	};
+
+	useEffect(() => {
+		handlePermissions();
+	}, []);
 
 	useEffect(() => {
 		Voice.onSpeechStart = onSpeechStartHandler;
