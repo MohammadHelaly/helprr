@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Platform, Alert } from "react-native";
 import * as Linking from "expo-linking";
 import { Camera } from "expo-camera"; // Used to handle both camera and microphone permissions, as @react-native-voice/voice is not an expo package
 import SettingsOption from "../components/UI/SettingsOption";
@@ -87,6 +87,14 @@ const PermissionsSettingsScreen = () => {
 		setCanAskAgainForMicrophonePermission(permission.canAskAgain);
 	};
 
+	const speechRecognitionPermissionsHandler = () => {
+		Alert.alert(
+			"Speech Recognition Permissions",
+			"Speech recognition permissions are managed by your device's settings. Please navigate to your device's Privacy and Security settings to manage speech recognition permissions.",
+			[{ text: "OK", style: "default" }]
+		);
+	};
+
 	useEffect(() => {
 		handleCameraPermissions();
 		handleMicrophonePermissions();
@@ -107,6 +115,13 @@ const PermissionsSettingsScreen = () => {
 				text="Microphone"
 				endIcon={microphonePermissionEndIcon}
 			/>
+			{Platform.OS === "ios" && (
+				<SettingsOption
+					onPress={speechRecognitionPermissionsHandler}
+					text="Speech Recognition"
+					endIcon="chevron-forward-sharp"
+				/>
+			)}
 		</View>
 	);
 };

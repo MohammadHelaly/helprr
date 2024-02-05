@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Platform, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationActions } from "../../store/slices/conversation-slice";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,6 +22,7 @@ const VoiceRecordButton = (props) => {
 	);
 
 	const [hasPermission, setHasPermission] = useState(false);
+	const [engineIsAvailable, setEngineIsAvailable] = useState(true);
 	const [isListening, setIsListening] = useState(false);
 	const [error, setError] = useState(false);
 
@@ -57,6 +58,37 @@ const VoiceRecordButton = (props) => {
 		}
 	};
 
+	const handleEngineAvailability = async () => {
+		try {
+			const isAvailable = await Voice.isAvailable();
+			const availableEngines = await Voice.getSpeechRecognitionServices();
+			if (Platform.OS !== "android") {
+				setEngineIsAvailable(isAvailable);
+				return;
+			}
+			setEngineIsAvailable(
+				isAvailable &&
+					availableEngines.includes(
+						"com.google.android.googlequicksearchbox"
+					)
+			);
+		} catch (error) {
+			console.error("Error checking speech recognition engine:", error);
+			Alert.alert(
+				"Error Checking Speech Recognition Engine",
+				"An error occurred while trying to check the speech recognition engine. Please try again.",
+				[
+					{ text: "Cancel", style: "cancel" },
+					{
+						text: "Retry",
+						style: "default",
+						onPress: () => handleEngineAvailability(),
+					},
+				]
+			);
+		}
+	};
+
 	const permissionAlert = () => {
 		Alert.alert(
 			"Microphone Permission Required",
@@ -75,10 +107,37 @@ const VoiceRecordButton = (props) => {
 		);
 	};
 
+	const engineAlert = () => {
+		if (Platform.OS === "android") {
+			Alert.alert(
+				"Speech Recognition Engine Not Found",
+				"Helprr uses Google's speech recognition engine. Please make sure you have the Google app installed and that it is up to date.",
+				[{ text: "OK", style: "default" }]
+			);
+		} else {
+			Alert.alert(
+				"Speech Recognition Engine Not Found",
+				"Helprr needs to use the speech recognition, but it is not available on your device. Please check your settings.",
+				[
+					{ text: "Cancel", style: "cancel" },
+					{
+						text: "OK",
+						style: "default",
+						onPress: async () => await Linking.openSettings(),
+					},
+				]
+			);
+		}
+	};
+
 	const startListening = async () => {
 		setError(false);
 		if (!hasPermission) {
 			permissionAlert();
+			return;
+		}
+		if (!engineIsAvailable) {
+			engineAlert();
 			return;
 		}
 		try {
@@ -144,6 +203,7 @@ const VoiceRecordButton = (props) => {
 
 	useEffect(() => {
 		handlePermissions();
+		handleEngineAvailability();
 	}, []);
 
 	useEffect(() => {
