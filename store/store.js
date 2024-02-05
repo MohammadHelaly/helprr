@@ -1,4 +1,5 @@
 import conversationReducer from "./slices/conversation-slice";
+import ObjectDetectionReducer from "./slices/object-detection-slice";
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,10 +17,12 @@ import {
 const persistConfig = {
 	key: "root",
 	storage: AsyncStorage,
+	blacklist: ["objectDetection"], // objectDetection slice is not persisted
 };
 
 const rootReducer = combineReducers({
 	conversations: conversationReducer,
+	objectDetection: ObjectDetectionReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

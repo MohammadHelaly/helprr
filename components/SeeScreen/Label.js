@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { useSelector } from "react-redux";
 import * as Speech from "expo-speech";
 import theme from "../../constants/theme";
 
-const Label = (props) => {
-	const { label, isFocused } = props;
+const Label = () => {
+	const label = useSelector((state) => state.objectDetection.label);
+	const isFocused = useSelector((state) => state.objectDetection.isFocused);
 
 	useEffect(() => {
 		if (!isFocused) {
@@ -16,13 +18,13 @@ const Label = (props) => {
 				pitch: 1,
 				rate: 1,
 			});
-		} else {
-			Speech.speak(label, {
-				language: "en-US",
-				pitch: 1,
-				rate: 1,
-			});
+			return;
 		}
+		Speech.speak(label, {
+			language: "en-US",
+			pitch: 1,
+			rate: 1,
+		});
 	}, [label, isFocused]);
 
 	return (
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginTop: 100,
 		minWidth: 168,
+		minHeight: 54,
 		padding: 16,
 		borderRadius: 8,
 		backgroundColor: theme.colors.white,

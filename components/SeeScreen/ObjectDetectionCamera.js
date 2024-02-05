@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Platform, StyleSheet, Alert } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { objectDetectionActions } from "../../store/slices/object-detection-slice";
 import { Camera } from "expo-camera";
 import * as tf from "@tensorflow/tfjs";
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
@@ -9,13 +11,15 @@ import theme from "../../constants/theme";
 
 const TensorCamera = cameraWithTensors(Camera);
 
-const ObjectDetectionCamera = (props) => {
-	const { setLabel, isFocused } = props;
+const ObjectDetectionCamera = () => {
+	const isFocused = useSelector((state) => state.objectDetection.isFocused);
+
+	const dispatch = useDispatch();
 
 	const [model, setModel] = useState();
-	const [predictedLabel, setPredictedLabel] = useState();
 	const [hasPermission, setHasPermission] = useState(true);
 
+	const cameraType = Camera.Constants.Type.back;
 	const textureDimensions =
 		Platform.OS === "ios"
 			? { height: 1920, width: 1080 }
@@ -26,10 +30,10 @@ const ObjectDetectionCamera = (props) => {
 	const loadModel = async () => {
 		try {
 			await tf.ready();
-			const loadedModel = await cocoSsd.load({
+			let loadedModel = await cocoSsd.load({
 				base: "lite_mobilenet_v2",
 			});
-			return loadedModel;
+			setModel(loadedModel);
 		} catch (error) {
 			console.error("Error loading model:", error);
 			Alert.alert(
@@ -56,7 +60,6 @@ const ObjectDetectionCamera = (props) => {
 					await Camera.requestCameraPermissionsAsync();
 				setHasPermission(newPermission.granted);
 			}
-			setLabel(undefined);
 		} catch (error) {
 			console.error("Error getting camera permission:", error);
 			Alert.alert(
@@ -75,16 +78,20 @@ const ObjectDetectionCamera = (props) => {
 	};
 
 	useEffect(() => {
-		const init = async () => {
-			await handlePermissions();
-			setModel(await loadModel());
-		};
-		init();
+		handlePermissions();
+		loadModel();
 	}, []);
 
 	useEffect(() => {
-		setLabel(predictedLabel);
-	}, [predictedLabel]);
+		if (!hasPermission) {
+			dispatch(
+				objectDetectionActions.setLabel({ label: "Permission needed" })
+			);
+			return;
+		}
+		dispatch(objectDetectionActions.clearLabel());
+		frameCount = 0;
+	}, [isFocused, hasPermission]);
 
 	const handleCameraStream = (images) => {
 		const loop = async () => {
@@ -106,10 +113,14 @@ const ObjectDetectionCamera = (props) => {
 				);
 				if (predictions.length > 0) {
 					const prediction = predictions[0].class;
-					const capitalizedPrediction =
+					const predictedLabel =
 						prediction.charAt(0).toUpperCase() +
 						prediction.slice(1);
-					setPredictedLabel(capitalizedPrediction);
+					dispatch(
+						objectDetectionActions.setLabel({
+							label: predictedLabel,
+						})
+					);
 				}
 			} catch (error) {
 				console.error("Error detecting objects:", error);
@@ -123,26 +134,21 @@ const ObjectDetectionCamera = (props) => {
 	};
 
 	if (!isFocused) {
-		frameCount = 0;
-		setLabel(undefined);
 		return null;
 	}
 
 	if (!hasPermission) {
-		setLabel("Uh oh!");
 		return <Warning variant="permission" utility="camera" />;
 	}
 
 	if (!model) {
-		return (
-			<Camera style={styles.camera} type={Camera.Constants.Type.back} />
-		);
+		return <Camera style={styles.camera} type={cameraType} />;
 	}
 
 	return (
 		<TensorCamera
 			style={styles.camera}
-			type={Camera.Constants.Type.back}
+			type={cameraType}
 			autorender={true}
 			cameraTextureHeight={textureDimensions.height}
 			cameraTextureWidth={textureDimensions.width}

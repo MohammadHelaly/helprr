@@ -1,20 +1,16 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import ConversationList from "../components/ListenScreen/ConversationList";
-import CallToAction from "../components/ListenScreen/CallToAction";
-import theme from "../constants/theme";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { conversationActions } from "../store/slices/conversation-slice";
-// import Conversation from "../models/Conversation";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+// import Conversation from "../models/Conversation";
+import ConversationList from "../components/ListenScreen/ConversationList";
+import CallToAction from "../components/ListenScreen/CallToAction";
+import theme from "../constants/theme";
 
 const ListenScreen = (props) => {
 	const { navigation } = props;
-
-	const conversations = useSelector(
-		(state) => state.conversations.conversations
-	);
 
 	const dispatch = useDispatch();
 
@@ -54,7 +50,6 @@ const ListenScreen = (props) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ConversationList
-				conversations={conversations}
 				onConversationPress={selectExistingConversationHandler}
 			/>
 			<CallToAction onButtonPress={startNewConversationHandler} />
