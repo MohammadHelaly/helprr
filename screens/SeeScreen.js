@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { objectDetectionActions } from "../store/slices/object-detection-slice";
 import Label from "../components/SeeScreen/Label";
 import ObjectDetectionCamera from "../components/SeeScreen/ObjectDetectionCamera";
 
 const SeeScreen = () => {
 	const isFocused = useIsFocused();
-	const [label, setLabel] = useState(undefined);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(
+			objectDetectionActions.setIsFocused({
+				isFocused: isFocused,
+			})
+		);
+	}, [isFocused]);
 
 	return (
 		<View style={styles.container}>
-			<ObjectDetectionCamera setLabel={setLabel} isFocused={isFocused} />
-			<Label label={label} isFocused={isFocused} />
+			<ObjectDetectionCamera />
+			<Label />
 		</View>
 	);
 };

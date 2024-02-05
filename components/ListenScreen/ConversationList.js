@@ -1,8 +1,13 @@
 import { FlatList, StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 import ConversationListItem from "./ConversationListItem";
 
 const ConversationList = (props) => {
-	const { conversations, onConversationPress } = props;
+	const { onConversationPress } = props;
+
+	const conversations = useSelector(
+		(state) => state.conversations.conversations
+	);
 
 	const reversedConversations = [...conversations].reverse();
 
