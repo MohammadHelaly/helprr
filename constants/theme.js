@@ -44,6 +44,7 @@ const sizes = {
 	small: 16,
 	xSmall: 14,
 	xxSmall: 12,
+	xxxSmall: 8,
 };
 
 export default theme = {

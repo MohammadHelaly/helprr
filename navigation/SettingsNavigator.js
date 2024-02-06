@@ -7,7 +7,11 @@ import MoreSettingsScreen from "../screens/MoreSettingsScreen";
 import LanguageSettingsScreen from "../screens/LanguageSettingsScreen";
 import GeneralSettingsScreen from "../screens/GeneralSettingsScreen";
 import PermissionsSettingsScreen from "../screens/PermissionsSettingsScreen";
+import AboutScreen from "../screens/AboutScreen";
+import AcknowledgementsScreen from "../screens/AcknowledgementsScreen";
 import theme from "../constants/theme";
+import LegalScreen from "../screens/LegalScreen";
+import LicenseScreen from "../screens/LicenseScreen";
 
 const Stack = createStackNavigator();
 
@@ -64,6 +68,34 @@ const SettingsNavigator = () => {
 					headerTitle: "More",
 				}}
 				component={MoreSettingsScreen}
+			/>
+			<Stack.Screen
+				name="AboutScreen"
+				options={{
+					headerTitle: "About Helprr",
+				}}
+				component={AboutScreen}
+			/>
+			<Stack.Screen
+				name="LegalScreen"
+				options={{
+					headerTitle: "Legal",
+				}}
+				component={LegalScreen}
+			/>
+			<Stack.Screen
+				name="LicenseScreen"
+				options={{
+					headerTitle: "License",
+				}}
+				component={LicenseScreen}
+			/>
+			<Stack.Screen
+				name="AcknowledgementsScreen"
+				options={{
+					headerTitle: "Acknowledgements",
+				}}
+				component={AcknowledgementsScreen}
 			/>
 		</Stack.Navigator>
 	);
