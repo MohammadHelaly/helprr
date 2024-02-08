@@ -15,22 +15,22 @@ import SettingsNavigator from "./SettingsNavigator";
 import SeeScreen from "../screens/SeeScreen";
 import theme from "../constants/theme";
 
-type TabParamList = {
+type AppParamList = {
 	Home: undefined;
 	Listen: NavigatorScreenParams<ListenParamList>;
 	See: undefined;
 	Settings: NavigatorScreenParams<SettingsParamList>;
 };
 
-type HomeScreenProps = BottomTabScreenProps<TabParamList, "Home">;
+type HomeScreenProps = BottomTabScreenProps<AppParamList, "Home">;
 
-type ListenScreenProps = BottomTabScreenProps<TabParamList, "Listen">;
+type ListenScreenProps = BottomTabScreenProps<AppParamList, "Listen">;
 
-type SeeScreenProps = BottomTabScreenProps<TabParamList, "See">;
+type SeeScreenProps = BottomTabScreenProps<AppParamList, "See">;
 
-type SettingsScreenProps = BottomTabScreenProps<TabParamList, "Settings">;
+type SettingsScreenProps = BottomTabScreenProps<AppParamList, "Settings">;
 
-const Tab = createBottomTabNavigator<TabParamList>();
+const Tab = createBottomTabNavigator<AppParamList>();
 
 const AppNavigator = () => {
 	const tabNavigatorScreenOptions: BottomTabNavigationOptions = {
@@ -112,5 +112,5 @@ export {
 	ListenScreenProps,
 	SeeScreenProps,
 	SettingsScreenProps,
-	TabParamList,
+	AppParamList,
 };
