@@ -52,12 +52,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: theme.colors.white,
-		paddingHorizontal: 16,
 	},
 	heading: {
 		fontSize: theme.sizes.medium,
 		fontWeight: "bold",
-		marginVertical: 16,
+		margin: 16,
 	},
 	libraryLicenseContainer: {
 		display: "flex",
@@ -66,6 +65,7 @@ const styles = StyleSheet.create({
 		alignItems: "flex-start",
 		gap: 8,
 		marginVertical: 8,
+		marginHorizontal: 16,
 	},
 	libraryName: {
 		fontSize: theme.sizes.xSmall,

@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 		gap: 16,
 		marginTop: 48,
 		marginBottom: 24,
+		marginHorizontal: 16,
 	},
 	heroSection: {
 		flexDirection: "column",

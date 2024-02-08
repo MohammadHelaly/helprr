@@ -73,18 +73,20 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 
 	const handleEngineAvailability = async () => {
 		try {
-			const isAvailable = await Voice.isAvailable();
+			const isAvailable =
+				(await Voice.isAvailable()) as unknown as boolean; // Type cast to boolean because the type definition is incorrect
 			const availableEngines = await Voice.getSpeechRecognitionServices();
 			if (Platform.OS !== "android") {
-				setEngineIsAvailable(isAvailable === 1);
+				setEngineIsAvailable(isAvailable);
 				return;
 			}
 			setEngineIsAvailable(
 				isAvailable &&
 					Array.isArray(availableEngines) &&
-					availableEngines.includes(
+					(availableEngines.includes(
 						"com.google.android.googlequicksearchbox"
-					)
+					) ||
+						availableEngines.includes("com.google.android.tts"))
 			);
 		} catch (error) {
 			console.error("Error checking speech recognition engine:", error);
@@ -125,7 +127,7 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 		if (Platform.OS === "android") {
 			Alert.alert(
 				"Speech Recognition Engine Not Found",
-				"Helprr uses Google's speech recognition engine. Please make sure you have the Google app installed and that it is up to date.",
+				"Helprr uses Google's speech recognition engine. Please make sure you have the Google TTS engine installed on your device.",
 				[{ text: "OK", style: "default" }]
 			);
 		} else {

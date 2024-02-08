@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import TouchableComponent from "../UI/TouchableComponent";
 import theme from "../../constants/theme";
 
 type AboutSectionCardProps = {
@@ -16,38 +15,39 @@ const AboutSectionCard = (props: AboutSectionCardProps) => {
 	const { onPress, title, image, icon, description } = props;
 
 	return (
-		<View style={styles.informationSectionContent}>
-			<TouchableComponent
+		<View style={styles.aboutSectionCard}>
+			<Pressable
 				onPress={onPress}
-				style={styles.informationSectionContentTouchable}>
-				{image ? (
-					<Image
-						style={styles.informationSectionContentImage}
-						source={image}
-					/>
-				) : (
-					<View style={styles.informationSectionContentImage}>
-						<Ionicons
-							name={icon}
-							size={64}
-							color={theme.colors.black}
+				style={styles.aboutSectionCardContentTouchable}>
+				<View style={styles.informationSectionCardContent}>
+					{image ? (
+						<Image
+							style={styles.aboutSectionCardContentImage}
+							source={image}
 						/>
-					</View>
-				)}
-
-				<Text style={styles.informationSectionContentTitle}>
-					{title}
-				</Text>
-				<Text style={styles.informationSectionContentDescription}>
-					{description}
-				</Text>
-			</TouchableComponent>
+					) : (
+						<View style={styles.aboutSectionCardContentImage}>
+							<Ionicons
+								name={icon}
+								size={64}
+								color={theme.colors.black}
+							/>
+						</View>
+					)}
+					<Text style={styles.aboutSectionCardContentTitle}>
+						{title}
+					</Text>
+					<Text style={styles.aboutSectionCardContentDescription}>
+						{description}
+					</Text>
+				</View>
+			</Pressable>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	informationSectionContent: {
+	aboutSectionCard: {
 		width: "48%",
 		borderTopRightRadius: 12,
 		borderTopLeftRadius: 12,
@@ -55,11 +55,13 @@ const styles = StyleSheet.create({
 		borderBottomStartRadius: 0,
 		overflow: "hidden",
 	},
-	informationSectionContentTouchable: {
+	aboutSectionCardContentTouchable: {
 		flex: 1,
+	},
+	informationSectionCardContent: {
 		flexDirection: "column",
 	},
-	informationSectionContentImage: {
+	aboutSectionCardContentImage: {
 		height: 200,
 		width: "100%",
 		justifyContent: "center",
@@ -68,12 +70,12 @@ const styles = StyleSheet.create({
 		marginBottom: 4,
 		backgroundColor: theme.colors.lightGrey,
 	},
-	informationSectionContentTitle: {
+	aboutSectionCardContentTitle: {
 		fontSize: theme.sizes.medium,
 		fontWeight: "bold",
 		textAlign: "left",
 	},
-	informationSectionContentDescription: {
+	aboutSectionCardContentDescription: {
 		fontSize: theme.sizes.small,
 		color: theme.colors.grey,
 		textAlign: "left",

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import {
 	useTypedSelector,
 	useTypedDispatch,
@@ -53,19 +53,27 @@ const LanguageToggleButton = () => {
 	}, [language]);
 
 	return (
-		<TouchableComponent style={styles.button} onPress={handleToggle}>
-			<Text style={styles.buttonText}>{buttonLanguage}</Text>
-		</TouchableComponent>
+		<View style={styles.button}>
+			<TouchableComponent onPress={handleToggle}>
+				<View style={styles.buttonContent}>
+					<Text style={styles.buttonText}>{buttonLanguage}</Text>
+				</View>
+			</TouchableComponent>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	button: {
 		backgroundColor: theme.colors.lightGrey,
-		padding: 10,
 		borderRadius: 40,
+		overflow: "hidden",
 		width: 40,
 		height: 40,
+	},
+	buttonContent: {
+		height: "100%",
+		width: "100%",
 		alignItems: "center",
 		justifyContent: "center",
 	},
