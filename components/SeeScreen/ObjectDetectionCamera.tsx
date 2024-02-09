@@ -60,6 +60,7 @@ const ObjectDetectionCamera = () => {
 		try {
 			const permission = await Camera.getCameraPermissionsAsync();
 			setHasPermission(permission.granted);
+
 			if (permission.canAskAgain && !permission.granted) {
 				const newPermission =
 					await Camera.requestCameraPermissionsAsync();
@@ -82,45 +83,34 @@ const ObjectDetectionCamera = () => {
 		}
 	};
 
-	useEffect(() => {
-		handlePermissions();
-		loadModel();
-	}, []);
-
-	useEffect(() => {
-		if (!hasPermission) {
-			dispatch(
-				objectDetectionActions.setLabel({ label: "Permission needed" })
-			);
-			return;
-		}
-		dispatch(objectDetectionActions.clearLabel());
-		frameCount = 0;
-	}, [isFocused, hasPermission]);
-
 	const handleCameraStream = (images: any) => {
 		const loop = async () => {
 			const nextImageTensor = images.next().value;
+
 			if (!model || !nextImageTensor) {
-				return;
+				return; // TODO: Check if this is the correct way to check for model and nextImageTensor
 			}
+
 			if (frameCount % predictEveryNFrames !== 0) {
 				frameCount += 1;
 				tf.dispose([nextImageTensor]);
 				requestAnimationFrame(loop);
 				return;
 			}
+
 			try {
 				const predictions = await model.detect(
 					nextImageTensor,
 					undefined,
 					0.7
 				);
+
 				if (predictions.length > 0) {
 					const prediction = predictions[0].class;
 					const predictedLabel =
 						prediction.charAt(0).toUpperCase() +
 						prediction.slice(1);
+
 					dispatch(
 						objectDetectionActions.setLabel({
 							label: predictedLabel,
@@ -137,6 +127,22 @@ const ObjectDetectionCamera = () => {
 		};
 		loop();
 	};
+
+	useEffect(() => {
+		handlePermissions();
+		loadModel();
+	}, []);
+
+	useEffect(() => {
+		if (!hasPermission) {
+			dispatch(
+				objectDetectionActions.setLabel({ label: "Permission needed" })
+			);
+			return;
+		}
+		dispatch(objectDetectionActions.clearLabel());
+		frameCount = 0;
+	}, [isFocused, hasPermission]);
 
 	if (!isFocused) {
 		return null;

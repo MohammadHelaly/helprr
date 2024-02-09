@@ -40,7 +40,8 @@
     "uuid": "^9.0.1",
     "expo-linking": "~5.0.2",
     "typescript": "^5.1.3",
-    "@types/react": "~18.2.14"
+    "@types/react": "~18.2.14",
+    "expo-store-review": "~6.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

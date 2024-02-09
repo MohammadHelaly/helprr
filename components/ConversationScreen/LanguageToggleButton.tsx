@@ -28,6 +28,7 @@ const LanguageToggleButton = () => {
 			availableVoices = await Speech.getAvailableVoicesAsync(); // Promise sometimes resolves with an empty array on first call on Android
 
 		if (availableVoices.length === 0) {
+			// TODO: Fix this, it's not working as expected on Android
 			Alert.alert(
 				"Voice Data Not Found",
 				"Please make sure you have voice data installed on your device if you want to use text-to-speech. You can still use speech-to-text."

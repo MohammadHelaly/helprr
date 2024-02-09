@@ -1,9 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import * as Linking from "expo-linking";
 import AboutSectionCard from "./AboutSectionCard";
 import theme from "../../constants/theme";
 
 const AboutSection = () => {
+	const handleWebsitePress = () => {
+		Linking.openURL("https://github.com/MohammadHelaly/helprr"); // TODO: Update with website link
+	};
+
+	const handleGitHubPress = () => {
+		Linking.openURL("https://github.com/MohammadHelaly/helprr");
+	};
+
 	return (
 		<View style={styles.aboutSection}>
 			<View style={styles.textContainer}>
@@ -36,13 +45,13 @@ const AboutSection = () => {
 			<ScrollView
 				contentContainerStyle={styles.informationSectionContainer}>
 				<AboutSectionCard
-					onPress={() => {}}
+					onPress={handleWebsitePress}
 					icon="globe-outline"
 					title="Website"
 					description="Go to the website."
 				/>
 				<AboutSectionCard
-					onPress={() => {}}
+					onPress={handleGitHubPress}
 					icon="logo-github"
 					title="GitHub"
 					description="See the source code."

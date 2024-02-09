@@ -18,16 +18,18 @@ const SettingsOption = (props: SettingsOptionProps) => {
 		<TouchableComponent onPress={onPress}>
 			<View style={styles.optionContainer}>
 				<View style={styles.option}>
-					<Text style={styles.setting}>{text}</Text>
-					{endIcon ? (
-						<Ionicons
-							name={endIcon}
-							size={24}
-							color={theme.colors.black}
-						/>
-					) : endText ? (
-						<Text style={styles.secondaryText}>{endText}</Text>
-					) : null}
+					<View style={styles.optionContent}>
+						<Text style={styles.setting}>{text}</Text>
+						{endIcon ? (
+							<Ionicons
+								name={endIcon}
+								size={24}
+								color={theme.colors.black}
+							/>
+						) : endText ? (
+							<Text style={styles.secondaryText}>{endText}</Text>
+						) : null}
+					</View>
 				</View>
 			</View>
 		</TouchableComponent>
@@ -40,13 +42,15 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 	option: {
-		width: "100%",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
 		paddingVertical: 32,
 		borderBottomWidth: 1,
 		borderColor: theme.colors.lightGrey,
+	},
+	optionContent: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		width: "100%",
 	},
 	setting: {
 		fontSize: theme.sizes.medium,

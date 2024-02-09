@@ -49,6 +49,7 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 		try {
 			const permission = await Camera.getMicrophonePermissionsAsync();
 			setHasPermission(permission.granted);
+
 			if (permission.canAskAgain && !permission.granted) {
 				const newPermission =
 					await Camera.requestMicrophonePermissionsAsync();
@@ -76,10 +77,12 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 			const isAvailable =
 				(await Voice.isAvailable()) as unknown as boolean; // Type cast to boolean because the type definition is incorrect
 			const availableEngines = await Voice.getSpeechRecognitionServices();
+
 			if (Platform.OS !== "android") {
 				setEngineIsAvailable(isAvailable);
 				return;
 			}
+
 			setEngineIsAvailable(
 				isAvailable &&
 					Array.isArray(availableEngines) &&
@@ -148,14 +151,17 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 
 	const startListening = async () => {
 		setError(false);
+
 		if (!hasPermission) {
 			permissionAlert();
 			return;
 		}
+
 		if (!engineIsAvailable) {
 			engineAlert();
 			return;
 		}
+
 		try {
 			setIsListening(true);
 			await Voice.start(language);
@@ -169,6 +175,7 @@ const VoiceRecordButton = (props: VoiceRecordButtonProps) => {
 		try {
 			Voice.removeAllListeners();
 			await Voice.stop();
+
 			setIsListening(false);
 			setError(false);
 		} catch (error) {
