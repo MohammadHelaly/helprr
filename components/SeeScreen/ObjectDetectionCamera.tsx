@@ -83,47 +83,39 @@ const ObjectDetectionCamera = () => {
 		}
 	};
 
-	const handleCameraStream = (images: any) => {
+	const handleCameraStream = (images: IterableIterator<tf.Tensor3D>) => {
 		const loop = async () => {
 			const nextImageTensor = images.next().value;
 
-			if (!model || !nextImageTensor) {
-				return; // TODO: Check if this is the correct way to check for model and nextImageTensor
-			}
-
-			if (frameCount % predictEveryNFrames !== 0) {
-				frameCount += 1;
-				tf.dispose([nextImageTensor]);
-				requestAnimationFrame(loop);
-				return;
-			}
-
 			try {
+				if (!model || !nextImageTensor) return; // TODO: Check if this is the correct way to check for model and nextImageTensor
+
+				if (frameCount % predictEveryNFrames !== 0) return;
+
 				const predictions = await model.detect(
 					nextImageTensor,
 					undefined,
 					0.7
 				);
 
-				if (predictions.length > 0) {
-					const prediction = predictions[0].class;
-					const predictedLabel =
-						prediction.charAt(0).toUpperCase() +
-						prediction.slice(1);
+				if (predictions.length === 0) return;
 
-					dispatch(
-						objectDetectionActions.setLabel({
-							label: predictedLabel,
-						})
-					);
-				}
+				const prediction = predictions[0].class;
+				const predictedLabel =
+					prediction.charAt(0).toUpperCase() + prediction.slice(1);
+
+				dispatch(
+					objectDetectionActions.setLabel({
+						label: predictedLabel,
+					})
+				);
 			} catch (error) {
 				console.error("Error detecting objects:", error);
 			} finally {
+				frameCount += 1;
 				tf.dispose([nextImageTensor]);
+				requestAnimationFrame(loop);
 			}
-			frameCount += 1;
-			requestAnimationFrame(loop);
 		};
 		loop();
 	};
@@ -138,8 +130,10 @@ const ObjectDetectionCamera = () => {
 			dispatch(
 				objectDetectionActions.setLabel({ label: "Permission needed" })
 			);
+
 			return;
 		}
+
 		dispatch(objectDetectionActions.clearLabel());
 		frameCount = 0;
 	}, [isFocused, hasPermission]);

@@ -273,11 +273,6 @@ const libraryLicenses = [
 		libraryLicense: apacheLicenseTemplate,
 	},
 	{
-		libraryName: "@tensorflow/tfjs-react-native",
-		license: "Apache-2.0 License",
-		libraryLicense: apacheLicenseTemplate,
-	},
-	{
 		libraryName: "@tensorflow-models/coco-ssd",
 		license: "Apache-2.0 License",
 		libraryLicense: apacheLicenseTemplate,
