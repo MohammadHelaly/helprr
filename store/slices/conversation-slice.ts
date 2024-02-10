@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Sentence {
+type Sentence = {
 	id: string;
 	text: string;
 	conversation: string;
 	type: "textToSpeech" | "speechToText";
 	language: "en-US" | "ar"; // string
 	timestamp: string;
-}
+};
 
-interface Conversation {
+type Conversation = {
 	id: string;
 	title: string;
 	date: string;
 	lastSentence: string;
 	sentences: Sentence[];
-}
+};
 
-interface ConversationState {
+type ConversationState = {
 	conversations: Conversation[];
 	conversationLanguage: "en-US" | "ar"; // string
-}
+};
 
 const initialState: ConversationState = {
 	conversations: [],

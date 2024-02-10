@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ObjectDetectionState {
+type ObjectDetectionState = {
 	label: string | undefined;
 	isFocused: boolean;
-}
+};
 
 const initialState: ObjectDetectionState = {
 	label: undefined,
