@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 import {
   openSourceNotices,
   type OpenSourceNotice,
-} from "@/data/generated/open-source-notices";
+} from "@/data/legal/generated/open-source-notice-data";
 
 const AcknowledgementsSettingsContent = () => {
   const renderItem = ({ item }: { item: OpenSourceNotice }) => {

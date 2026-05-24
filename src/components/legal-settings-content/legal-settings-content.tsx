@@ -1,11 +1,30 @@
 import { router } from "expo-router";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 
+// TODO: Update the legal content to match the actual legal documents of the app, and add links to the full documents if needed.
 const LegalSettingsContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <ScrollView
+      className="flex-1"
+      contentContainerClassName="grow items-center justify-center"
+    >
+      <SettingsOption
+        label="Privacy Policy"
+        trailingIcon="chevron-forward-sharp"
+        onPress={() => router.push("/settings/privacy")}
+      />
+      <SettingsOption
+        label="Terms of Use"
+        trailingIcon="chevron-forward-sharp"
+        onPress={() => router.push("/settings/terms")}
+      />
+      <SettingsOption
+        label="Safety Notice"
+        trailingIcon="chevron-forward-sharp"
+        onPress={() => router.push("/settings/safety")}
+      />
       <SettingsOption
         label="License"
         trailingIcon="chevron-forward-sharp"
@@ -16,7 +35,12 @@ const LegalSettingsContent = () => {
         trailingIcon="chevron-forward-sharp"
         onPress={() => router.push("/settings/acknowledgements")}
       />
-    </View>
+      <SettingsOption
+        label="Store Disclosure Notes"
+        trailingIcon="chevron-forward-sharp"
+        onPress={() => router.push("/settings/store-disclosures")}
+      />
+    </ScrollView>
   );
 };
 

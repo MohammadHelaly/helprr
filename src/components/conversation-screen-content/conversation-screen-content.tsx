@@ -38,7 +38,7 @@ const ConversationScreenContent = (props: Props) => {
         }}
       />
       <KeyboardAvoidingView
-        className="bg-light-grey flex-1"
+        className="flex-1 bg-light-grey"
         behavior={keyboardAvoidingBehavior}
         keyboardVerticalOffset={sizes.spacing.xxxl}
       >
