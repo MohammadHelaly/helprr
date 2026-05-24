@@ -11,7 +11,7 @@ import {
   type MessageType,
 } from "@/lib/db/schema";
 import { getLanguageOption, isLanguageLocale } from "@/lib/language/language";
-import { createId } from "@/lib/utils/create-id";
+import { createId } from "@/lib/utils/prefixed-id";
 
 // TODO: decide on app/conversation language functionality
 const languageKey = "conversation-language";

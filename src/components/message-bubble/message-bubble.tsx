@@ -4,7 +4,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
 import type { Message } from "@/lib/db/schema";
-import { formatTime } from "@/lib/utils/format-date";
+import { formatTime } from "@/lib/utils/date-time";
 
 interface Props {
   message: Message;

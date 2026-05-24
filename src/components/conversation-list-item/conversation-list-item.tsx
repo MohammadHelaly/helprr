@@ -4,7 +4,7 @@ import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
 import type { Conversation } from "@/lib/db/schema";
-import { formatDate } from "@/lib/utils/format-date";
+import { formatDate } from "@/lib/utils/date-time";
 
 type Props = {
   conversation: Conversation;

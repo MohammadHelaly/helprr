@@ -15,7 +15,10 @@ const ListenScreenContent = () => {
 
   const startConversation = () => {
     const conversation = createConversation();
-    router.push(`/listen/conversation/${conversation.id}`);
+    router.push({
+      pathname: "/listen/conversation/[id]",
+      params: { id: conversation.id },
+    });
   };
 
   return (
@@ -25,7 +28,10 @@ const ListenScreenContent = () => {
         onDelete={deleteConversation}
         onRename={renameConversation}
         onSelect={(conversationId) =>
-          router.push(`/listen/conversation/${conversationId}`)
+          router.push({
+            pathname: "/listen/conversation/[id]",
+            params: { id: conversationId },
+          })
         }
       />
       <View className="min-h-[50%] w-full items-center justify-center gap-6 bg-white px-4">

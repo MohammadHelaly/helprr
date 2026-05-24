@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
 import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 
 import type { LanguageLocale } from "@/constants/language";
 import {
@@ -61,8 +61,12 @@ const useConversations = () => {
 };
 
 const useChatConversation = (conversationId: string) => {
-  const [conversation, setConversation] = useState<Conversation>();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [conversation, setConversation] = useState<Conversation | undefined>(
+    () => getConversation(conversationId),
+  );
+  const [messages, setMessages] = useState<Message[]>(() =>
+    listMessages(conversationId),
+  );
 
   const refresh = useCallback(() => {
     setConversation(getConversation(conversationId));

@@ -1,7 +1,7 @@
 import { FlashList, type FlashListRef } from "@shopify/flash-list";
 import { Stack } from "expo-router";
 import { useRef } from "react";
-import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, Text, View } from "react-native";
 
 import { ConversationInput } from "@/components/conversation-input";
 import { MessageBubble } from "@/components/message-bubble";
@@ -12,6 +12,7 @@ import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
 import { getNextLanguageLocale } from "@/lib/language/language";
 import { keyboardAvoidingBehavior } from "@/lib/platform/keyboard-avoiding-behavior";
+import { formatDate, isSameDate } from "@/lib/utils/date-time";
 
 type Props = {
   conversationId: string;
@@ -52,14 +53,32 @@ const ConversationScreenContent = (props: Props) => {
             onContentSizeChange={() =>
               listRef.current?.scrollToEnd({ animated: true })
             }
-            renderItem={({ item }) => (
-              <MessageBubble
-                message={item}
-                isSpeaking={speech.speakingId === item.id}
-                onEdit={(body) => editMessage(item.id, body)}
-                onSpeak={() => speech.speak(item.body, item.language, item.id)}
-              />
-            )}
+            renderItem={({ item, index }) => {
+              const previousMessage = messages[index - 1];
+              const shouldShowDate =
+                !previousMessage ||
+                !isSameDate(previousMessage.createdAt, item.createdAt);
+
+              return (
+                <>
+                  {shouldShowDate ? (
+                    <View className="mb-4 mt-2 items-center">
+                      <Text className="rounded-full bg-white px-4 py-1 text-xs text-grey">
+                        {formatDate(item.createdAt)}
+                      </Text>
+                    </View>
+                  ) : null}
+                  <MessageBubble
+                    message={item}
+                    isSpeaking={speech.speakingId === item.id}
+                    onEdit={(body) => editMessage(item.id, body)}
+                    onSpeak={() =>
+                      speech.speak(item.body, item.language, item.id)
+                    }
+                  />
+                </>
+              );
+            }}
             style={{ flex: 1 }}
           />
         ) : (
