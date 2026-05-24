@@ -5,7 +5,7 @@ import { Warning } from "@/components/warning";
 
 const SeeScreen = () => {
   return (
-    <Screen className="bg-lightGrey">
+    <Screen className="bg-light-grey">
       <View className="flex-1">
         <Warning
           icon="eye-sharp"

@@ -22,7 +22,7 @@ const Button = (props: Props) => {
   const container =
     variant === "primary"
       ? "bg-black border-black"
-      : "bg-white border-lightGrey";
+      : "bg-white border-light-grey";
   const text = variant === "primary" ? "text-white" : "text-black";
 
   return (

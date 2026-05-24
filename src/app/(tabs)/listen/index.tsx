@@ -15,7 +15,7 @@ const ListenScreen = () => {
   };
 
   return (
-    <Screen className="bg-lightGrey">
+    <Screen className="bg-light-grey">
       <ConversationList
         conversations={conversations}
         onSelect={(conversationId) =>

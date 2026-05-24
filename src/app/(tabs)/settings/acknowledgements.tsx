@@ -21,7 +21,7 @@ const AcknowledgementsSettingsScreen = () => {
           return (
             <Text
               key={library.libraryName}
-              className="border-b border-lightGrey py-4 text-xs leading-5 text-black"
+              className="border-light-grey border-b py-4 text-xs leading-5 text-black"
             >
               <Text className="text-sm font-bold">{library.libraryName}</Text>
               {"\n\n"}

@@ -1,6 +1,7 @@
+import { FlashList, type FlashListRef } from "@shopify/flash-list";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useRef } from "react";
-import { FlatList, KeyboardAvoidingView, Platform } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 import { ConversationInput } from "@/components/conversation-input";
 import { MessageBubble } from "@/components/message-bubble";
@@ -17,22 +18,22 @@ const ConversationScreen = () => {
     useChatConversation(conversationId);
   const { language, toggleLanguage } = useConversationLanguage();
   const speech = useSpeechSynthesis();
-  const listRef = useRef<FlatList<Message>>(null);
+  const listRef = useRef<FlashListRef<Message>>(null);
 
   return (
-    <Screen className="bg-lightGrey">
+    <Screen className="bg-light-grey">
       <Stack.Screen
         options={{ title: conversation?.title ?? "Conversation" }}
       />
       <KeyboardAvoidingView
-        className="flex-1 bg-lightGrey"
+        className="flex-1 bg-light-grey"
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={90}
       >
         {messages.length > 0 ? (
-          <FlatList
+          <FlashList
             ref={listRef}
-            contentContainerClassName="py-4"
+            contentContainerStyle={{ paddingVertical: 16 }}
             data={messages}
             keyExtractor={(item) => item.id}
             onContentSizeChange={() =>
@@ -51,6 +52,7 @@ const ConversationScreen = () => {
                 }
               />
             )}
+            style={{ flex: 1 }}
           />
         ) : (
           <Warning text="Make sure your phone is not silent and grant speech permissions when prompted." />

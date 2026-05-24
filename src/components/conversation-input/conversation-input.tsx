@@ -46,7 +46,7 @@ const ConversationInput = (props: Props) => {
       />
       <LanguageToggle language={language} onToggle={onToggleLanguage} />
       <TextInput
-        className={`mx-3 max-h-28 flex-1 rounded-3xl border border-lightGrey bg-lightGrey px-4 py-3 text-base text-black ${
+        className={`border-light-grey bg-light-grey mx-3 max-h-28 flex-1 rounded-3xl border px-4 py-3 text-base text-black ${
           language.startsWith("ar") ? "text-right" : "text-left"
         }`}
         multiline

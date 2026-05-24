@@ -14,10 +14,10 @@ const SettingsOption = (props: Props) => {
 
   return (
     <Pressable
-      className="min-h-16 flex-row items-center border-b border-lightGrey bg-white px-5 py-3"
+      className="border-light-grey min-h-16 flex-row items-center border-b bg-white px-5 py-3"
       onPress={onPress}
     >
-      <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-lightGrey">
+      <View className="bg-light-grey mr-4 h-10 w-10 items-center justify-center rounded-full">
         <Icon name={icon} size={22} color="#000000" />
       </View>
       <View className="flex-1">
