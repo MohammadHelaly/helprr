@@ -1,6 +1,6 @@
 import { Linking } from "react-native";
 
-import { appUrls } from "@/lib/external-links/urls";
+import { appUrls } from "@/constants/urls";
 
 const requestAppReview = async () => {
   try {

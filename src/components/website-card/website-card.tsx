@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
-import { appUrls } from "@/lib/external-links/urls";
+import { appUrls } from "@/constants/urls";
 import { openExternalUrl } from "@/lib/external-links/open-external-url";
 
 const WebsiteCard = () => {
