@@ -16,26 +16,26 @@ const VoiceRecordButton = (props: Props) => {
     props;
 
   return (
-    <View className="absolute bottom-20 left-1/2 z-10 -ml-7 items-center">
-      {partialTranscript || errorMessage ? (
-        <View className="mb-3 max-w-72 rounded-lg bg-black px-4 py-2">
-          <Text className="text-center text-xs text-white" numberOfLines={2}>
-            {errorMessage ?? partialTranscript}
-          </Text>
-        </View>
-      ) : null}
-      <Pressable
-        className={`h-14 w-14 items-center justify-center rounded-full ${
-          isListening
-            ? "scale-110 bg-pink"
-            : errorMessage
-              ? "bg-red-600"
-              : "bg-black"
-        }`}
-        onPressIn={onStart}
-        onPressOut={onStop}
+    <View className="absolute bottom-20 end-0 start-0 z-10 flex flex-col items-center justify-center gap-3">
+      <View
+        className={`max-w-72 rounded-lg bg-black px-4 py-2 transition-all duration-[20] ${partialTranscript || errorMessage ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
-        <Icon name="mic-sharp" size={sizes.icon.md} color={colors.white} />
+        <Text className="text-center text-xs text-white" numberOfLines={2}>
+          {errorMessage ?? partialTranscript}
+        </Text>
+      </View>
+      <Pressable onPressIn={onStart} onPressOut={onStop}>
+        <View
+          className={`flex h-16 w-16 items-center justify-center rounded-full transition-all duration-200 ${
+            isListening
+              ? "scale-125 bg-pink"
+              : errorMessage
+                ? "bg-red-600"
+                : "bg-black"
+          }`}
+        >
+          <Icon name="mic-sharp" size={sizes.icon.md} color={colors.white} />
+        </View>
       </Pressable>
     </View>
   );

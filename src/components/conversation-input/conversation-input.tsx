@@ -39,7 +39,7 @@ const ConversationInput = (props: Props) => {
   };
 
   return (
-    <View className="flex min-h-16 flex-row items-center gap-3 bg-white px-4 py-2">
+    <View className="relative flex min-h-16 flex-row items-center gap-3 bg-white px-4 py-2">
       <VoiceRecordButton
         isListening={recognition.isListening}
         errorMessage={recognition.errorMessage}
@@ -49,7 +49,7 @@ const ConversationInput = (props: Props) => {
       />
       <LanguageToggle language={language} onToggle={onToggleLanguage} />
       <TextInput
-        className={`border-light-grey bg-light-grey min-h-10 flex-1 rounded-3xl border px-4 py-0 text-base text-black ${languageOption.direction === "rtl" ? "text-end" : "text-start"}`}
+        className={`min-h-10 flex-1 rounded-3xl border border-light-grey bg-light-grey px-4 py-0 text-base text-black ${languageOption.direction === "rtl" ? "text-end" : "text-start"}`}
         multiline
         value={message}
         onChangeText={setMessage}
