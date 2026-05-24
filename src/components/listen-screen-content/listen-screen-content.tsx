@@ -19,7 +19,7 @@ const ListenScreenContent = () => {
   };
 
   return (
-    <>
+    <View className="flex-1 items-center justify-center bg-white">
       <ConversationList
         conversations={conversations}
         onDelete={deleteConversation}
@@ -28,8 +28,8 @@ const ListenScreenContent = () => {
           router.push(`/listen/conversation/${conversationId}`)
         }
       />
-      <View className="min-h-[50%] items-center justify-center gap-6 bg-white px-4">
-        <Text className="text-left text-lg text-grey">
+      <View className="min-h-[50%] w-full items-center justify-center gap-6 bg-white px-4">
+        <Text className="text-start text-lg text-grey">
           Start a<Text className="font-bold text-pink"> conversation </Text>
           with someone. Have them speak and {"we'll"}
           <Text className="font-bold text-black"> transcribe </Text>
@@ -47,7 +47,7 @@ const ListenScreenContent = () => {
           Listen
         </Button>
       </View>
-    </>
+    </View>
   );
 };
 

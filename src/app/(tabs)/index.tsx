@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const HomeScreen = () => {
   return (
-    <Screen>
+    <Screen topInset>
       <HomeScreenContent />
     </Screen>
   );

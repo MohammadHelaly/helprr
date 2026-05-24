@@ -6,11 +6,11 @@ import { KeyboardAvoidingView } from "react-native";
 import { ConversationInput } from "@/components/conversation-input";
 import { MessageBubble } from "@/components/message-bubble";
 import { Warning } from "@/components/warning";
-import type { LanguageLocale } from "@/constants/language";
 import { sizes } from "@/constants/theme";
 import { useChatConversation, useConversationLanguage } from "@/hooks/use-chat";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
+import { getNextLanguageLocale } from "@/lib/language/language";
 import { keyboardAvoidingBehavior } from "@/lib/platform/keyboard-avoiding-behavior";
 
 type Props = {
@@ -26,9 +26,7 @@ const ConversationScreenContent = (props: Props) => {
   const listRef = useRef<FlashListRef<Message>>(null);
 
   const selectNextLanguage = () => {
-    const nextLanguage: LanguageLocale =
-      language === "en-US" ? "ar-EG" : "en-US";
-    selectLanguage(nextLanguage);
+    selectLanguage(getNextLanguageLocale(language));
   };
 
   return (
@@ -56,13 +54,7 @@ const ConversationScreenContent = (props: Props) => {
               <MessageBubble
                 message={item}
                 isSpeaking={speech.speakingId === item.id}
-                onSpeak={() =>
-                  speech.speak(
-                    item.body,
-                    item.language as "en-US" | "ar-EG",
-                    item.id,
-                  )
-                }
+                onSpeak={() => speech.speak(item.body, item.language, item.id)}
               />
             )}
             style={{ flex: 1 }}

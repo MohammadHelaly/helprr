@@ -1,6 +1,7 @@
 import { Pressable, Text } from "react-native";
 
 import type { LanguageLocale } from "@/constants/language";
+import { getLanguageOption } from "@/lib/language/language";
 
 interface Props {
   language: LanguageLocale;
@@ -9,14 +10,15 @@ interface Props {
 
 const LanguageToggle = (props: Props) => {
   const { language, onToggle } = props;
+  const languageOption = getLanguageOption(language);
 
   return (
     <Pressable
-      className="h-11 min-w-14 items-center justify-center rounded-full bg-light-grey px-3"
+      className="flex h-10 min-w-10 flex-shrink-0 items-center justify-center rounded-full bg-light-grey"
       onPress={onToggle}
     >
       <Text className="text-sm font-bold text-black">
-        {language === "en-US" ? "EN" : "AR"}
+        {languageOption.symbol}
       </Text>
     </Pressable>
   );

@@ -1,5 +1,7 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+import type { LanguageLocale, LanguageOption } from "@/constants/language";
+
 export const conversations = sqliteTable("conversations", {
   id: text("id").primaryKey(),
   title: text("title").notNull(),
@@ -14,8 +16,9 @@ export const messages = sqliteTable("messages", {
     .notNull()
     .references(() => conversations.id, { onDelete: "cascade" }),
   body: text("body").notNull(),
-  kind: text("kind", { enum: ["text-to-speech", "speech-to-text"] }).notNull(),
-  language: text("language").notNull(),
+  type: text("type", { enum: ["text-to-speech", "speech-to-text"] }).notNull(),
+  language: text("language").$type<LanguageLocale>().notNull(),
+  direction: text("direction").$type<LanguageOption["direction"]>().notNull(),
   createdAt: integer("created_at").notNull(),
   deletedAt: integer("deleted_at"),
 });
@@ -27,4 +30,4 @@ export const appSettings = sqliteTable("app_settings", {
 
 export type Conversation = typeof conversations.$inferSelect;
 export type Message = typeof messages.$inferSelect;
-export type MessageKind = (typeof messages.$inferInsert)["kind"];
+export type MessageType = (typeof messages.$inferInsert)["type"];

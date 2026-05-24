@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const LegalSettingsScreen = () => {
   return (
-    <Screen className="items-center justify-center" edges={["left", "right"]}>
+    <Screen>
       <LegalSettingsContent />
     </Screen>
   );

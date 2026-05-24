@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const PermissionsSettingsScreen = () => {
   return (
-    <Screen className="justify-center" edges={["left", "right"]}>
+    <Screen>
       <PermissionsSettingsContent />
     </Screen>
   );

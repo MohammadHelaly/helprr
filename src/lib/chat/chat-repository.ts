@@ -8,8 +8,9 @@ import {
   messages,
   type Conversation,
   type Message,
-  type MessageKind,
+  type MessageType,
 } from "@/lib/db/schema";
+import { getLanguageOption, isLanguageLocale } from "@/lib/language/language";
 import { createId } from "@/lib/utils/create-id";
 
 // TODO: decide on app/conversation language functionality
@@ -98,18 +99,20 @@ const listMessages = (conversationId: string) => {
 interface AddMessageInput {
   conversationId: string;
   body: string;
-  kind: MessageKind;
+  type: MessageType;
   language: LanguageLocale;
 }
 
 const addMessage = (input: AddMessageInput) => {
   const now = Date.now();
+  const languageOption = getLanguageOption(input.language);
   const message: Message = {
     id: createId("message"),
     conversationId: input.conversationId,
     body: input.body.trim(),
-    kind: input.kind,
+    type: input.type,
     language: input.language,
+    direction: languageOption.direction,
     createdAt: now,
     deletedAt: null,
   };
@@ -149,7 +152,9 @@ const getLanguagePreference = (): LanguageLocale => {
     .from(appSettings)
     .where(eq(appSettings.key, languageKey))
     .get();
-  return (setting?.value as LanguageLocale | undefined) ?? defaultLanguage;
+  return setting && isLanguageLocale(setting.value)
+    ? setting.value
+    : defaultLanguage;
 };
 
 const setLanguagePreference = (language: LanguageLocale) => {

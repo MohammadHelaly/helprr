@@ -3,11 +3,12 @@ import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 
 type Props = PropsWithChildren<{
   className?: string;
-  edges?: Edge[];
+  topInset?: boolean;
 }>;
 
 const Screen = (props: Props) => {
-  const { children, className = "", edges = ["top", "left", "right"] } = props;
+  const { children, className = "", topInset = false } = props;
+  const edges: Edge[] = topInset ? ["top", "left", "right"] : ["left", "right"];
 
   return (
     <SafeAreaView className={`flex-1 bg-white ${className}`} edges={edges}>

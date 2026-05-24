@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const AcknowledgementsSettingsScreen = () => {
   return (
-    <Screen edges={["left", "right"]}>
+    <Screen>
       <AcknowledgementsSettingsContent />
     </Screen>
   );

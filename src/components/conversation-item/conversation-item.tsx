@@ -57,7 +57,7 @@ const ConversationItem = (props: Props) => {
       className="w-full bg-white px-4 pt-5"
       onPress={() => onSelect(conversation.id)}
     >
-      <View className="border-light-grey w-full border-b pb-5">
+      <View className="w-full border-b border-light-grey pb-5">
         <View className="w-full flex-row items-center justify-between">
           <View className="flex-1 flex-row items-center">
             {isEditing ? (

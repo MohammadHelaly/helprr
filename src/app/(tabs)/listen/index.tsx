@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const ListenScreen = () => {
   return (
-    <Screen className="items-center justify-center bg-white">
+    <Screen>
       <ListenScreenContent />
     </Screen>
   );

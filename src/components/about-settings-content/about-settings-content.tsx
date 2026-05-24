@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { View } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 import { WebsiteCard } from "@/components/website-card";
@@ -7,7 +8,7 @@ import { shareApp } from "@/lib/share/share-app";
 
 const AboutSettingsContent = () => {
   return (
-    <>
+    <View className="flex-1 justify-center">
       <WebsiteCard />
       <SettingsOption
         label="Rate Helprr"
@@ -24,7 +25,7 @@ const AboutSettingsContent = () => {
         trailingIcon="chevron-forward-sharp"
         onPress={() => router.push("/settings/legal")}
       />
-    </>
+    </View>
   );
 };
 

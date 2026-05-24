@@ -9,6 +9,9 @@ export const db = drizzle(sqlite, { schema });
 
 const migrateDatabase = () => {
   sqlite.execSync("PRAGMA foreign_keys = ON;");
+  sqlite.execSync("DROP TABLE IF EXISTS messages;");
+  sqlite.execSync("DROP TABLE IF EXISTS conversations;");
+  sqlite.execSync("DROP TABLE IF EXISTS app_settings;");
   sqlite.execSync(`
     CREATE TABLE IF NOT EXISTS conversations (
       id TEXT PRIMARY KEY NOT NULL,
@@ -23,8 +26,9 @@ const migrateDatabase = () => {
       id TEXT PRIMARY KEY NOT NULL,
       conversation_id TEXT NOT NULL,
       body TEXT NOT NULL,
-      kind TEXT NOT NULL,
+      type TEXT NOT NULL,
       language TEXT NOT NULL,
+      direction TEXT NOT NULL,
       created_at INTEGER NOT NULL,
       deleted_at INTEGER,
       FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE

@@ -8,6 +8,7 @@ import type { LanguageLocale } from "@/constants/language";
 import { colors, sizes } from "@/constants/theme";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
+import { getLanguageOption } from "@/lib/language/language";
 
 interface Props {
   language: LanguageLocale;
@@ -19,6 +20,7 @@ interface Props {
 const ConversationInput = (props: Props) => {
   const { language, onToggleLanguage, onAddTextToSpeech, onAddSpeechToText } =
     props;
+  const languageOption = getLanguageOption(language);
 
   const [message, setMessage] = useState("");
   const { speak } = useSpeechSynthesis();
@@ -37,7 +39,7 @@ const ConversationInput = (props: Props) => {
   };
 
   return (
-    <View className="min-h-16 flex-row items-center bg-white px-4 py-2">
+    <View className="flex min-h-16 flex-row items-center gap-3 bg-white px-4 py-2">
       <VoiceRecordButton
         isListening={recognition.isListening}
         errorMessage={recognition.errorMessage}
@@ -47,24 +49,19 @@ const ConversationInput = (props: Props) => {
       />
       <LanguageToggle language={language} onToggle={onToggleLanguage} />
       <TextInput
-        className={`mx-3 max-h-28 flex-1 rounded-3xl border border-light-grey bg-light-grey px-4 py-3 text-base text-black ${
-          language.startsWith("ar") ? "text-right" : "text-left"
-        }`}
+        className={`border-light-grey bg-light-grey min-h-10 flex-1 rounded-3xl border px-4 py-0 text-base text-black ${languageOption.direction === "rtl" ? "text-end" : "text-start"}`}
         multiline
-        placeholder={
-          language === "en-US" ? "Type a message..." : "اكتب رسالة..."
-        }
         value={message}
         onChangeText={setMessage}
       />
       <Pressable
-        className="h-12 w-12 items-center justify-center rounded-full"
+        className="h-10 w-10 items-center justify-center rounded-full bg-black"
         onPress={send}
       >
         <Icon
-          name="arrow-forward-circle-sharp"
-          size={sizes.icon.lg}
-          color={colors.black}
+          name="arrow-forward-sharp"
+          size={sizes.icon.sm}
+          color={colors.white}
         />
       </Pressable>
     </View>

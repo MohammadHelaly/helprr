@@ -4,7 +4,7 @@ import { Warning } from "@/components/warning";
 
 const SeeScreenContent = () => {
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-light-grey">
       <Warning
         icon="eye-sharp"
         title="Camera paused"

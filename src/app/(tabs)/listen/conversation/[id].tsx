@@ -7,7 +7,7 @@ const ConversationScreen = () => {
   const params = useLocalSearchParams<{ id: string }>();
 
   return (
-    <Screen className="bg-light-grey">
+    <Screen>
       <ConversationScreenContent conversationId={params["id"]} />
     </Screen>
   );

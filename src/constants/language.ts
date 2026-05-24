@@ -1,15 +1,22 @@
 export const languageOptions = {
   english: {
     label: "English",
+    symbol: "EN",
     locale: "en-US",
+    direction: "ltr",
   },
   arabic: {
     label: "Arabic",
+    symbol: "AR",
     locale: "ar-EG",
+    direction: "rtl",
   },
 } as const;
 
-export type LanguageLocale =
-  (typeof languageOptions)[keyof typeof languageOptions]["locale"];
+export const supportedLanguages = Object.values(languageOptions);
 
-export const defaultLanguage: LanguageLocale = "en-US";
+export type LanguageOption = (typeof supportedLanguages)[number];
+
+export type LanguageLocale = LanguageOption["locale"];
+
+export const defaultLanguage = languageOptions.english.locale;

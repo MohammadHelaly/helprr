@@ -14,7 +14,7 @@ const ConversationList = (props: Props) => {
   const { conversations, onDelete, onRename, onSelect } = props;
 
   return (
-    <View className="flex-1">
+    <View className="w-full flex-1">
       {conversations.length > 0 ? (
         <FlatList
           className="h-1/2"

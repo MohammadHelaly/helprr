@@ -13,7 +13,7 @@ import {
   renameConversation,
   setLanguagePreference,
 } from "@/lib/chat/chat-repository";
-import type { Conversation, Message, MessageKind } from "@/lib/db/schema";
+import type { Conversation, Message, MessageType } from "@/lib/db/schema";
 
 const useConversations = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -70,14 +70,14 @@ const useChatConversation = (conversationId: string) => {
   useFocusEffect(refresh);
 
   const add = useCallback(
-    (body: string, kind: MessageKind, language: LanguageLocale) => {
+    (body: string, type: MessageType, language: LanguageLocale) => {
       const trimmed = body.trim();
       if (!trimmed) return undefined;
 
       const message = addMessage({
         conversationId,
         body: trimmed,
-        kind,
+        type,
         language,
       });
       refresh();

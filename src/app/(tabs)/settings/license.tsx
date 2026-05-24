@@ -3,7 +3,7 @@ import { Screen } from "@/components/screen";
 
 const LicenseSettingsScreen = () => {
   return (
-    <Screen edges={["left", "right"]}>
+    <Screen>
       <LicenseSettingsContent />
     </Screen>
   );

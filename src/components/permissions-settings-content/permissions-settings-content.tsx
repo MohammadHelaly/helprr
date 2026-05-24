@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 import { SpeechRecognitionPermissionOption } from "@/components/speech-recognition-permission-option";
@@ -81,7 +81,7 @@ const PermissionsSettingsContent = () => {
   }, []);
 
   return (
-    <>
+    <View className="flex-1 justify-center">
       <Text className="px-4 text-base text-grey">
         Allow Helprr to access your:
       </Text>
@@ -99,7 +99,7 @@ const PermissionsSettingsContent = () => {
         hasPermission={hasSpeechRecognitionPermission}
         onPress={handleSpeechRecognitionPermissions}
       />
-    </>
+    </View>
   );
 };
 

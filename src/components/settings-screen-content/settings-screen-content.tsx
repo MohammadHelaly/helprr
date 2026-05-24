@@ -1,10 +1,11 @@
 import { router } from "expo-router";
+import { View } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 
 const SettingsScreenContent = () => {
   return (
-    <>
+    <View className="flex-1 items-center justify-center">
       <SettingsOption
         label="General"
         trailingIcon="chevron-forward-sharp"
@@ -25,7 +26,7 @@ const SettingsScreenContent = () => {
         trailingIcon="chevron-forward-sharp"
         onPress={() => router.push("/settings/about")}
       />
-    </>
+    </View>
   );
 };
 

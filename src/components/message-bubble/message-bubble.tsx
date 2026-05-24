@@ -14,7 +14,7 @@ interface Props {
 const MessageBubble = (props: Props) => {
   const { message, isSpeaking, onSpeak } = props;
 
-  const isSpeechToText = message.kind === "speech-to-text";
+  const isSpeechToText = message.type === "speech-to-text";
 
   return (
     <View
@@ -24,9 +24,7 @@ const MessageBubble = (props: Props) => {
         className={`max-w-[86%] rounded-lg px-4 py-3 ${isSpeechToText ? "bg-black" : "bg-white"}`}
       >
         <Text
-          className={`text-base leading-6 ${isSpeechToText ? "text-white" : "text-black"} ${
-            message.language.startsWith("ar") ? "text-right" : "text-left"
-          }`}
+          className={`text-base leading-6 ${isSpeechToText ? "text-white" : "text-black"} ${message.direction === "rtl" ? "text-end" : "text-start"}`}
         >
           {message.body}
         </Text>
