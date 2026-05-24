@@ -100,7 +100,7 @@ const SeeScreenContent = () => {
   );
 
   const frameOutput = useFrameOutput({
-    targetResolution: CommonResolutions.VGA_4_3,
+    targetResolution: CommonResolutions.VGA_16_9,
     pixelFormat: "rgb",
     dropFramesWhileBusy: true,
     enablePreviewSizedOutputBuffers: true,

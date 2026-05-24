@@ -3,7 +3,7 @@ import { SeeScreenContent } from "@/components/see-screen-content";
 
 const SeeScreen = () => {
   return (
-    <Screen topInset>
+    <Screen>
       <SeeScreenContent />
     </Screen>
   );
