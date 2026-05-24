@@ -1,6 +1,6 @@
 import { FlatList, View } from "react-native";
 
-import { ConversationItem } from "@/components/conversation-item";
+import { ConversationListItem } from "@/components/conversation-list-item";
 import type { Conversation } from "@/lib/db/schema";
 
 interface Props {
@@ -21,7 +21,7 @@ const ConversationList = (props: Props) => {
           data={conversations}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <ConversationItem
+            <ConversationListItem
               conversation={item}
               onDelete={onDelete}
               onRename={onRename}
