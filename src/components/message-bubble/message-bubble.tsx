@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
@@ -8,42 +9,92 @@ import { formatTime } from "@/lib/utils/format-date";
 interface Props {
   message: Message;
   isSpeaking: boolean;
+  onEdit: (body: string) => void;
   onSpeak: () => void;
 }
 
 const MessageBubble = (props: Props) => {
-  const { message, isSpeaking, onSpeak } = props;
+  const { message, isSpeaking, onEdit, onSpeak } = props;
+  const [isEditing, setIsEditing] = useState(false);
+  const [draftBody, setDraftBody] = useState(message.body);
 
   const isSpeechToText = message.type === "speech-to-text";
 
+  const saveBody = () => {
+    const nextBody = draftBody.trim();
+
+    if (nextBody.length !== 0 && nextBody !== message.body) {
+      setDraftBody(nextBody);
+      onEdit(nextBody);
+    } else {
+      setDraftBody(message.body);
+    }
+
+    setIsEditing(false);
+  };
+
+  const startEditing = () => {
+    setDraftBody(message.body);
+    setIsEditing(true);
+  };
+
   return (
     <View
-      className={`mb-3 px-4 ${isSpeechToText ? "items-start" : "items-end"}`}
+      className={`my-2 px-4 ${isSpeechToText ? "items-start" : "items-end"}`}
     >
       <View
-        className={`max-w-[86%] rounded-lg px-4 py-3 ${isSpeechToText ? "bg-black" : "bg-white"}`}
+        className={`relative flex w-3/5 flex-col gap-4 rounded-2xl bg-white p-4 ${
+          isSpeechToText ? "self-start" : "self-end"
+        }`}
       >
-        <Text
-          className={`text-base leading-6 ${isSpeechToText ? "text-white" : "text-black"} ${message.direction === "rtl" ? "text-end" : "text-start"}`}
-        >
-          {message.body}
-        </Text>
-        <View className="mt-2 flex-row items-center justify-between gap-3">
+        <View
+          className={`absolute bottom-3 h-0 w-0 border-b-[16px] border-t-[16px] border-b-transparent border-t-transparent ${
+            isSpeechToText
+              ? "-left-3 border-r-[24px] border-r-white"
+              : "-right-3 border-l-[24px] border-l-white"
+          }`}
+        />
+        {isEditing ? (
+          <TextInput
+            autoFocus
+            className={`p-0 font-bold ${
+              isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
+            } ${message.direction === "rtl" ? "text-end" : "text-start"}`}
+            multiline
+            onChangeText={setDraftBody}
+            onEndEditing={saveBody}
+            returnKeyType="done"
+            value={draftBody}
+          />
+        ) : (
           <Text
-            className={`text-xs ${isSpeechToText ? "text-white" : "text-grey"}`}
+            className={`font-bold ${
+              isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
+            } ${message.direction === "rtl" ? "text-end" : "text-start"}`}
           >
-            {formatTime(message.createdAt)}
+            {message.body}
           </Text>
+        )}
+        <View className="flex flex-row items-end justify-end gap-2">
           <Pressable
-            className="h-8 w-8 items-center justify-center rounded-full"
-            onPress={onSpeak}
+            className="flex h-5 w-5 items-center justify-center"
+            onPress={isSpeechToText ? startEditing : onSpeak}
           >
             <Icon
-              name={isSpeaking ? "volume-high-sharp" : "play-sharp"}
-              size={sizes.icon.xxs}
-              color={isSpeechToText ? colors.white : colors.black}
+              name={
+                isSpeechToText
+                  ? "create-outline"
+                  : isSpeaking
+                    ? "volume-high-outline"
+                    : "play-outline"
+              }
+              size={sizes.icon.xs}
+              color={colors.grey}
             />
           </Pressable>
+          <Text className="text-xs text-grey">
+            {formatTime(message.createdAt)}
+          </Text>
         </View>
       </View>
     </View>

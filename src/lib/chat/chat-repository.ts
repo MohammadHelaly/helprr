@@ -134,6 +134,43 @@ const softDeleteMessage = (messageId: string) => {
     .run();
 };
 
+const editMessage = (messageId: string, body: string) => {
+  const nextBody = body.trim();
+  if (!nextBody) return;
+
+  const message = db
+    .select()
+    .from(messages)
+    .where(eq(messages.id, messageId))
+    .get();
+
+  if (!message) return;
+
+  db.update(messages)
+    .set({ body: nextBody })
+    .where(eq(messages.id, messageId))
+    .run();
+
+  const latestMessage = db
+    .select()
+    .from(messages)
+    .where(
+      and(
+        eq(messages.conversationId, message.conversationId),
+        isNull(messages.deletedAt),
+      ),
+    )
+    .orderBy(desc(messages.createdAt))
+    .get();
+
+  if (latestMessage?.id === messageId) {
+    db.update(conversations)
+      .set({ lastMessagePreview: nextBody })
+      .where(eq(conversations.id, message.conversationId))
+      .run();
+  }
+};
+
 const clearConversation = (conversationId: string) => {
   db.update(messages)
     .set({ deletedAt: Date.now() })
@@ -172,6 +209,7 @@ export {
   clearConversation,
   createConversation,
   deleteConversation,
+  editMessage,
   getConversation,
   getLanguagePreference,
   listConversations,

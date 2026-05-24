@@ -19,7 +19,7 @@ type Props = {
 
 const ConversationScreenContent = (props: Props) => {
   const { conversationId } = props;
-  const { conversation, messages, addMessage } =
+  const { conversation, messages, addMessage, editMessage } =
     useChatConversation(conversationId);
   const { language, selectLanguage } = useConversationLanguage();
   const speech = useSpeechSynthesis();
@@ -32,10 +32,12 @@ const ConversationScreenContent = (props: Props) => {
   return (
     <>
       <Stack.Screen
-        options={{ title: conversation?.title ?? "Conversation" }}
+        options={{
+          title: conversation?.title ?? "Conversation",
+        }}
       />
       <KeyboardAvoidingView
-        className="flex-1 bg-light-grey"
+        className="bg-light-grey flex-1"
         behavior={keyboardAvoidingBehavior}
         keyboardVerticalOffset={sizes.spacing.xxxl}
       >
@@ -54,6 +56,7 @@ const ConversationScreenContent = (props: Props) => {
               <MessageBubble
                 message={item}
                 isSpeaking={speech.speakingId === item.id}
+                onEdit={(body) => editMessage(item.id, body)}
                 onSpeak={() => speech.speak(item.body, item.language, item.id)}
               />
             )}

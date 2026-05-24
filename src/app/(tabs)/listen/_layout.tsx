@@ -21,7 +21,14 @@ const ListenLayout = () => {
       <Stack.Screen name="index" options={{ title: "Listen" }} />
       <Stack.Screen
         name="conversation/[id]"
-        options={{ title: "Conversation" }}
+        options={{
+          title: "Conversation",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: sizes.font.lg,
+            fontWeight: "bold",
+          },
+        }}
       />
     </Stack>
   );

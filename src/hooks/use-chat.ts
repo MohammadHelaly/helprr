@@ -6,12 +6,14 @@ import {
   addMessage,
   createConversation,
   deleteConversation,
+  editMessage,
   getConversation,
   getLanguagePreference,
   listConversations,
   listMessages,
   renameConversation,
   setLanguagePreference,
+  softDeleteMessage,
 } from "@/lib/chat/chat-repository";
 import type { Conversation, Message, MessageType } from "@/lib/db/schema";
 
@@ -94,10 +96,28 @@ const useChatConversation = (conversationId: string) => {
     [conversationId, refresh],
   );
 
+  const remove = useCallback(
+    (messageId: string) => {
+      softDeleteMessage(messageId);
+      refresh();
+    },
+    [refresh],
+  );
+
+  const edit = useCallback(
+    (messageId: string, body: string) => {
+      editMessage(messageId, body);
+      refresh();
+    },
+    [refresh],
+  );
+
   return {
     conversation,
     messages,
     addMessage: add,
+    deleteMessage: remove,
+    editMessage: edit,
     renameConversation: rename,
     refresh,
   };
