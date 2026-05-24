@@ -14,15 +14,15 @@ import { createId } from "@/lib/utils/create-id";
 
 const languageKey = "conversation-language";
 
-export function listConversations() {
+const listConversations = () => {
   return db
     .select()
     .from(conversations)
     .orderBy(desc(conversations.updatedAt))
     .all();
-}
+};
 
-export function createConversation(title = "New Conversation") {
+const createConversation = (title = "New Conversation") => {
   const now = Date.now();
   const conversation: Conversation = {
     id: createId("conversation"),
@@ -34,28 +34,28 @@ export function createConversation(title = "New Conversation") {
 
   db.insert(conversations).values(conversation).run();
   return conversation;
-}
+};
 
-export function getConversation(conversationId: string) {
+const getConversation = (conversationId: string) => {
   return db
     .select()
     .from(conversations)
     .where(eq(conversations.id, conversationId))
     .get();
-}
+};
 
-export function renameConversation(conversationId: string, title: string) {
+const renameConversation = (conversationId: string, title: string) => {
   db.update(conversations)
     .set({ title, updatedAt: Date.now() })
     .where(eq(conversations.id, conversationId))
     .run();
-}
+};
 
-export function deleteConversation(conversationId: string) {
+const deleteConversation = (conversationId: string) => {
   db.delete(conversations).where(eq(conversations.id, conversationId)).run();
-}
+};
 
-export function listMessages(conversationId: string) {
+const listMessages = (conversationId: string) => {
   return db
     .select()
     .from(messages)
@@ -67,14 +67,16 @@ export function listMessages(conversationId: string) {
     )
     .orderBy(messages.createdAt)
     .all();
-}
+};
 
-export function addMessage(input: {
+interface AddMessageInput {
   conversationId: string;
   body: string;
   kind: MessageKind;
   language: LanguageLocale;
-}) {
+}
+
+const addMessage = (input: AddMessageInput) => {
   const now = Date.now();
   const message: Message = {
     id: createId("message"),
@@ -93,16 +95,16 @@ export function addMessage(input: {
     .run();
 
   return message;
-}
+};
 
-export function softDeleteMessage(messageId: string) {
+const softDeleteMessage = (messageId: string) => {
   db.update(messages)
     .set({ deletedAt: Date.now() })
     .where(eq(messages.id, messageId))
     .run();
-}
+};
 
-export function clearConversation(conversationId: string) {
+const clearConversation = (conversationId: string) => {
   db.update(messages)
     .set({ deletedAt: Date.now() })
     .where(eq(messages.conversationId, conversationId))
@@ -111,18 +113,18 @@ export function clearConversation(conversationId: string) {
     .set({ updatedAt: Date.now(), lastMessagePreview: null })
     .where(eq(conversations.id, conversationId))
     .run();
-}
+};
 
-export function getLanguagePreference(): LanguageLocale {
+const getLanguagePreference = (): LanguageLocale => {
   const setting = db
     .select()
     .from(appSettings)
     .where(eq(appSettings.key, languageKey))
     .get();
   return (setting?.value as LanguageLocale | undefined) ?? defaultLanguage;
-}
+};
 
-export function setLanguagePreference(language: LanguageLocale) {
+const setLanguagePreference = (language: LanguageLocale) => {
   db.insert(appSettings)
     .values({ key: languageKey, value: language })
     .onConflictDoUpdate({
@@ -130,4 +132,18 @@ export function setLanguagePreference(language: LanguageLocale) {
       set: { value: language },
     })
     .run();
-}
+};
+
+export {
+  addMessage,
+  clearConversation,
+  createConversation,
+  deleteConversation,
+  getConversation,
+  getLanguagePreference,
+  listConversations,
+  listMessages,
+  renameConversation,
+  setLanguagePreference,
+  softDeleteMessage,
+};

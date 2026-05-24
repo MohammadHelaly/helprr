@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 import { Screen } from "@/components/screen";
 
-export default function GeneralSettingsScreen() {
+const GeneralSettingsScreen = () => {
   return (
     <Screen>
       <View className="px-6 py-6">
@@ -14,4 +14,6 @@ export default function GeneralSettingsScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default GeneralSettingsScreen;

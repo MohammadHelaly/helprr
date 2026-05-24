@@ -15,7 +15,7 @@ import {
 } from "@/lib/chat/chat-repository";
 import type { Conversation, Message, MessageKind } from "@/lib/db/schema";
 
-export function useConversations() {
+const useConversations = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
 
   const refresh = useCallback(() => {
@@ -47,9 +47,9 @@ export function useConversations() {
     deleteConversation: remove,
     refresh,
   };
-}
+};
 
-export function useChatConversation(conversationId: string) {
+const useChatConversation = (conversationId: string) => {
   const [conversation, setConversation] = useState<Conversation>();
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -92,9 +92,9 @@ export function useChatConversation(conversationId: string) {
     renameConversation: rename,
     refresh,
   };
-}
+};
 
-export function useConversationLanguage() {
+const useConversationLanguage = () => {
   const [language, setLanguage] = useState<LanguageLocale>(() =>
     getLanguagePreference(),
   );
@@ -108,4 +108,6 @@ export function useConversationLanguage() {
   }, []);
 
   return { language, toggleLanguage };
-}
+};
+
+export { useChatConversation, useConversationLanguage, useConversations };

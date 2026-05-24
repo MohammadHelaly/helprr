@@ -8,6 +8,10 @@ export type IconProps = Omit<ComponentProps<typeof Ionicons>, "name"> & {
   className?: string;
 };
 
-export function Icon({ color = "#000000", size = 24, ...props }: IconProps) {
-  return <Ionicons color={color} size={size} {...props} />;
-}
+const Icon = (props: IconProps) => {
+  const { color = "#000000", size = 24, ...iconProps } = props;
+
+  return <Ionicons color={color} size={size} {...iconProps} />;
+};
+
+export { Icon };

@@ -3,7 +3,7 @@ import { Linking, Text, View } from "react-native";
 import { Button } from "@/components/button";
 import { Screen } from "@/components/screen";
 
-export default function PermissionsSettingsScreen() {
+const PermissionsSettingsScreen = () => {
   return (
     <Screen>
       <View className="gap-4 px-6 py-6">
@@ -16,4 +16,6 @@ export default function PermissionsSettingsScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default PermissionsSettingsScreen;

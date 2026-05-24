@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { Screen } from "@/components/screen";
 import { Warning } from "@/components/warning";
 
-export default function SeeScreen() {
+const SeeScreen = () => {
   return (
     <Screen className="bg-lightGrey">
       <View className="flex-1">
@@ -18,4 +18,6 @@ export default function SeeScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default SeeScreen;

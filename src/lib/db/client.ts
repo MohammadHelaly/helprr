@@ -7,7 +7,7 @@ const sqlite = openDatabaseSync("helprr.db");
 
 export const db = drizzle(sqlite, { schema });
 
-export function migrateDatabase() {
+const migrateDatabase = () => {
   sqlite.execSync("PRAGMA foreign_keys = ON;");
   sqlite.execSync(`
     CREATE TABLE IF NOT EXISTS conversations (
@@ -40,4 +40,6 @@ export function migrateDatabase() {
     CREATE INDEX IF NOT EXISTS messages_conversation_created_idx
     ON messages (conversation_id, created_at);
   `);
-}
+};
+
+export { migrateDatabase };

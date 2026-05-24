@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function ListenLayout() {
+const ListenLayout = () => {
   return (
     <Stack
       screenOptions={{
@@ -21,4 +21,6 @@ export default function ListenLayout() {
       />
     </Stack>
   );
-}
+};
+
+export default ListenLayout;

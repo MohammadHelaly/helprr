@@ -6,7 +6,7 @@ import { ConversationList } from "@/components/conversation-list";
 import { Screen } from "@/components/screen";
 import { useConversations } from "@/hooks/use-chat";
 
-export default function ListenScreen() {
+const ListenScreen = () => {
   const { conversations, createConversation } = useConversations();
 
   const startConversation = () => {
@@ -27,4 +27,6 @@ export default function ListenScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default ListenScreen;

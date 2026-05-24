@@ -9,10 +9,12 @@ const timeFormatter = new Intl.DateTimeFormat(undefined, {
   minute: "2-digit",
 });
 
-export function formatDate(value: number) {
+const formatDate = (value: number) => {
   return dateFormatter.format(new Date(value));
-}
+};
 
-export function formatTime(value: number) {
+const formatTime = (value: number) => {
   return timeFormatter.format(new Date(value));
-}
+};
+
+export { formatDate, formatTime };

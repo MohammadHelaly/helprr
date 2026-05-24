@@ -4,7 +4,7 @@ import { Image, Text, View } from "react-native";
 import { Button } from "@/components/button";
 import { Screen } from "@/components/screen";
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   return (
     <Screen>
       <View className="flex-1 justify-center px-8">
@@ -31,4 +31,6 @@ export default function HomeScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default HomeScreen;

@@ -3,7 +3,7 @@ import { ScrollView, Text } from "react-native";
 import { Screen } from "@/components/screen";
 import { libraryLicenses, mitLicenseTemplate } from "@/data/license-data";
 
-export default function AcknowledgementsSettingsScreen() {
+const AcknowledgementsSettingsScreen = () => {
   return (
     <Screen>
       <ScrollView className="px-6 py-6">
@@ -32,4 +32,6 @@ export default function AcknowledgementsSettingsScreen() {
       </ScrollView>
     </Screen>
   );
-}
+};
+
+export default AcknowledgementsSettingsScreen;

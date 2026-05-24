@@ -2,17 +2,19 @@ import { Text, View } from "react-native";
 
 import { Icon, type IconName } from "@/components/icon";
 
-type WarningProps = {
+interface Props {
   title?: string;
   text: string;
   icon?: IconName;
-};
+}
 
-export function Warning({
-  title = "Nothing here yet",
-  text,
-  icon = "information-circle-outline",
-}: WarningProps) {
+const Warning = (props: Props) => {
+  const {
+    title = "Nothing here yet",
+    text,
+    icon = "information-circle-outline",
+  } = props;
+
   return (
     <View className="flex-1 items-center justify-center px-8">
       <Icon name={icon} size={48} color="#000000" />
@@ -24,4 +26,6 @@ export function Warning({
       </Text>
     </View>
   );
-}
+};
+
+export { Warning };

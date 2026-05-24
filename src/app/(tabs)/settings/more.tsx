@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { Screen } from "@/components/screen";
 import { SettingsOption } from "@/components/settings-option";
 
-export default function MoreSettingsScreen() {
+const MoreSettingsScreen = () => {
   return (
     <Screen>
       <SettingsOption
@@ -18,4 +18,6 @@ export default function MoreSettingsScreen() {
       />
     </Screen>
   );
-}
+};
+
+export default MoreSettingsScreen;

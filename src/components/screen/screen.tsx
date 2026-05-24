@@ -1,11 +1,13 @@
 import type { PropsWithChildren } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type ScreenProps = PropsWithChildren<{
+type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-export function Screen({ children, className = "" }: ScreenProps) {
+const Screen = (props: Props) => {
+  const { children, className = "" } = props;
+
   return (
     <SafeAreaView
       className={`flex-1 bg-white ${className}`}
@@ -14,4 +16,6 @@ export function Screen({ children, className = "" }: ScreenProps) {
       {children}
     </SafeAreaView>
   );
-}
+};
+
+export { Screen };

@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 
 import { migrateDatabase } from "@/lib/db/client";
 
-export default function TabLayout() {
+const TabLayout = () => {
   useEffect(() => {
     migrateDatabase();
   }, []);
@@ -17,4 +17,6 @@ export default function TabLayout() {
       <Stack screenOptions={{ headerShown: false }} />
     </>
   );
-}
+};
+
+export default TabLayout;

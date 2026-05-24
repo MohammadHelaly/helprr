@@ -10,7 +10,7 @@ import { useChatConversation, useConversationLanguage } from "@/hooks/use-chat";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
 
-export default function ConversationScreen() {
+const ConversationScreen = () => {
   const params = useLocalSearchParams<{ id: string }>();
   const conversationId = params["id"];
   const { conversation, messages, addMessage } =
@@ -68,4 +68,6 @@ export default function ConversationScreen() {
       </KeyboardAvoidingView>
     </Screen>
   );
-}
+};
+
+export default ConversationScreen;

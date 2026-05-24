@@ -4,17 +4,15 @@ import { Icon } from "@/components/icon";
 import type { Message } from "@/lib/db/schema";
 import { formatTime } from "@/lib/utils/format-date";
 
-type MessageBubbleProps = {
+interface Props {
   message: Message;
   isSpeaking: boolean;
   onSpeak: () => void;
-};
+}
 
-export function MessageBubble({
-  message,
-  isSpeaking,
-  onSpeak,
-}: MessageBubbleProps) {
+const MessageBubble = (props: Props) => {
+  const { message, isSpeaking, onSpeak } = props;
+
   const isSpeechToText = message.kind === "speech-to-text";
 
   return (
@@ -51,4 +49,6 @@ export function MessageBubble({
       </View>
     </View>
   );
-}
+};
+
+export { MessageBubble };

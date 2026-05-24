@@ -2,21 +2,18 @@ import { Pressable, Text, View } from "react-native";
 
 import { Icon } from "@/components/icon";
 
-type VoiceRecordButtonProps = {
+interface Props {
   isListening: boolean;
   errorMessage: string | null;
   partialTranscript: string;
   onStart: () => void;
   onStop: () => void;
-};
+}
 
-export function VoiceRecordButton({
-  isListening,
-  errorMessage,
-  partialTranscript,
-  onStart,
-  onStop,
-}: VoiceRecordButtonProps) {
+const VoiceRecordButton = (props: Props) => {
+  const { isListening, errorMessage, partialTranscript, onStart, onStop } =
+    props;
+
   return (
     <View className="absolute bottom-20 left-1/2 z-10 -ml-7 items-center">
       {partialTranscript || errorMessage ? (
@@ -41,4 +38,6 @@ export function VoiceRecordButton({
       </Pressable>
     </View>
   );
-}
+};
+
+export { VoiceRecordButton };

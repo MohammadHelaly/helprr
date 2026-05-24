@@ -2,19 +2,16 @@ import { Pressable, Text, View } from "react-native";
 
 import { Icon, type IconName } from "@/components/icon";
 
-type SettingsOptionProps = {
+interface Props {
   title: string;
   subtitle?: string;
   icon: IconName;
   onPress?: () => void;
-};
+}
 
-export function SettingsOption({
-  title,
-  subtitle,
-  icon,
-  onPress,
-}: SettingsOptionProps) {
+const SettingsOption = (props: Props) => {
+  const { title, subtitle, icon, onPress } = props;
+
   return (
     <Pressable
       className="min-h-16 flex-row items-center border-b border-lightGrey bg-white px-5 py-3"
@@ -32,4 +29,6 @@ export function SettingsOption({
       <Icon name="chevron-forward-sharp" size={18} color="#000000" />
     </Pressable>
   );
-}
+};
+
+export { SettingsOption };

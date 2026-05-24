@@ -8,19 +8,17 @@ import type { LanguageLocale } from "@/constants/language";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 
-type ConversationInputProps = {
+interface Props {
   language: LanguageLocale;
   onToggleLanguage: () => void;
   onAddTextToSpeech: (text: string) => void;
   onAddSpeechToText: (text: string) => void;
-};
+}
 
-export function ConversationInput({
-  language,
-  onToggleLanguage,
-  onAddTextToSpeech,
-  onAddSpeechToText,
-}: ConversationInputProps) {
+const ConversationInput = (props: Props) => {
+  const { language, onToggleLanguage, onAddTextToSpeech, onAddSpeechToText } =
+    props;
+
   const [message, setMessage] = useState("");
   const { speak } = useSpeechSynthesis();
   const recognition = useSpeechRecognition({
@@ -66,4 +64,6 @@ export function ConversationInput({
       </Pressable>
     </View>
   );
-}
+};
+
+export { ConversationInput };

@@ -3,7 +3,7 @@ import * as Speech from "expo-speech";
 
 import type { LanguageLocale } from "@/constants/language";
 
-export function useSpeechSynthesis() {
+const useSpeechSynthesis = () => {
   const [speakingId, setSpeakingId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,4 +37,6 @@ export function useSpeechSynthesis() {
   }, []);
 
   return { speak, stop, speakingId };
-}
+};
+
+export { useSpeechSynthesis };

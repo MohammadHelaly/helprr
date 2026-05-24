@@ -3,7 +3,7 @@ import { ScrollView, Text } from "react-native";
 import { Screen } from "@/components/screen";
 import { appLicense } from "@/data/license-data";
 
-export default function LicenseSettingsScreen() {
+const LicenseSettingsScreen = () => {
   return (
     <Screen>
       <ScrollView className="px-6 py-6">
@@ -14,4 +14,6 @@ export default function LicenseSettingsScreen() {
       </ScrollView>
     </Screen>
   );
-}
+};
+
+export default LicenseSettingsScreen;

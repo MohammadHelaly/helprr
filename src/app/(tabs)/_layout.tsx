@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 
 import { Icon } from "@/components/icon";
 
-export default function TabsLayout() {
+const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
@@ -57,4 +57,6 @@ export default function TabsLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default TabsLayout;

@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Screen } from "@/components/screen";
 import { useConversationLanguage } from "@/hooks/use-chat";
 
-export default function LanguageSettingsScreen() {
+const LanguageSettingsScreen = () => {
   const { language, toggleLanguage } = useConversationLanguage();
 
   return (
@@ -20,4 +20,6 @@ export default function LanguageSettingsScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default LanguageSettingsScreen;

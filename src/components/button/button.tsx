@@ -1,7 +1,7 @@
 import type { ComponentProps, PropsWithChildren } from "react";
 import { Pressable, Text } from "react-native";
 
-type ButtonProps = PropsWithChildren<{
+type Props = PropsWithChildren<{
   onPress?: () => void;
   variant?: "primary" | "ghost";
   className?: string;
@@ -9,14 +9,16 @@ type ButtonProps = PropsWithChildren<{
 }> &
   Omit<ComponentProps<typeof Pressable>, "children" | "onPress">;
 
-export function Button({
-  children,
-  onPress,
-  variant = "primary",
-  className = "",
-  textClassName = "",
-  ...pressableProps
-}: ButtonProps) {
+const Button = (props: Props) => {
+  const {
+    children,
+    onPress,
+    variant = "primary",
+    className = "",
+    textClassName = "",
+    ...pressableProps
+  } = props;
+
   const container =
     variant === "primary"
       ? "bg-black border-black"
@@ -34,4 +36,6 @@ export function Button({
       </Text>
     </Pressable>
   );
-}
+};
+
+export { Button };

@@ -10,10 +10,12 @@ import type { LanguageLocale } from "@/constants/language";
 
 type RecognitionStatus = "idle" | "listening" | "error" | "permission-denied";
 
-export function useSpeechRecognition(options: {
+interface Options {
   language: LanguageLocale;
   onFinalResult: (text: string) => void;
-}) {
+}
+
+const useSpeechRecognition = (options: Options) => {
   const [status, setStatus] = useState<RecognitionStatus>("idle");
   const [partialTranscript, setPartialTranscript] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -79,4 +81,6 @@ export function useSpeechRecognition(options: {
     start,
     stop,
   };
-}
+};
+
+export { useSpeechRecognition };

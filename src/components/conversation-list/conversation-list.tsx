@@ -5,15 +5,14 @@ import { Warning } from "@/components/warning";
 import type { Conversation } from "@/lib/db/schema";
 import { formatDate } from "@/lib/utils/format-date";
 
-type ConversationListProps = {
+interface Props {
   conversations: Conversation[];
   onSelect: (conversationId: string) => void;
-};
+}
 
-export function ConversationList({
-  conversations,
-  onSelect,
-}: ConversationListProps) {
+const ConversationList = (props: Props) => {
+  const { conversations, onSelect } = props;
+
   if (conversations.length === 0) {
     return (
       <Warning
@@ -53,4 +52,6 @@ export function ConversationList({
       )}
     />
   );
-}
+};
+
+export { ConversationList };

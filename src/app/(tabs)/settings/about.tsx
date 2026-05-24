@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 import { Screen } from "@/components/screen";
 
-export default function AboutSettingsScreen() {
+const AboutSettingsScreen = () => {
   return (
     <Screen>
       <View className="flex-1 justify-center px-8">
@@ -16,4 +16,6 @@ export default function AboutSettingsScreen() {
       </View>
     </Screen>
   );
-}
+};
+
+export default AboutSettingsScreen;
