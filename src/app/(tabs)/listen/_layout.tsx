@@ -25,6 +25,7 @@ const ListenLayout = () => {
           title: "Conversation",
           headerTitleAlign: "center",
           headerTitleStyle: {
+            color: colors.black,
             fontSize: sizes.font.lg,
             fontWeight: "bold",
           },

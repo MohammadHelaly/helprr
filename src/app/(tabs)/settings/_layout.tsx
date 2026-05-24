@@ -27,7 +27,15 @@ const SettingsLayout = () => {
       <Stack.Screen name="license" options={{ title: "License" }} />
       <Stack.Screen
         name="acknowledgements"
-        options={{ title: "Acknowledgements" }}
+        options={{
+          title: "Acknowledgements",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: colors.black,
+            fontSize: sizes.font.lg,
+            fontWeight: "bold",
+          },
+        }}
       />
     </Stack>
   );

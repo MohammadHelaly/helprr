@@ -1,36 +1,42 @@
-import { FlatList, Text, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { Text, View } from "react-native";
 
 import {
-  libraryLicenses,
-  mitLicenseTemplate,
-  type LibraryLicense,
-} from "@/data/license-data";
+  openSourceNotices,
+  type OpenSourceNotice,
+} from "@/data/generated/open-source-notices";
 
 const AcknowledgementsSettingsContent = () => {
-  const renderItem = ({ item }: { item: LibraryLicense }) => {
-    const licenseText =
-      item.license === "MIT License"
-        ? mitLicenseTemplate[0] + item.libraryLicense + mitLicenseTemplate[1]
-        : item.libraryLicense;
-
+  const renderItem = ({ item }: { item: OpenSourceNotice }) => {
     return (
       <View className="mx-4 my-2 items-start justify-start gap-2">
-        <Text className="text-sm font-bold text-black">{item.libraryName}</Text>
-        <Text className="text-[8px] text-black">{licenseText}</Text>
+        <Text className="text-sm font-bold text-black">
+          {item.name} {item.version}
+        </Text>
+        <Text className="text-xs font-semibold text-black">
+          License: {item.license}
+        </Text>
+        {item.repository ? (
+          <Text className="text-[8px] text-black">{item.repository}</Text>
+        ) : null}
+        <Text className="text-[8px] text-black">
+          {item.licenseText || "License text unavailable in package metadata."}
+        </Text>
       </View>
     );
   };
 
   return (
-    <FlatList
+    <FlashList
       ListHeaderComponent={
-        <Text className="m-4 text-lg font-bold text-black">
+        <Text className="m-4 text-base font-bold text-black">
           Helprr makes use of the following third-party libraries:
         </Text>
       }
-      data={libraryLicenses}
-      keyExtractor={(item, index) => `${item.libraryName}-${index}`}
+      data={openSourceNotices}
+      keyExtractor={(item) => `${item.name}-${item.version}`}
       renderItem={renderItem}
+      style={{ flex: 1 }}
     />
   );
 };
