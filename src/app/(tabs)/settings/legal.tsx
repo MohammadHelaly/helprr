@@ -1,0 +1,17 @@
+import { router } from 'expo-router';
+
+import { Screen } from '@/components/screen';
+import { SettingsOption } from '@/components/settings-option';
+
+export default function LegalSettingsScreen() {
+  return (
+    <Screen>
+      <SettingsOption icon="doc" title="License" onPress={() => router.push('/settings/license')} />
+      <SettingsOption
+        icon="books.vertical"
+        title="Acknowledgements"
+        onPress={() => router.push('/settings/acknowledgements')}
+      />
+    </Screen>
+  );
+}
