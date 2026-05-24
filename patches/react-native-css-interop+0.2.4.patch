@@ -35,6 +35,28 @@ index c91ba6a..09cb8e0 100644
              });
          }).then((css) => {
              debug(`virtualStyles.initial ${platform}`);
+diff --git a/node_modules/react-native-css-interop/dist/runtime/native/render-component.js b/node_modules/react-native-css-interop/dist/runtime/native/render-component.js
+index eba25ec..cf43d09 100644
+--- a/node_modules/react-native-css-interop/dist/runtime/native/render-component.js
++++ b/node_modules/react-native-css-interop/dist/runtime/native/render-component.js
+@@ -118,7 +118,16 @@ function createAnimatedComponent(Component) {
+     return AnimatedComponent;
+ }
+ function printUpgradeWarning(warning, originalProps) {
+-    console.log(`CssInterop upgrade warning.\n\n${warning}.\n\nThis warning was caused by a component with the props:\n${stringify(originalProps)}\n\nIf adding or removing sibling components caused this warning you should add a unique "key" prop to your components. https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key\n`);
++    console.log(`CssInterop upgrade warning.\n\n${warning}.\n\nThis warning was caused by a component with the props:\n${safeStringify(originalProps)}\n\nIf adding or removing sibling components caused this warning you should add a unique "key" prop to your components. https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key\n`);
++}
++function safeStringify(object) {
++    try {
++        return stringify(object);
++    }
++    catch (error) {
++        const message = error instanceof Error ? error.message : String(error);
++        return `[Unable to serialize props: ${message}]`;
++    }
+ }
+ function stringify(object) {
+     const seen = new WeakSet();
 diff --git a/node_modules/react-native-css-interop/src/metro/index.ts b/node_modules/react-native-css-interop/src/metro/index.ts
 index fa58c7b..bb72dfc 100644
 --- a/node_modules/react-native-css-interop/src/metro/index.ts
@@ -72,3 +94,28 @@ index fa58c7b..bb72dfc 100644
          });
        }).then((css) => {
          debug(`virtualStyles.initial ${platform}`);
+diff --git a/node_modules/react-native-css-interop/src/runtime/native/render-component.tsx b/node_modules/react-native-css-interop/src/runtime/native/render-component.tsx
+index cfb9a9e..5265e17 100644
+--- a/node_modules/react-native-css-interop/src/runtime/native/render-component.tsx
++++ b/node_modules/react-native-css-interop/src/runtime/native/render-component.tsx
+@@ -230,10 +230,19 @@ function printUpgradeWarning(
+   originalProps: Record<string, any> | null | undefined,
+ ) {
+   console.log(
+-    `CssInterop upgrade warning.\n\n${warning}.\n\nThis warning was caused by a component with the props:\n${stringify(originalProps)}\n\nIf adding or removing sibling components caused this warning you should add a unique "key" prop to your components. https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key\n`,
++    `CssInterop upgrade warning.\n\n${warning}.\n\nThis warning was caused by a component with the props:\n${safeStringify(originalProps)}\n\nIf adding or removing sibling components caused this warning you should add a unique "key" prop to your components. https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key\n`,
+   );
+ }
+ 
++function safeStringify(object: any) {
++  try {
++    return stringify(object);
++  } catch (error: unknown) {
++    const message = error instanceof Error ? error.message : String(error);
++    return `[Unable to serialize props: ${message}]`;
++  }
++}
++
+ function stringify(object: any) {
+   const seen = new WeakSet();
+   return JSON.stringify(
