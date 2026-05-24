@@ -1,1 +1,1 @@
-export { ConversationList } from "@/components/conversation-list/conversation-list";
+export { ConversationList } from "./conversation-list";

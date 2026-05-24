@@ -1,0 +1,20 @@
+{
+  "colors": {
+    "white": "#ffffff",
+    "black": "#000000",
+    "grey": "grey",
+    "light-grey": "#eeeeee",
+    "pink": "#ff69b4",
+    "cyan": "#00cccc"
+  },
+  "sizes": {
+    "tabBarHeight": 100,
+    "tabBarPaddingTop": 10,
+    "tabBarPaddingBottom": 16,
+    "headerTitle": 36,
+    "iconSmall": 24,
+    "iconMedium": 30,
+    "iconLarge": 42,
+    "iconXLarge": 48
+  }
+}

@@ -1,32 +1,38 @@
 import { Pressable, Text, View } from "react-native";
 
 import { Icon, type IconName } from "@/components/icon";
+import { colors } from "@/constants/theme";
 
 interface Props {
-  title: string;
-  subtitle?: string;
-  icon: IconName;
+  label: string;
+  description?: string;
+  trailingIcon?: IconName | null;
+  trailingText?: string;
   onPress?: () => void;
 }
 
 const SettingsOption = (props: Props) => {
-  const { title, subtitle, icon, onPress } = props;
+  const { label, description, trailingIcon, trailingText, onPress } = props;
 
   return (
-    <Pressable
-      className="border-light-grey min-h-16 flex-row items-center border-b bg-white px-5 py-3"
-      onPress={onPress}
-    >
-      <View className="bg-light-grey mr-4 h-10 w-10 items-center justify-center rounded-full">
-        <Icon name={icon} size={22} color="#000000" />
+    <Pressable className="w-full bg-white px-4" onPress={onPress}>
+      <View className="w-full border-b border-light-grey py-8">
+        <View className="w-full flex-row items-center justify-between">
+          <View className="flex-1 flex-row items-center">
+            <View className="flex-1">
+              <Text className="text-lg text-black">{label}</Text>
+              {description ? (
+                <Text className="mt-1 text-xs text-grey">{description}</Text>
+              ) : null}
+            </View>
+          </View>
+          {trailingIcon ? (
+            <Icon name={trailingIcon} color={colors.black} />
+          ) : trailingText ? (
+            <Text className="text-base text-grey">{trailingText}</Text>
+          ) : null}
+        </View>
       </View>
-      <View className="flex-1">
-        <Text className="text-base font-semibold text-black">{title}</Text>
-        {subtitle ? (
-          <Text className="mt-1 text-xs text-grey">{subtitle}</Text>
-        ) : null}
-      </View>
-      <Icon name="chevron-forward-sharp" size={18} color="#000000" />
     </Pressable>
   );
 };

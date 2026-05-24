@@ -20,6 +20,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "package": "com.mohammadhelaly.helprr",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.mohammadhelaly.helprr",
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -41,6 +42,12 @@
         }
       ],
       "expo-sqlite",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Helprr to access your camera."
+        }
+      ],
       [
         "expo-speech-recognition",
         {

@@ -1,1 +1,1 @@
-export { ConversationInput } from "@/components/conversation-input/conversation-input";
+export { ConversationInput } from "./conversation-input";

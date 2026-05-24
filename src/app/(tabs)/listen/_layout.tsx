@@ -1,15 +1,17 @@
 import { Stack } from "expo-router";
 
+import { colors, sizes } from "@/constants/theme";
+
 const ListenLayout = () => {
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: "#ffffff" },
+        headerStyle: { backgroundColor: colors.white },
         headerShadowVisible: false,
         headerTitleAlign: "left",
         headerTitleStyle: {
-          color: "#000000",
-          fontSize: 36,
+          color: colors.black,
+          fontSize: sizes.headerTitle,
           fontWeight: "bold",
         },
       }}

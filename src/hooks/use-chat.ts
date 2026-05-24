@@ -41,10 +41,19 @@ const useConversations = () => {
     [refresh],
   );
 
+  const rename = useCallback(
+    (conversationId: string, title: string) => {
+      renameConversation(conversationId, title);
+      refresh();
+    },
+    [refresh],
+  );
+
   return {
     conversations,
     createConversation: create,
     deleteConversation: remove,
+    renameConversation: rename,
     refresh,
   };
 };
@@ -99,15 +108,12 @@ const useConversationLanguage = () => {
     getLanguagePreference(),
   );
 
-  const toggleLanguage = useCallback(() => {
-    setLanguage((current) => {
-      const next = current === "en-US" ? "ar-EG" : "en-US";
-      setLanguagePreference(next);
-      return next;
-    });
+  const selectLanguage = useCallback((next: LanguageLocale) => {
+    setLanguagePreference(next);
+    setLanguage(next);
   }, []);
 
-  return { language, toggleLanguage };
+  return { language, selectLanguage };
 };
 
 export { useChatConversation, useConversationLanguage, useConversations };

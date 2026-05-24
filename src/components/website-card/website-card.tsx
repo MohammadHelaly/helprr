@@ -1,0 +1,30 @@
+import { Pressable, Text, View } from "react-native";
+
+import { Icon } from "@/components/icon";
+import { colors } from "@/constants/theme";
+import { appUrls } from "@/lib/external-links/urls";
+import { openExternalUrl } from "@/lib/external-links/open-external-url";
+
+const WebsiteCard = () => {
+  return (
+    <Pressable
+      className="mx-4 mb-4 self-stretch rounded-xl bg-light-grey p-5"
+      onPress={() => openExternalUrl(appUrls.website)}
+    >
+      <View className="flex-row items-center gap-4">
+        <View className="h-14 w-14 items-center justify-center rounded-full bg-white">
+          <Icon name="globe-outline" size={28} color={colors.black} />
+        </View>
+        <View className="flex-1">
+          <Text className="text-lg font-bold text-black">Website</Text>
+          <Text className="mt-1 text-base text-grey">
+            Visit Mohammad Helaly online.
+          </Text>
+        </View>
+        <Icon name="open-outline" color={colors.black} />
+      </View>
+    </Pressable>
+  );
+};
+
+export { WebsiteCard };

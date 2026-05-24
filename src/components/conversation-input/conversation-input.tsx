@@ -5,6 +5,7 @@ import { Icon } from "@/components/icon";
 import { LanguageToggle } from "@/components/language-toggle";
 import { VoiceRecordButton } from "@/components/voice-record-button";
 import type { LanguageLocale } from "@/constants/language";
+import { colors, sizes } from "@/constants/theme";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 
@@ -46,7 +47,7 @@ const ConversationInput = (props: Props) => {
       />
       <LanguageToggle language={language} onToggle={onToggleLanguage} />
       <TextInput
-        className={`border-light-grey bg-light-grey mx-3 max-h-28 flex-1 rounded-3xl border px-4 py-3 text-base text-black ${
+        className={`mx-3 max-h-28 flex-1 rounded-3xl border border-light-grey bg-light-grey px-4 py-3 text-base text-black ${
           language.startsWith("ar") ? "text-right" : "text-left"
         }`}
         multiline
@@ -60,7 +61,11 @@ const ConversationInput = (props: Props) => {
         className="h-12 w-12 items-center justify-center rounded-full"
         onPress={send}
       >
-        <Icon name="arrow-forward-circle-sharp" size={42} color="#000000" />
+        <Icon
+          name="arrow-forward-circle-sharp"
+          size={sizes.iconLarge}
+          color={colors.black}
+        />
       </Pressable>
     </View>
   );

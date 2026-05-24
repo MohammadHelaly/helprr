@@ -1,1 +1,1 @@
-export { Screen } from "@/components/screen/screen";
+export { Screen } from "./screen";

@@ -1,6 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 
 import { Icon } from "@/components/icon";
+import { colors, sizes } from "@/constants/theme";
 
 interface Props {
   isListening: boolean;
@@ -34,7 +35,7 @@ const VoiceRecordButton = (props: Props) => {
         onPressIn={onStart}
         onPressOut={onStop}
       >
-        <Icon name="mic-sharp" size={30} color="#ffffff" />
+        <Icon name="mic-sharp" size={sizes.iconMedium} color={colors.white} />
       </Pressable>
     </View>
   );

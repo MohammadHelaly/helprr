@@ -1,1 +1,1 @@
-export { Warning } from "@/components/warning/warning";
+export { Warning } from "./warning";

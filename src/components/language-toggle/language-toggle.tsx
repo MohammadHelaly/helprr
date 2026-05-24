@@ -12,7 +12,7 @@ const LanguageToggle = (props: Props) => {
 
   return (
     <Pressable
-      className="bg-light-grey h-11 min-w-14 items-center justify-center rounded-full px-3"
+      className="h-11 min-w-14 items-center justify-center rounded-full bg-light-grey px-3"
       onPress={onToggle}
     >
       <Text className="text-sm font-bold text-black">

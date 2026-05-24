@@ -1,1 +1,1 @@
-export { VoiceRecordButton } from "@/components/voice-record-button/voice-record-button";
+export { VoiceRecordButton } from "./voice-record-button";

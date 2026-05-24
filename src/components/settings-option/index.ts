@@ -1,1 +1,1 @@
-export { SettingsOption } from "@/components/settings-option/settings-option";
+export { SettingsOption } from "./settings-option";
