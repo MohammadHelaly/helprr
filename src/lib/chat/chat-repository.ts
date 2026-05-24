@@ -1,20 +1,16 @@
 import { and, desc, eq, isNull, notInArray } from "drizzle-orm";
 
-import { defaultLanguage, type LanguageLocale } from "@/constants/language";
+import type { LanguageLocale } from "@/constants/language";
 import { db } from "@/lib/db/client";
 import {
-  appSettings,
   conversations,
   messages,
   type Conversation,
   type Message,
   type MessageType,
 } from "@/lib/db/schema";
-import { getLanguageOption, isLanguageLocale } from "@/lib/language/language";
+import { getLanguageOption } from "@/lib/language/language";
 import { createId } from "@/lib/utils/prefixed-id";
-
-// TODO: decide on app/conversation language functionality
-const languageKey = "conversation-language";
 
 // This is to limit the number of converstations stored locally
 // To increase the number of conversations, increase the conversationLimit
@@ -183,27 +179,6 @@ const clearConversation = (conversationId: string) => {
   pruneConversations();
 };
 
-const getLanguagePreference = (): LanguageLocale => {
-  const setting = db
-    .select()
-    .from(appSettings)
-    .where(eq(appSettings.key, languageKey))
-    .get();
-  return setting && isLanguageLocale(setting.value)
-    ? setting.value
-    : defaultLanguage;
-};
-
-const setLanguagePreference = (language: LanguageLocale) => {
-  db.insert(appSettings)
-    .values({ key: languageKey, value: language })
-    .onConflictDoUpdate({
-      target: appSettings.key,
-      set: { value: language },
-    })
-    .run();
-};
-
 export {
   addMessage,
   clearConversation,
@@ -211,10 +186,8 @@ export {
   deleteConversation,
   editMessage,
   getConversation,
-  getLanguagePreference,
   listConversations,
   listMessages,
   renameConversation,
-  setLanguagePreference,
   softDeleteMessage,
 };

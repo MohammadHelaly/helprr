@@ -2,11 +2,10 @@ import { View } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 import { supportedLanguages } from "@/constants/language";
-import { useConversationLanguage } from "@/hooks/use-chat";
+import { useAppLanguage } from "@/hooks/use-language-preferences";
 
-// TODO: decide on app/conversation language functionality
 const LanguageSettingsContent = () => {
-  const { language, selectLanguage } = useConversationLanguage();
+  const { language, selectLanguage } = useAppLanguage();
 
   return (
     <View className="flex-1 items-center justify-center">

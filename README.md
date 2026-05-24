@@ -235,6 +235,7 @@ Reference policies and docs:
 ## Development Notes
 
 - Voice recording uses Expo Speech Recognition and supports the current English/Arabic language toggle. The alnguage for conversations is separate from the UI language (which is not yet implemented).
+- App language preference is currently stored in the local database, separate from conversation message languages. However, i18n is not currently implemented.
 - The See flow is currently a placeholder; camera object detection is out of scope for this branch.
 
 ## License

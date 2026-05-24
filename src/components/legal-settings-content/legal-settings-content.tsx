@@ -3,7 +3,6 @@ import { ScrollView } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
 
-// TODO: Update the legal content to match the actual legal documents of the app, and add links to the full documents if needed.
 const LegalSettingsContent = () => {
   return (
     <ScrollView

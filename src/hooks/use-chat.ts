@@ -8,11 +8,9 @@ import {
   deleteConversation,
   editMessage,
   getConversation,
-  getLanguagePreference,
   listConversations,
   listMessages,
   renameConversation,
-  setLanguagePreference,
   softDeleteMessage,
 } from "@/lib/chat/chat-repository";
 import type { Conversation, Message, MessageType } from "@/lib/db/schema";
@@ -127,17 +125,4 @@ const useChatConversation = (conversationId: string) => {
   };
 };
 
-const useConversationLanguage = () => {
-  const [language, setLanguage] = useState<LanguageLocale>(() =>
-    getLanguagePreference(),
-  );
-
-  const selectLanguage = useCallback((next: LanguageLocale) => {
-    setLanguagePreference(next);
-    setLanguage(next);
-  }, []);
-
-  return { language, selectLanguage };
-};
-
-export { useChatConversation, useConversationLanguage, useConversations };
+export { useChatConversation, useConversations };
