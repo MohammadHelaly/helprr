@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull, notInArray } from "drizzle-orm";
 
 import { defaultLanguage, type LanguageLocale } from "@/constants/language";
 import { db } from "@/lib/db/client";
@@ -12,9 +12,33 @@ import {
 } from "@/lib/db/schema";
 import { createId } from "@/lib/utils/create-id";
 
+// TODO: decide on app/conversation language functionality
 const languageKey = "conversation-language";
 
+// This is to limit the number of converstations stored locally
+// To increase the number of conversations, increase the conversationLimit
+// To remove the limit, remove conversationLimit, pruneConversations and all calls to it in the database functions in this file
+const conversationLimit = 10;
+
+const pruneConversations = () => {
+  const retainedConversationIds = db
+    .select({ id: conversations.id })
+    .from(conversations)
+    .orderBy(desc(conversations.updatedAt))
+    .limit(conversationLimit)
+    .all()
+    .map((conversation) => conversation.id);
+
+  if (retainedConversationIds.length < conversationLimit) return;
+
+  db.delete(conversations)
+    .where(notInArray(conversations.id, retainedConversationIds))
+    .run();
+};
+
 const listConversations = () => {
+  pruneConversations();
+
   return db
     .select()
     .from(conversations)
@@ -33,6 +57,7 @@ const createConversation = (title = "New Conversation") => {
   };
 
   db.insert(conversations).values(conversation).run();
+  pruneConversations();
   return conversation;
 };
 
@@ -49,6 +74,7 @@ const renameConversation = (conversationId: string, title: string) => {
     .set({ title, updatedAt: Date.now() })
     .where(eq(conversations.id, conversationId))
     .run();
+  pruneConversations();
 };
 
 const deleteConversation = (conversationId: string) => {
@@ -93,6 +119,7 @@ const addMessage = (input: AddMessageInput) => {
     .set({ updatedAt: now, lastMessagePreview: message.body })
     .where(eq(conversations.id, input.conversationId))
     .run();
+  pruneConversations();
 
   return message;
 };
@@ -113,6 +140,7 @@ const clearConversation = (conversationId: string) => {
     .set({ updatedAt: Date.now(), lastMessagePreview: null })
     .where(eq(conversations.id, conversationId))
     .run();
+  pruneConversations();
 };
 
 const getLanguagePreference = (): LanguageLocale => {
