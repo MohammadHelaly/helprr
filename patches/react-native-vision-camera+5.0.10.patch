@@ -1,0 +1,35 @@
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/margelo/nitro/camera/extensions/ImageProxy+getPixelBuffer.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/margelo/nitro/camera/extensions/ImageProxy+getPixelBuffer.kt
+index 1d73759..d8fb63f 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/margelo/nitro/camera/extensions/ImageProxy+getPixelBuffer.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/margelo/nitro/camera/extensions/ImageProxy+getPixelBuffer.kt
+@@ -25,6 +25,15 @@ data class DisposableArrayBuffer(
+ 
+ @OptIn(ExperimentalGetImage::class)
+ fun ImageProxy.getPixelBuffer(): DisposableArrayBuffer {
++  if (planes.size == 1) {
++    // Prefer the CPU-readable plane for RGB/RGBA ImageAnalysis outputs.
++    val byteBuffer = planes.single().buffer
++    val arrayBuffer = ArrayBuffer.wrap(byteBuffer)
++    return DisposableArrayBuffer(arrayBuffer) {
++      // no release
++    }
++  }
++
+   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+     val hardwareBuffer = image?.hardwareBuffer
+     if (hardwareBuffer != null) {
+@@ -40,14 +49,6 @@ fun ImageProxy.getPixelBuffer(): DisposableArrayBuffer {
+     }
+   }
+   when {
+-    planes.size == 1 -> {
+-      // Medium Path: We can wrap a single plane as a ByteBuffer
+-      val byteBuffer = planes.single().buffer
+-      val arrayBuffer = ArrayBuffer.wrap(byteBuffer)
+-      return DisposableArrayBuffer(arrayBuffer) {
+-        // no release
+-      }
+-    }
+     planes.size > 1 -> {
+       // Slow Path: We have to copy all planes into a new ByteBuffer.
+       val totalBytes = planes.sumOf { plane -> plane.buffer.capacity() }

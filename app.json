@@ -10,7 +10,10 @@
     "ios": {
       "bundleIdentifier": "com.mohammadhelaly.helprr",
       "icon": "./assets/expo.icon",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Helprr to access your camera."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +24,8 @@
       },
       "package": "com.mohammadhelaly.helprr",
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.mohammadhelaly.helprr",
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["android.permission.CAMERA"]
     },
     "web": {
       "output": "static",
@@ -43,9 +47,11 @@
       ],
       "expo-sqlite",
       [
-        "expo-camera",
+        "expo-build-properties",
         {
-          "cameraPermission": "Allow Helprr to access your camera."
+          "android": {
+            "minSdkVersion": 26
+          }
         }
       ],
       [

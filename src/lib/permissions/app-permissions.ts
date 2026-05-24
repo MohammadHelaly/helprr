@@ -1,10 +1,18 @@
 import { Alert, Linking } from "react-native";
-import { Camera } from "expo-camera";
 import { ExpoSpeechRecognitionModule } from "expo-speech-recognition";
+import {
+  VisionCamera,
+  type PermissionStatus,
+} from "react-native-vision-camera";
+
+const toPermissionResponse = (status: PermissionStatus) => ({
+  canAskAgain: status === "not-determined",
+  granted: status === "authorized",
+});
 
 const getCameraPermission = async () => {
   try {
-    return await Camera.getCameraPermissionsAsync();
+    return toPermissionResponse(VisionCamera.cameraPermissionStatus);
   } catch {
     Alert.alert(
       "Error Getting Camera Permission",
@@ -15,7 +23,9 @@ const getCameraPermission = async () => {
 };
 
 const requestCameraPermission = async () => {
-  return Camera.requestCameraPermissionsAsync();
+  const granted = await VisionCamera.requestCameraPermission();
+
+  return toPermissionResponse(granted ? "authorized" : "denied");
 };
 
 const getMicrophonePermission = async () => {
