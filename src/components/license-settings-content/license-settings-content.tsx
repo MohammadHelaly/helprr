@@ -2,7 +2,7 @@ import { ScrollView, Text } from "react-native";
 
 import { appLicense } from "@/data/license-data";
 
-const LicenseSettings = () => {
+const LicenseSettingsContent = () => {
   return (
     <ScrollView className="px-4">
       <Text className="my-4 text-lg font-bold text-black">
@@ -13,4 +13,4 @@ const LicenseSettings = () => {
   );
 };
 
-export { LicenseSettings };
+export { LicenseSettingsContent };

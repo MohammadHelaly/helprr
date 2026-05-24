@@ -2,7 +2,7 @@ import { router } from "expo-router";
 
 import { SettingsOption } from "@/components/settings-option";
 
-const SettingsList = () => {
+const SettingsScreenContent = () => {
   return (
     <>
       <SettingsOption
@@ -29,4 +29,4 @@ const SettingsList = () => {
   );
 };
 
-export { SettingsList };
+export { SettingsScreenContent };

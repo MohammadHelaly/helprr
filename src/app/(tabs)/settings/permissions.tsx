@@ -1,10 +1,10 @@
-import { PermissionsSettings } from "@/components/permissions-settings";
+import { PermissionsSettingsContent } from "@/components/permissions-settings-content";
 import { Screen } from "@/components/screen";
 
 const PermissionsSettingsScreen = () => {
   return (
     <Screen className="justify-center" edges={["left", "right"]}>
-      <PermissionsSettings />
+      <PermissionsSettingsContent />
     </Screen>
   );
 };

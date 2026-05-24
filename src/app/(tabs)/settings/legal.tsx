@@ -1,10 +1,10 @@
-import { LegalSettings } from "@/components/legal-settings";
+import { LegalSettingsContent } from "@/components/legal-settings-content";
 import { Screen } from "@/components/screen";
 
 const LegalSettingsScreen = () => {
   return (
     <Screen className="items-center justify-center" edges={["left", "right"]}>
-      <LegalSettings />
+      <LegalSettingsContent />
     </Screen>
   );
 };

@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 
 import { Icon } from "@/components/icon";
-import { colors } from "@/constants/theme";
+import { colors, sizes } from "@/constants/theme";
 import type { Message } from "@/lib/db/schema";
 import { formatTime } from "@/lib/utils/format-date";
 
@@ -42,7 +42,7 @@ const MessageBubble = (props: Props) => {
           >
             <Icon
               name={isSpeaking ? "volume-high-sharp" : "play-sharp"}
-              size={18}
+              size={sizes.icon.xxs}
               color={isSpeechToText ? colors.white : colors.black}
             />
           </Pressable>

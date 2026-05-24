@@ -7,12 +7,6 @@ module.exports = {
   theme: {
     extend: {
       colors: theme.colors,
-      fontSize: {
-        header: `${theme.sizes.headerTitle}px`,
-      },
-      spacing: {
-        "tab-bar": `${theme.sizes.tabBarHeight}px`,
-      },
     },
   },
   plugins: [],

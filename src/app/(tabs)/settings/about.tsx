@@ -1,10 +1,10 @@
-import { AboutSettings } from "@/components/about-settings";
+import { AboutSettingsContent } from "@/components/about-settings-content";
 import { Screen } from "@/components/screen";
 
 const AboutSettingsScreen = () => {
   return (
     <Screen className="justify-center" edges={["left", "right"]}>
-      <AboutSettings />
+      <AboutSettingsContent />
     </Screen>
   );
 };

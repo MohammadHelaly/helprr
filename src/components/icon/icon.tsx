@@ -11,7 +11,7 @@ export type IconProps = Omit<ComponentProps<typeof Ionicons>, "name"> & {
 };
 
 const Icon = (props: IconProps) => {
-  const { color = colors.black, size = sizes.iconSmall, ...iconProps } = props;
+  const { color = colors.black, size = sizes.icon.sm, ...iconProps } = props;
 
   return <Ionicons color={color} size={size} {...iconProps} />;
 };

@@ -1,6 +1,6 @@
 import { SettingsOption } from "@/components/settings-option";
 
-const GeneralSettings = () => {
+const GeneralSettingsContent = () => {
   return (
     <>
       <SettingsOption label="Appearance" trailingText="Coming soon!" />
@@ -9,4 +9,4 @@ const GeneralSettings = () => {
   );
 };
 
-export { GeneralSettings };
+export { GeneralSettingsContent };

@@ -35,7 +35,7 @@ const VoiceRecordButton = (props: Props) => {
         onPressIn={onStart}
         onPressOut={onStop}
       >
-        <Icon name="mic-sharp" size={sizes.iconMedium} color={colors.white} />
+        <Icon name="mic-sharp" size={sizes.icon.md} color={colors.white} />
       </Pressable>
     </View>
   );

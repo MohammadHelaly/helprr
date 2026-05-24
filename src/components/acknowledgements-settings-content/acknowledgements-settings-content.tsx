@@ -6,7 +6,7 @@ import {
   type LibraryLicense,
 } from "@/data/license-data";
 
-const AcknowledgementsSettings = () => {
+const AcknowledgementsSettingsContent = () => {
   const renderItem = ({ item }: { item: LibraryLicense }) => {
     const licenseText =
       item.license === "MIT License"
@@ -35,4 +35,4 @@ const AcknowledgementsSettings = () => {
   );
 };
 
-export { AcknowledgementsSettings };
+export { AcknowledgementsSettingsContent };

@@ -5,7 +5,7 @@ import { WebsiteCard } from "@/components/website-card";
 import { requestAppReview } from "@/lib/app-review/request-app-review";
 import { shareApp } from "@/lib/share/share-app";
 
-const AboutSettings = () => {
+const AboutSettingsContent = () => {
   return (
     <>
       <WebsiteCard />
@@ -28,4 +28,4 @@ const AboutSettings = () => {
   );
 };
 
-export { AboutSettings };
+export { AboutSettingsContent };

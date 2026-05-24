@@ -18,7 +18,7 @@ const Warning = (props: Props) => {
 
   return (
     <View className="flex-1 items-center justify-center px-8">
-      <Icon name={icon} size={sizes.iconXLarge} color={colors.black} />
+      <Icon name={icon} size={sizes.icon.xl} color={colors.black} />
       <Text className="mt-4 text-center text-lg font-bold text-black">
         {title}
       </Text>

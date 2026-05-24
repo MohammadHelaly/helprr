@@ -2,7 +2,7 @@ import { SettingsOption } from "@/components/settings-option";
 import { useConversationLanguage } from "@/hooks/use-chat";
 
 // TODO: decide on app/conversation language functionality
-const LanguageSettings = () => {
+const LanguageSettingsContent = () => {
   const { language, selectLanguage } = useConversationLanguage();
 
   return (
@@ -22,4 +22,4 @@ const LanguageSettings = () => {
   );
 };
 
-export { LanguageSettings };
+export { LanguageSettingsContent };

@@ -2,7 +2,7 @@ import { router } from "expo-router";
 
 import { SettingsOption } from "@/components/settings-option";
 
-const LegalSettings = () => {
+const LegalSettingsContent = () => {
   return (
     <>
       <SettingsOption
@@ -19,4 +19,4 @@ const LegalSettings = () => {
   );
 };
 
-export { LegalSettings };
+export { LegalSettingsContent };

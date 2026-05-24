@@ -12,7 +12,7 @@ const SettingsLayout = () => {
         headerTintColor: colors.black,
         headerTitleStyle: {
           color: colors.black,
-          fontSize: sizes.headerTitle,
+          fontSize: sizes.font.xxxl,
           fontWeight: "bold",
         },
         headerBackButtonDisplayMode: "minimal",

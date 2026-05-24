@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 
 import { Icon } from "@/components/icon";
-import { colors } from "@/constants/theme";
+import { colors, sizes } from "@/constants/theme";
 import { appUrls } from "@/lib/external-links/urls";
 import { openExternalUrl } from "@/lib/external-links/open-external-url";
 
@@ -13,7 +13,11 @@ const WebsiteCard = () => {
     >
       <View className="flex-row items-center gap-4">
         <View className="h-14 w-14 items-center justify-center rounded-full bg-white">
-          <Icon name="globe-outline" size={28} color={colors.black} />
+          <Icon
+            name="globe-outline"
+            size={sizes.icon.md}
+            color={colors.black}
+          />
         </View>
         <View className="flex-1">
           <Text className="text-lg font-bold text-black">Website</Text>

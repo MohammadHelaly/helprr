@@ -13,7 +13,7 @@ import {
   requestSpeechRecognitionPermission,
 } from "@/lib/permissions/app-permissions";
 
-const PermissionsSettings = () => {
+const PermissionsSettingsContent = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [canAskAgainForCameraPermission, setCanAskAgainForCameraPermission] =
     useState(false);
@@ -103,4 +103,4 @@ const PermissionsSettings = () => {
   );
 };
 
-export { PermissionsSettings };
+export { PermissionsSettingsContent };

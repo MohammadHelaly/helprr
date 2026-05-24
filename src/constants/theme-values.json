@@ -8,13 +8,25 @@
     "cyan": "#00cccc"
   },
   "sizes": {
-    "tabBarHeight": 100,
-    "tabBarPaddingTop": 10,
-    "tabBarPaddingBottom": 16,
-    "headerTitle": 36,
-    "iconSmall": 24,
-    "iconMedium": 30,
-    "iconLarge": 42,
-    "iconXLarge": 48
+    "icon": {
+      "xxs": 14,
+      "xs": 18,
+      "sm": 24,
+      "md": 32,
+      "lg": 42,
+      "xl": 48
+    },
+    "font": {
+      "xxxl": 36
+    },
+    "sizing": {
+      "none": 0,
+      "xxxl": 96
+    },
+    "spacing": {
+      "sm": 12,
+      "md": 16,
+      "xxxl": 88
+    }
   }
 }

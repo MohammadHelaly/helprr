@@ -1,10 +1,10 @@
-import { AcknowledgementsSettings } from "@/components/acknowledgements-settings";
+import { AcknowledgementsSettingsContent } from "@/components/acknowledgements-settings-content";
 import { Screen } from "@/components/screen";
 
 const AcknowledgementsSettingsScreen = () => {
   return (
     <Screen edges={["left", "right"]}>
-      <AcknowledgementsSettings />
+      <AcknowledgementsSettingsContent />
     </Screen>
   );
 };

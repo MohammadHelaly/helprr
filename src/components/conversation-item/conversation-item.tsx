@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
 
 import { Icon } from "@/components/icon";
-import { colors } from "@/constants/theme";
+import { colors, sizes } from "@/constants/theme";
 import type { Conversation } from "@/lib/db/schema";
 import { formatDate } from "@/lib/utils/format-date";
 
@@ -19,15 +19,21 @@ const ConversationItem = (props: Props) => {
   const [title, setTitle] = useState(conversation.title);
 
   const preview = conversation.lastMessagePreview
-    ? conversation.lastMessagePreview.length > 46
-      ? `${conversation.lastMessagePreview.substring(0, 46)}...`
+    ? conversation.lastMessagePreview.length > 48
+      ? `${conversation.lastMessagePreview.substring(0, 48)}...`
       : conversation.lastMessagePreview
     : "";
 
   const saveTitle = () => {
-    const nextTitle = title.trim() || conversation.title;
-    setTitle(nextTitle);
-    onRename(conversation.id, nextTitle);
+    const nextTitle = title.trim();
+
+    if (nextTitle.length !== 0 && nextTitle !== conversation.title) {
+      setTitle(nextTitle);
+      onRename(conversation.id, nextTitle);
+    } else {
+      setTitle(conversation.title);
+    }
+
     setIsEditing(false);
   };
 
@@ -51,13 +57,13 @@ const ConversationItem = (props: Props) => {
       className="w-full bg-white px-4 pt-5"
       onPress={() => onSelect(conversation.id)}
     >
-      <View className="w-full border-b border-light-grey pb-5">
+      <View className="border-light-grey w-full border-b pb-5">
         <View className="w-full flex-row items-center justify-between">
-          <View className="flex-1 flex-row items-center gap-0.5">
+          <View className="flex-1 flex-row items-center">
             {isEditing ? (
               <TextInput
                 autoFocus
-                className="flex-1 text-lg font-bold text-black"
+                className="text-lg font-bold text-black"
                 maxLength={32}
                 onChangeText={setTitle}
                 onEndEditing={saveTitle}
@@ -70,33 +76,39 @@ const ConversationItem = (props: Props) => {
               </Text>
             )}
             <Pressable
-              className="h-9 w-9 items-center justify-center"
+              className="h-8 w-8 items-center justify-center"
               onPress={(event) => {
                 event.stopPropagation();
                 setIsEditing(true);
               }}
             >
-              <Icon name="create-outline" color={colors.black} />
+              <Icon
+                name="create-outline"
+                color={colors.grey}
+                size={sizes.icon.xxs}
+              />
             </Pressable>
           </View>
           <Pressable
-            className="h-9 w-9 items-center justify-center"
+            className="h-8 w-8 items-center justify-center"
             onPress={(event) => {
               event.stopPropagation();
               confirmDelete();
             }}
           >
-            <Icon name="trash-outline" color={colors.black} />
+            <Icon
+              name="trash-outline"
+              color={colors.grey}
+              size={sizes.icon.xxs}
+            />
           </Pressable>
         </View>
         <Text className="self-start text-xs text-grey">
           {formatDate(conversation.updatedAt)}
         </Text>
-        {preview ? (
-          <Text className="mt-2.5 self-start text-base text-black">
-            {preview}
-          </Text>
-        ) : null}
+        <Text className="mt-2.5 self-start text-base text-black">
+          {preview}
+        </Text>
       </View>
     </Pressable>
   );

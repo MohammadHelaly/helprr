@@ -1,4 +1,4 @@
-import { ListenScreenContent } from "@/components/listen-screen";
+import { ListenScreenContent } from "@/components/listen-screen-content";
 import { Screen } from "@/components/screen";
 
 const ListenScreen = () => {

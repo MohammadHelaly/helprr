@@ -63,7 +63,7 @@ const ConversationInput = (props: Props) => {
       >
         <Icon
           name="arrow-forward-circle-sharp"
-          size={sizes.iconLarge}
+          size={sizes.icon.lg}
           color={colors.black}
         />
       </Pressable>

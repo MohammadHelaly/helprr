@@ -1,10 +1,10 @@
-import { GeneralSettings } from "@/components/general-settings";
+import { GeneralSettingsContent } from "@/components/general-settings-content";
 import { Screen } from "@/components/screen";
 
 const GeneralSettingsScreen = () => {
   return (
     <Screen className="items-center justify-center" edges={["left", "right"]}>
-      <GeneralSettings />
+      <GeneralSettingsContent />
     </Screen>
   );
 };

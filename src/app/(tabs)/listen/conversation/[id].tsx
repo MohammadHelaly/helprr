@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 
-import { ConversationScreenContent } from "@/components/conversation-screen";
+import { ConversationScreenContent } from "@/components/conversation-screen-content";
 import { Screen } from "@/components/screen";
 
 const ConversationScreen = () => {

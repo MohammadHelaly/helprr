@@ -7,6 +7,7 @@ import { ConversationInput } from "@/components/conversation-input";
 import { MessageBubble } from "@/components/message-bubble";
 import { Warning } from "@/components/warning";
 import type { LanguageLocale } from "@/constants/language";
+import { sizes } from "@/constants/theme";
 import { useChatConversation, useConversationLanguage } from "@/hooks/use-chat";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
@@ -38,12 +39,14 @@ const ConversationScreenContent = (props: Props) => {
       <KeyboardAvoidingView
         className="flex-1 bg-light-grey"
         behavior={keyboardAvoidingBehavior}
-        keyboardVerticalOffset={90}
+        keyboardVerticalOffset={sizes.spacing.xxxl}
       >
         {messages.length > 0 ? (
           <FlashList
             ref={listRef}
-            contentContainerStyle={{ paddingVertical: 16 }}
+            contentContainerStyle={{
+              paddingVertical: sizes.spacing.md,
+            }}
             data={messages}
             keyExtractor={(item) => item.id}
             onContentSizeChange={() =>
