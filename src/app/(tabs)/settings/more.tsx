@@ -7,12 +7,12 @@ export default function MoreSettingsScreen() {
   return (
     <Screen>
       <SettingsOption
-        icon="info.circle"
+        icon="information-circle-outline"
         title="About Helprr"
         onPress={() => router.push("/settings/about")}
       />
       <SettingsOption
-        icon="doc.text"
+        icon="document-text-outline"
         title="Legal"
         onPress={() => router.push("/settings/legal")}
       />

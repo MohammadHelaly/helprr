@@ -16,7 +16,7 @@ export default function ListenLayout() {
     >
       <Stack.Screen name="index" options={{ title: "Listen" }} />
       <Stack.Screen
-        name="conversation/[conversation-id]"
+        name="conversation/[id]"
         options={{ title: "Conversation" }}
       />
     </Stack>

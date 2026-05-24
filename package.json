@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
     "drizzle-orm": "^0.45.2",
     "expo": "~56.0.4",
     "expo-constants": "~56.0.15",
@@ -15,7 +16,6 @@
     "expo-splash-screen": "~56.0.10",
     "expo-sqlite": "~56.0.4",
     "expo-status-bar": "~56.0.4",
-    "expo-symbols": "~56.0.5",
     "expo-system-ui": "~56.0.5",
     "nativewind": "^4.2.4",
     "react": "19.2.3",

@@ -7,22 +7,22 @@ export default function SettingsScreen() {
   return (
     <Screen>
       <SettingsOption
-        icon="gearshape"
+        icon="settings-sharp"
         title="General"
         onPress={() => router.push("/settings/general")}
       />
       <SettingsOption
-        icon="lock"
+        icon="lock-closed-sharp"
         title="Permissions"
         onPress={() => router.push("/settings/permissions")}
       />
       <SettingsOption
-        icon="globe"
+        icon="globe-outline"
         title="Language"
         onPress={() => router.push("/settings/language")}
       />
       <SettingsOption
-        icon="ellipsis"
+        icon="ellipsis-horizontal-sharp"
         title="More"
         onPress={() => router.push("/settings/more")}
       />

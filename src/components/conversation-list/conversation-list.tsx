@@ -1,6 +1,6 @@
-import { SymbolView } from "expo-symbols";
 import { FlatList, Pressable, Text, View } from "react-native";
 
+import { Icon } from "@/components/icon";
 import { Warning } from "@/components/warning";
 import type { Conversation } from "@/lib/db/schema";
 import { formatDate } from "@/lib/utils/format-date";
@@ -17,7 +17,7 @@ export function ConversationList({
   if (conversations.length === 0) {
     return (
       <Warning
-        icon="ear"
+        icon="ear-sharp"
         title="Start listening"
         text="Create a conversation to save speech-to-text and text-to-speech messages locally."
       />
@@ -36,7 +36,7 @@ export function ConversationList({
           onPress={() => onSelect(item.id)}
         >
           <View className="mr-4 h-12 w-12 items-center justify-center rounded-full bg-black">
-            <SymbolView name="bubble.left.fill" size={22} tintColor="#ffffff" />
+            <Icon name="chatbubble-sharp" size={22} color="#ffffff" />
           </View>
           <View className="flex-1">
             <Text className="text-base font-bold text-black" numberOfLines={1}>

@@ -1,20 +1,21 @@
-import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { Text, View } from "react-native";
+
+import { Icon, type IconName } from "@/components/icon";
 
 type WarningProps = {
   title?: string;
   text: string;
-  icon?: SymbolViewProps["name"];
+  icon?: IconName;
 };
 
 export function Warning({
   title = "Nothing here yet",
   text,
-  icon = "exclamationmark.circle",
+  icon = "information-circle-outline",
 }: WarningProps) {
   return (
     <View className="flex-1 items-center justify-center px-8">
-      <SymbolView name={icon} size={48} tintColor="#000000" />
+      <Icon name={icon} size={48} color="#000000" />
       <Text className="mt-4 text-center text-lg font-bold text-black">
         {title}
       </Text>

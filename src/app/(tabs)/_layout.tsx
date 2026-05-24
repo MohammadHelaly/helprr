@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
-import { SymbolView } from "expo-symbols";
+
+import { Icon } from "@/components/icon";
 
 export default function TabsLayout() {
   return (
@@ -23,7 +24,7 @@ export default function TabsLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
-            <SymbolView name="house.fill" size={size} tintColor={color} />
+            <Icon name="home-sharp" size={size} color={color} />
           ),
         }}
       />
@@ -32,7 +33,7 @@ export default function TabsLayout() {
         options={{
           title: "Listen",
           tabBarIcon: ({ color, size }) => (
-            <SymbolView name="ear" size={size} tintColor={color} />
+            <Icon name="ear-sharp" size={size} color={color} />
           ),
         }}
       />
@@ -41,7 +42,7 @@ export default function TabsLayout() {
         options={{
           title: "See",
           tabBarIcon: ({ color, size }) => (
-            <SymbolView name="eye" size={size} tintColor={color} />
+            <Icon name="eye-sharp" size={size} color={color} />
           ),
         }}
       />
@@ -50,7 +51,7 @@ export default function TabsLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, size }) => (
-            <SymbolView name="gearshape.fill" size={size} tintColor={color} />
+            <Icon name="settings-sharp" size={size} color={color} />
           ),
         }}
       />

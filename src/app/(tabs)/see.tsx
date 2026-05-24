@@ -8,7 +8,7 @@ export default function SeeScreen() {
     <Screen className="bg-lightGrey">
       <View className="flex-1">
         <Warning
-          icon="eye"
+          icon="eye-sharp"
           title="Camera paused"
           text="Camera object detection is intentionally out of scope for this modernization branch."
         />

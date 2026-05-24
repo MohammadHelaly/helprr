@@ -7,12 +7,12 @@ import { MessageBubble } from "@/components/message-bubble";
 import { Screen } from "@/components/screen";
 import { Warning } from "@/components/warning";
 import { useChatConversation, useConversationLanguage } from "@/hooks/use-chat";
-import type { Message } from "@/lib/db/schema";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
+import type { Message } from "@/lib/db/schema";
 
 export default function ConversationScreen() {
-  const params = useLocalSearchParams<{ "conversation-id": string }>();
-  const conversationId = params["conversation-id"];
+  const params = useLocalSearchParams<{ id: string }>();
+  const conversationId = params["id"];
   const { conversation, messages, addMessage } =
     useChatConversation(conversationId);
   const { language, toggleLanguage } = useConversationLanguage();

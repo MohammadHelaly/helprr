@@ -1,10 +1,11 @@
-import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { Pressable, Text, View } from "react-native";
+
+import { Icon, type IconName } from "@/components/icon";
 
 type SettingsOptionProps = {
   title: string;
   subtitle?: string;
-  icon: SymbolViewProps["name"];
+  icon: IconName;
   onPress?: () => void;
 };
 
@@ -20,7 +21,7 @@ export function SettingsOption({
       onPress={onPress}
     >
       <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-lightGrey">
-        <SymbolView name={icon} size={22} tintColor="#000000" />
+        <Icon name={icon} size={22} color="#000000" />
       </View>
       <View className="flex-1">
         <Text className="text-base font-semibold text-black">{title}</Text>
@@ -28,7 +29,7 @@ export function SettingsOption({
           <Text className="mt-1 text-xs text-grey">{subtitle}</Text>
         ) : null}
       </View>
-      <SymbolView name="chevron.forward" size={18} tintColor="#000000" />
+      <Icon name="chevron-forward-sharp" size={18} color="#000000" />
     </Pressable>
   );
 }

@@ -1,7 +1,7 @@
-import { SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 
+import { Icon } from "@/components/icon";
 import { LanguageToggle } from "@/components/language-toggle";
 import { VoiceRecordButton } from "@/components/voice-record-button";
 import type { LanguageLocale } from "@/constants/language";
@@ -62,11 +62,7 @@ export function ConversationInput({
         className="h-12 w-12 items-center justify-center rounded-full"
         onPress={send}
       >
-        <SymbolView
-          name="arrow.forward.circle.fill"
-          size={42}
-          tintColor="#000000"
-        />
+        <Icon name="arrow-forward-circle-sharp" size={42} color="#000000" />
       </Pressable>
     </View>
   );

@@ -7,12 +7,12 @@ export default function LegalSettingsScreen() {
   return (
     <Screen>
       <SettingsOption
-        icon="doc"
+        icon="document-text-outline"
         title="License"
         onPress={() => router.push("/settings/license")}
       />
       <SettingsOption
-        icon="books.vertical"
+        icon="library-outline"
         title="Acknowledgements"
         onPress={() => router.push("/settings/acknowledgements")}
       />

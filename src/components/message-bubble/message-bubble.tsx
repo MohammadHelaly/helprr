@@ -1,6 +1,6 @@
-import { SymbolView } from "expo-symbols";
 import { Pressable, Text, View } from "react-native";
 
+import { Icon } from "@/components/icon";
 import type { Message } from "@/lib/db/schema";
 import { formatTime } from "@/lib/utils/format-date";
 
@@ -41,10 +41,10 @@ export function MessageBubble({
             className="h-8 w-8 items-center justify-center rounded-full"
             onPress={onSpeak}
           >
-            <SymbolView
-              name={isSpeaking ? "speaker.wave.2.fill" : "play.fill"}
+            <Icon
+              name={isSpeaking ? "volume-high-sharp" : "play-sharp"}
               size={18}
-              tintColor={isSpeechToText ? "#ffffff" : "#000000"}
+              color={isSpeechToText ? "#ffffff" : "#000000"}
             />
           </Pressable>
         </View>
