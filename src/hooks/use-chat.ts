@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react';
-import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
 
-import type { LanguageLocale } from '@/constants/language';
+import type { LanguageLocale } from "@/constants/language";
 import {
   addMessage,
   createConversation,
@@ -12,8 +12,8 @@ import {
   listMessages,
   renameConversation,
   setLanguagePreference,
-} from '@/lib/chat/chat-repository';
-import type { Conversation, Message, MessageKind } from '@/lib/db/schema';
+} from "@/lib/chat/chat-repository";
+import type { Conversation, Message, MessageKind } from "@/lib/db/schema";
 
 export function useConversations() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -24,18 +24,29 @@ export function useConversations() {
 
   useFocusEffect(refresh);
 
-  const create = useCallback((title?: string) => {
-    const conversation = createConversation(title);
-    refresh();
-    return conversation;
-  }, [refresh]);
+  const create = useCallback(
+    (title?: string) => {
+      const conversation = createConversation(title);
+      refresh();
+      return conversation;
+    },
+    [refresh],
+  );
 
-  const remove = useCallback((conversationId: string) => {
-    deleteConversation(conversationId);
-    refresh();
-  }, [refresh]);
+  const remove = useCallback(
+    (conversationId: string) => {
+      deleteConversation(conversationId);
+      refresh();
+    },
+    [refresh],
+  );
 
-  return { conversations, createConversation: create, deleteConversation: remove, refresh };
+  return {
+    conversations,
+    createConversation: create,
+    deleteConversation: remove,
+    refresh,
+  };
 }
 
 export function useChatConversation(conversationId: string) {
@@ -49,29 +60,48 @@ export function useChatConversation(conversationId: string) {
 
   useFocusEffect(refresh);
 
-  const add = useCallback((body: string, kind: MessageKind, language: LanguageLocale) => {
-    const trimmed = body.trim();
-    if (!trimmed) return undefined;
+  const add = useCallback(
+    (body: string, kind: MessageKind, language: LanguageLocale) => {
+      const trimmed = body.trim();
+      if (!trimmed) return undefined;
 
-    const message = addMessage({ conversationId, body: trimmed, kind, language });
-    refresh();
-    return message;
-  }, [conversationId, refresh]);
+      const message = addMessage({
+        conversationId,
+        body: trimmed,
+        kind,
+        language,
+      });
+      refresh();
+      return message;
+    },
+    [conversationId, refresh],
+  );
 
-  const rename = useCallback((title: string) => {
-    renameConversation(conversationId, title);
-    refresh();
-  }, [conversationId, refresh]);
+  const rename = useCallback(
+    (title: string) => {
+      renameConversation(conversationId, title);
+      refresh();
+    },
+    [conversationId, refresh],
+  );
 
-  return { conversation, messages, addMessage: add, renameConversation: rename, refresh };
+  return {
+    conversation,
+    messages,
+    addMessage: add,
+    renameConversation: rename,
+    refresh,
+  };
 }
 
 export function useConversationLanguage() {
-  const [language, setLanguage] = useState<LanguageLocale>(() => getLanguagePreference());
+  const [language, setLanguage] = useState<LanguageLocale>(() =>
+    getLanguagePreference(),
+  );
 
   const toggleLanguage = useCallback(() => {
     setLanguage((current) => {
-      const next = current === 'en-US' ? 'ar-EG' : 'en-US';
+      const next = current === "en-US" ? "ar-EG" : "en-US";
       setLanguagePreference(next);
       return next;
     });

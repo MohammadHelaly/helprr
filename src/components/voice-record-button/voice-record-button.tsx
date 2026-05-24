@@ -1,5 +1,5 @@
-import { SymbolView } from 'expo-symbols';
-import { Pressable, Text, View } from 'react-native';
+import { SymbolView } from "expo-symbols";
+import { Pressable, Text, View } from "react-native";
 
 type VoiceRecordButtonProps = {
   isListening: boolean;
@@ -27,10 +27,15 @@ export function VoiceRecordButton({
       ) : null}
       <Pressable
         className={`h-14 w-14 items-center justify-center rounded-full ${
-          isListening ? 'scale-110 bg-pink' : errorMessage ? 'bg-red-600' : 'bg-black'
+          isListening
+            ? "scale-110 bg-pink"
+            : errorMessage
+              ? "bg-red-600"
+              : "bg-black"
         }`}
         onPressIn={onStart}
-        onPressOut={onStop}>
+        onPressOut={onStop}
+      >
         <SymbolView name="mic.fill" size={30} tintColor="#ffffff" />
       </Pressable>
     </View>

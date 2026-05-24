@@ -1,7 +1,7 @@
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text } from "react-native";
 
-import { Screen } from '@/components/screen';
-import { appLicense } from '@/data/license-data';
+import { Screen } from "@/components/screen";
+import { appLicense } from "@/data/license-data";
 
 export default function LicenseSettingsScreen() {
   return (

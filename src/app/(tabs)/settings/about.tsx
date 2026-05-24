@@ -1,6 +1,6 @@
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
 
-import { Screen } from '@/components/screen';
+import { Screen } from "@/components/screen";
 
 export default function AboutSettingsScreen() {
   return (
@@ -10,7 +10,8 @@ export default function AboutSettingsScreen() {
           About <Text className="text-pink">Helprr</Text>
         </Text>
         <Text className="mt-4 text-base leading-6 text-grey">
-          Helprr keeps conversations local and provides speech tools for everyday accessibility.
+          Helprr keeps conversations local and provides speech tools for
+          everyday accessibility.
         </Text>
       </View>
     </Screen>

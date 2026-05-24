@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import * as Speech from 'expo-speech';
+import { useCallback, useEffect, useState } from "react";
+import * as Speech from "expo-speech";
 
-import type { LanguageLocale } from '@/constants/language';
+import type { LanguageLocale } from "@/constants/language";
 
 export function useSpeechSynthesis() {
   const [speakingId, setSpeakingId] = useState<string | null>(null);
@@ -12,21 +12,24 @@ export function useSpeechSynthesis() {
     };
   }, []);
 
-  const speak = useCallback(async (text: string, language: LanguageLocale, id?: string) => {
-    const trimmed = text.trim();
-    if (!trimmed) return;
+  const speak = useCallback(
+    async (text: string, language: LanguageLocale, id?: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) return;
 
-    await Speech.stop();
-    setSpeakingId(id ?? null);
-    Speech.speak(trimmed.slice(0, Speech.maxSpeechInputLength), {
-      language,
-      pitch: 1,
-      rate: 1,
-      onDone: () => setSpeakingId(null),
-      onStopped: () => setSpeakingId(null),
-      onError: () => setSpeakingId(null),
-    });
-  }, []);
+      await Speech.stop();
+      setSpeakingId(id ?? null);
+      Speech.speak(trimmed.slice(0, Speech.maxSpeechInputLength), {
+        language,
+        pitch: 1,
+        rate: 1,
+        onDone: () => setSpeakingId(null),
+        onStopped: () => setSpeakingId(null),
+        onError: () => setSpeakingId(null),
+      });
+    },
+    [],
+  );
 
   const stop = useCallback(async () => {
     await Speech.stop();

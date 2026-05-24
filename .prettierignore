@@ -1,0 +1,10 @@
+android/
+ios/
+node_modules/
+dist/
+web-build/
+.expo/
+.git/
+coverage/
+patches/
+package-lock.json

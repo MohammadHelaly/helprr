@@ -1,7 +1,7 @@
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text } from "react-native";
 
-import { Screen } from '@/components/screen';
-import { libraryLicenses, mitLicenseTemplate } from '@/data/license-data';
+import { Screen } from "@/components/screen";
+import { libraryLicenses, mitLicenseTemplate } from "@/data/license-data";
 
 export default function AcknowledgementsSettingsScreen() {
   return (
@@ -12,16 +12,19 @@ export default function AcknowledgementsSettingsScreen() {
         </Text>
         {libraryLicenses.map((library) => {
           const licenseText =
-            library.license === 'MIT License'
-              ? mitLicenseTemplate[0] + library.libraryLicense + mitLicenseTemplate[1]
+            library.license === "MIT License"
+              ? mitLicenseTemplate[0] +
+                library.libraryLicense +
+                mitLicenseTemplate[1]
               : library.libraryLicense;
 
           return (
             <Text
               key={library.libraryName}
-              className="border-b border-lightGrey py-4 text-xs leading-5 text-black">
+              className="border-b border-lightGrey py-4 text-xs leading-5 text-black"
+            >
               <Text className="text-sm font-bold">{library.libraryName}</Text>
-              {'\n\n'}
+              {"\n\n"}
               {licenseText}
             </Text>
           );

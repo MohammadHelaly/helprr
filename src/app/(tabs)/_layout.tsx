@@ -1,26 +1,27 @@
-import { Tabs } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { Tabs } from "expo-router";
+import { SymbolView } from "expo-symbols";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#000000',
-        tabBarInactiveTintColor: 'grey',
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "grey",
         tabBarStyle: {
           height: 100,
           paddingTop: 10,
           paddingBottom: 16,
           borderTopWidth: 0,
           elevation: 0,
-          backgroundColor: '#ffffff',
+          backgroundColor: "white",
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: "Home",
           tabBarIcon: ({ color, size }) => (
             <SymbolView name="house.fill" size={size} tintColor={color} />
           ),
@@ -29,7 +30,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="listen"
         options={{
-          title: 'Listen',
+          title: "Listen",
           tabBarIcon: ({ color, size }) => (
             <SymbolView name="ear" size={size} tintColor={color} />
           ),
@@ -38,7 +39,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="see"
         options={{
-          title: 'See',
+          title: "See",
           tabBarIcon: ({ color, size }) => (
             <SymbolView name="eye" size={size} tintColor={color} />
           ),
@@ -47,7 +48,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: "Settings",
           tabBarIcon: ({ color, size }) => (
             <SymbolView name="gearshape.fill" size={size} tintColor={color} />
           ),

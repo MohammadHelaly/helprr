@@ -1,14 +1,14 @@
-import { drizzle } from 'drizzle-orm/expo-sqlite';
-import { openDatabaseSync } from 'expo-sqlite';
+import { drizzle } from "drizzle-orm/expo-sqlite";
+import { openDatabaseSync } from "expo-sqlite";
 
-import * as schema from '@/lib/db/schema';
+import * as schema from "@/lib/db/schema";
 
-const sqlite = openDatabaseSync('helprr.db');
+const sqlite = openDatabaseSync("helprr.db");
 
 export const db = drizzle(sqlite, { schema });
 
 export function migrateDatabase() {
-  sqlite.execSync('PRAGMA foreign_keys = ON;');
+  sqlite.execSync("PRAGMA foreign_keys = ON;");
   sqlite.execSync(`
     CREATE TABLE IF NOT EXISTS conversations (
       id TEXT PRIMARY KEY NOT NULL,

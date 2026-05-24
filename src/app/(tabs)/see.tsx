@@ -1,7 +1,7 @@
-import { Text, View } from 'react-native';
+import { Text, View } from "react-native";
 
-import { Screen } from '@/components/screen';
-import { Warning } from '@/components/warning';
+import { Screen } from "@/components/screen";
+import { Warning } from "@/components/warning";
 
 export default function SeeScreen() {
   return (
