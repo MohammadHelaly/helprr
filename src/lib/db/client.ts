@@ -5,13 +5,8 @@ import * as schema from "@/lib/db/schema";
 
 const sqlite = openDatabaseSync("helprr.db");
 
-export const db = drizzle(sqlite, { schema });
-
 const migrateDatabase = () => {
   sqlite.execSync("PRAGMA foreign_keys = ON;");
-  sqlite.execSync("DROP TABLE IF EXISTS messages;");
-  sqlite.execSync("DROP TABLE IF EXISTS conversations;");
-  sqlite.execSync("DROP TABLE IF EXISTS app_settings;");
   sqlite.execSync(`
     CREATE TABLE IF NOT EXISTS conversations (
       id TEXT PRIMARY KEY NOT NULL,
@@ -46,4 +41,6 @@ const migrateDatabase = () => {
   `);
 };
 
-export { migrateDatabase };
+migrateDatabase();
+
+export const db = drizzle(sqlite, { schema });
