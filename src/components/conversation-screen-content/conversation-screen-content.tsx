@@ -1,8 +1,9 @@
 import { FlashList, type FlashListRef } from "@shopify/flash-list";
-import { Stack } from "expo-router";
-import { useRef } from "react";
+import { Stack, useIsFocused } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Text, View } from "react-native";
 
+import { Button } from "@/components/button";
 import { ConversationInput } from "@/components/conversation-input";
 import { MessageBubble } from "@/components/message-bubble";
 import { Warning } from "@/components/warning";
@@ -12,6 +13,11 @@ import { useConversationLanguage } from "@/hooks/use-language-preferences";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
 import { getNextLanguageLocale } from "@/lib/language/language";
+import {
+  getMicrophonePermission,
+  openAppSettings,
+  requestMicrophonePermission,
+} from "@/lib/permissions/app-permissions";
 import { keyboardAvoidingBehavior } from "@/lib/platform/keyboard-avoiding-behavior";
 import { formatDate, isSameDate } from "@/lib/utils/date-time";
 
@@ -21,15 +27,50 @@ type Props = {
 
 const ConversationScreenContent = (props: Props) => {
   const { conversationId } = props;
+  const isFocused = useIsFocused();
   const { conversation, messages, addMessage, editMessage } =
     useChatConversation(conversationId);
   const { language, selectLanguage } = useConversationLanguage();
   const speech = useSpeechSynthesis();
   const listRef = useRef<FlashListRef<Message>>(null);
+  const [hasMicrophonePermission, setHasMicrophonePermission] = useState<
+    boolean | null
+  >(null);
+  const [
+    canAskAgainForMicrophonePermission,
+    setCanAskAgainForMicrophonePermission,
+  ] = useState(true);
 
   const selectNextLanguage = () => {
     selectLanguage(getNextLanguageLocale(language));
   };
+
+  const refreshMicrophonePermission = useCallback(async () => {
+    const permission = await getMicrophonePermission();
+    if (!permission) {
+      return;
+    }
+
+    setHasMicrophonePermission(permission.granted);
+    setCanAskAgainForMicrophonePermission(permission.canAskAgain);
+  }, []);
+
+  const handleMicrophonePermission = useCallback(async () => {
+    if (canAskAgainForMicrophonePermission) {
+      const permission = await requestMicrophonePermission();
+      setHasMicrophonePermission(permission.granted);
+      setCanAskAgainForMicrophonePermission(permission.canAskAgain);
+      return;
+    }
+
+    await openAppSettings();
+  }, [canAskAgainForMicrophonePermission]);
+
+  useEffect(() => {
+    if (isFocused) {
+      void Promise.resolve().then(refreshMicrophonePermission);
+    }
+  }, [isFocused, refreshMicrophonePermission]);
 
   return (
     <>
@@ -43,7 +84,19 @@ const ConversationScreenContent = (props: Props) => {
         behavior={keyboardAvoidingBehavior}
         keyboardVerticalOffset={sizes.spacing.xxxl}
       >
-        {messages.length > 0 ? (
+        {hasMicrophonePermission === false ? (
+          <Warning
+            icon="mic-outline"
+            title="Microphone needed"
+            text="Allow microphone access to record speech in this conversation."
+          >
+            <Button onPress={handleMicrophonePermission}>
+              {canAskAgainForMicrophonePermission
+                ? "Grant microphone access"
+                : "Open settings"}
+            </Button>
+          </Warning>
+        ) : messages.length > 0 ? (
           <FlashList
             ref={listRef}
             contentContainerStyle={{
@@ -83,7 +136,7 @@ const ConversationScreenContent = (props: Props) => {
             style={{ flex: 1 }}
           />
         ) : (
-          <Warning text="Make sure your phone is not silent and grant speech permissions when prompted." />
+          <Warning text="Make sure your phone is not silent and that you have speech recognition enabled." />
         )}
         <ConversationInput
           language={language}

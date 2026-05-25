@@ -1,19 +1,21 @@
+import type { PropsWithChildren } from "react";
 import { Text, View } from "react-native";
 
 import { Icon, type IconName } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
 
-interface Props {
+type Props = PropsWithChildren<{
   title?: string;
   text: string;
   icon?: IconName;
-}
+}>;
 
 const Warning = (props: Props) => {
   const {
     title = "Nothing here yet",
     text,
     icon = "information-circle-outline",
+    children,
   } = props;
 
   return (
@@ -25,6 +27,7 @@ const Warning = (props: Props) => {
       <Text className="mt-2 text-center text-sm leading-5 text-grey">
         {text}
       </Text>
+      {children ? <View className="m-8 mt-4 w-full">{children}</View> : null}
     </View>
   );
 };

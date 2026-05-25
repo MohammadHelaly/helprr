@@ -147,10 +147,11 @@ const SeeScreenContent = () => {
           icon="camera-outline"
           title="Permission needed"
           text="Allow camera access to identify objects around you."
-        />
-        <Button className="mx-8 mb-8" onPress={handleCameraPermission}>
-          {canRequestPermission ? "Grant camera access" : "Open settings"}
-        </Button>
+        >
+          <Button onPress={handleCameraPermission}>
+            {canRequestPermission ? "Grant camera access" : "Open settings"}
+          </Button>
+        </Warning>
       </View>
     );
   }
