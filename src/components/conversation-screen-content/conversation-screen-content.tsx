@@ -14,9 +14,9 @@ import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import type { Message } from "@/lib/db/schema";
 import { getNextLanguageLocale } from "@/lib/language/language";
 import {
-  getMicrophonePermission,
+  getSpeechPermission,
   openAppSettings,
-  requestMicrophonePermission,
+  requestSpeechPermission,
 } from "@/lib/permissions/app-permissions";
 import { keyboardAvoidingBehavior } from "@/lib/platform/keyboard-avoiding-behavior";
 import { formatDate, isSameDate } from "@/lib/utils/date-time";
@@ -33,44 +33,42 @@ const ConversationScreenContent = (props: Props) => {
   const { language, selectLanguage } = useConversationLanguage();
   const speech = useSpeechSynthesis();
   const listRef = useRef<FlashListRef<Message>>(null);
-  const [hasMicrophonePermission, setHasMicrophonePermission] = useState<
+  const [hasSpeechPermission, setHasSpeechPermission] = useState<
     boolean | null
   >(null);
-  const [
-    canAskAgainForMicrophonePermission,
-    setCanAskAgainForMicrophonePermission,
-  ] = useState(true);
+  const [canAskAgainForSpeechPermission, setCanAskAgainForSpeechPermission] =
+    useState(true);
 
   const selectNextLanguage = () => {
     selectLanguage(getNextLanguageLocale(language));
   };
 
-  const refreshMicrophonePermission = useCallback(async () => {
-    const permission = await getMicrophonePermission();
+  const refreshSpeechPermission = useCallback(async () => {
+    const permission = await getSpeechPermission();
     if (!permission) {
       return;
     }
 
-    setHasMicrophonePermission(permission.granted);
-    setCanAskAgainForMicrophonePermission(permission.canAskAgain);
+    setHasSpeechPermission(permission.granted);
+    setCanAskAgainForSpeechPermission(permission.canAskAgain);
   }, []);
 
-  const handleMicrophonePermission = useCallback(async () => {
-    if (canAskAgainForMicrophonePermission) {
-      const permission = await requestMicrophonePermission();
-      setHasMicrophonePermission(permission.granted);
-      setCanAskAgainForMicrophonePermission(permission.canAskAgain);
+  const handleSpeechPermission = useCallback(async () => {
+    if (canAskAgainForSpeechPermission) {
+      const permission = await requestSpeechPermission();
+      setHasSpeechPermission(permission.granted);
+      setCanAskAgainForSpeechPermission(permission.canAskAgain);
       return;
     }
 
     await openAppSettings();
-  }, [canAskAgainForMicrophonePermission]);
+  }, [canAskAgainForSpeechPermission]);
 
   useEffect(() => {
     if (isFocused) {
-      void Promise.resolve().then(refreshMicrophonePermission);
+      void Promise.resolve().then(refreshSpeechPermission);
     }
-  }, [isFocused, refreshMicrophonePermission]);
+  }, [isFocused, refreshSpeechPermission]);
 
   return (
     <>
@@ -84,15 +82,15 @@ const ConversationScreenContent = (props: Props) => {
         behavior={keyboardAvoidingBehavior}
         keyboardVerticalOffset={sizes.spacing.xxxl}
       >
-        {hasMicrophonePermission === false ? (
+        {hasSpeechPermission === false ? (
           <Warning
             icon="mic-outline"
-            title="Microphone needed"
-            text="Allow microphone access to record speech in this conversation."
+            title="Speech permission needed"
+            text="Allow speech recognition and microphone access to record speech in this conversation."
           >
-            <Button onPress={handleMicrophonePermission}>
-              {canAskAgainForMicrophonePermission
-                ? "Grant microphone access"
+            <Button onPress={handleSpeechPermission}>
+              {canAskAgainForSpeechPermission
+                ? "Grant speech access"
                 : "Open settings"}
             </Button>
           </Warning>

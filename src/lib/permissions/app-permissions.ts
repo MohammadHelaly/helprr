@@ -44,6 +44,22 @@ const requestMicrophonePermission = async () => {
   return ExpoSpeechRecognitionModule.requestMicrophonePermissionsAsync();
 };
 
+const getSpeechPermission = async () => {
+  try {
+    return await ExpoSpeechRecognitionModule.getPermissionsAsync();
+  } catch {
+    Alert.alert(
+      "Error Getting Speech Permission",
+      "An error occurred while trying to get speech permissions. Please try again.",
+    );
+    return null;
+  }
+};
+
+const requestSpeechPermission = async () => {
+  return ExpoSpeechRecognitionModule.requestPermissionsAsync();
+};
+
 const getSpeechRecognitionPermission = async () => {
   try {
     return await ExpoSpeechRecognitionModule.getSpeechRecognizerPermissionsAsync();
@@ -63,9 +79,11 @@ const openAppSettings = async () => {
 export {
   getCameraPermission,
   getMicrophonePermission,
+  getSpeechPermission,
   getSpeechRecognitionPermission,
   openAppSettings,
   requestCameraPermission,
   requestMicrophonePermission,
+  requestSpeechPermission,
   requestSpeechRecognitionPermission,
 };
