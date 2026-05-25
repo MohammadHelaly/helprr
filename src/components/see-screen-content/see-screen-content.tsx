@@ -81,8 +81,28 @@ const SeeScreenContent = () => {
       return;
     }
 
-    void speak(cameraReady && label ? label : "Loading", "en-US");
-  }, [cameraReady, isFocused, label, speak]);
+    if (
+      !cameraReady ||
+      !hasPermission ||
+      !isExecutorchAvailable ||
+      !isObjectDetectionReady ||
+      objectDetection.error ||
+      !device
+    ) {
+      return;
+    }
+
+    void speak(label ?? "Loading", "en-US");
+  }, [
+    cameraReady,
+    device,
+    hasPermission,
+    isFocused,
+    isObjectDetectionReady,
+    label,
+    objectDetection.error,
+    speak,
+  ]);
 
   const updateDetections = useCallback(
     (detections: Detection[]) => {
