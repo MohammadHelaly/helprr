@@ -5,6 +5,8 @@
     "grey": "grey",
     "light-grey": "#eeeeee",
     "pink": "#ff69b4",
+    "pink-haze": "#ffb3d9",
+    "pink-light": "#ff9ccd",
     "cyan": "#00cccc"
   },
   "sizes": {
@@ -24,12 +26,17 @@
     },
     "sizing": {
       "none": 0,
-      "xxxl": 96
+      "sm": 48,
+      "md": 64,
+      "lg": 96,
+      "xl": 128,
+      "xxl": 176
     },
     "spacing": {
       "xs": 8,
       "sm": 12,
-      "md": 16
+      "md": 16,
+      "lg": 24
     }
   }
 }

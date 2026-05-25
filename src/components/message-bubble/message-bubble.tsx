@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
@@ -12,6 +13,12 @@ interface Props {
   onEdit: (body: string) => void;
   onSpeak: () => void;
 }
+
+const bubbleEntering = FadeInDown.duration(200)
+  .springify()
+  .mass(0.4)
+  .damping(20)
+  .stiffness(200);
 
 const MessageBubble = (props: Props) => {
   const { message, isSpeaking, onEdit, onSpeak } = props;
@@ -39,7 +46,8 @@ const MessageBubble = (props: Props) => {
   };
 
   return (
-    <View
+    <Animated.View
+      entering={bubbleEntering}
       className={`my-2 px-4 ${isSpeechToText ? "items-start" : "items-end"}`}
     >
       <View
@@ -96,7 +104,7 @@ const MessageBubble = (props: Props) => {
           </Text>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

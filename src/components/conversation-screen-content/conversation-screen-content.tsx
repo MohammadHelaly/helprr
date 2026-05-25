@@ -82,7 +82,7 @@ const ConversationScreenContent = (props: Props) => {
         // Same height as the header to ensure the input is fully visible when the keyboard is open
         // This value means: how far from the top of the screen your app content starts before keyboard avoidance should begin
         // It is usually the header height
-        keyboardVerticalOffset={sizes.sizing.xxxl}
+        keyboardVerticalOffset={sizes.sizing.lg}
       >
         {hasSpeechPermission === false ? (
           <Warning

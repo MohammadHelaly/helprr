@@ -8,7 +8,7 @@ const SettingsLayout = () => {
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.white,
-          height: sizes.sizing.xxxl,
+          height: sizes.sizing.lg,
         },
         headerShadowVisible: false,
         headerTitleAlign: "left",
