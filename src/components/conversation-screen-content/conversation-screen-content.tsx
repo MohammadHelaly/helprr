@@ -117,7 +117,7 @@ const ConversationScreenContent = (props: Props) => {
                 <>
                   {shouldShowDate ? (
                     <View className="mb-4 mt-2 items-center">
-                      <Text className="rounded-full bg-white px-4 py-1 text-xs text-grey">
+                      <Text className="rounded-full bg-white/60 px-4 py-1 text-xs text-grey">
                         {formatDate(item.createdAt)}
                       </Text>
                     </View>

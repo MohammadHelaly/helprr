@@ -1,9 +1,13 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   FadeIn,
   FadeOut,
+  useAnimatedStyle,
+  useSharedValue,
   type CSSAnimationKeyframes,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
@@ -19,6 +23,11 @@ interface Props {
 const recordTransitionDuration = 200;
 const recordHazeTransitionDuration = 400;
 const recordPulseDuration = 600;
+
+const recordGestureHitSlop = sizes.spacing.sm;
+const recordGestureMinDistance = sizes.spacing.xs;
+
+const recordHoldDuration = 100;
 
 const recordPulse: CSSAnimationKeyframes = {
   from: { backgroundColor: colors.pink, transform: [{ scale: 1 }] },
@@ -44,21 +53,82 @@ const statusExiting = FadeOut.duration(200);
 const VoiceRecordButton = (props: Props) => {
   const { isListening, errorMessage, partialTranscript, onStart, onStop } =
     props;
+  const { height: screenHeight, width: screenWidth } = useWindowDimensions();
 
   const statusText = errorMessage ?? partialTranscript;
 
   const buttonSize = isListening ? sizes.sizing.xl : sizes.sizing.md;
-  const pulseAnimation = isListening ? recordPulse : "none";
-  const hazeAnimation = isListening ? recordHazePulse : "none";
-  const pulseIterationCount = isListening ? "infinite" : 0;
-  const pulseDelay = isListening ? recordTransitionDuration : 0;
+  const iconSize = isListening ? sizes.icon.xl : sizes.icon.md;
+  const pulseStyle = {
+    animationDelay: isListening ? recordTransitionDuration : 0,
+    animationDirection: "alternate" as const,
+    animationDuration: recordPulseDuration,
+    animationIterationCount: isListening ? ("infinite" as const) : 0,
+    animationTimingFunction: "ease-in-out" as const,
+  };
+  const statusGap = isListening ? sizes.spacing.lg : sizes.spacing.xs;
+
+  const controlHeight = sizes.sizing.sm + statusGap + buttonSize;
+  const controlWidth = Math.max(buttonSize, sizes.sizing.xxl);
+  const horizontalLimit = (screenWidth - controlWidth) / 2;
+  const minX = -horizontalLimit;
+  const maxX = horizontalLimit;
+  const minY = -(screenHeight - controlHeight);
+  const maxY = 0;
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+  const dragStartX = useSharedValue(0);
+  const dragStartY = useSharedValue(0);
+
+  const dragGesture = Gesture.Pan()
+    .minDistance(recordGestureMinDistance)
+    .hitSlop(recordGestureHitSlop)
+    .onBegin(() => {
+      dragStartX.value = translateX.value;
+      dragStartY.value = translateY.value;
+    })
+    .onUpdate((event) => {
+      translateX.value = Math.min(
+        Math.max(dragStartX.value + event.translationX, minX),
+        maxX,
+      );
+      translateY.value = Math.min(
+        Math.max(dragStartY.value + event.translationY, minY),
+        maxY,
+      );
+    });
+
+  const recordGesture = Gesture.LongPress()
+    .minDuration(recordHoldDuration)
+    .maxDistance(recordGestureMinDistance)
+    .hitSlop(recordGestureHitSlop)
+    .onStart(() => {
+      scheduleOnRN(onStart);
+    })
+    .onEnd((_event, success) => {
+      if (success) {
+        scheduleOnRN(onStop);
+      }
+    });
+
+  const recordAndDragGesture = Gesture.Simultaneous(dragGesture, recordGesture);
+
+  const dragStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+    ],
+  }));
 
   return (
-    <View
+    <Animated.View
       className="absolute bottom-20 end-0 start-0 z-10 flex flex-col items-center justify-center"
-      style={{
-        gap: isListening ? sizes.spacing.lg : sizes.spacing.xs,
-      }}
+      style={[
+        {
+          gap: statusGap,
+        },
+        dragStyle,
+      ]}
     >
       <View
         className="items-center justify-center"
@@ -66,7 +136,7 @@ const VoiceRecordButton = (props: Props) => {
       >
         {statusText ? (
           <Animated.View
-            className="max-w-72 rounded-full bg-black px-4 py-2"
+            className="max-w-72 rounded-full bg-black/60 px-4 py-2"
             entering={statusEntering}
             exiting={statusExiting}
           >
@@ -76,7 +146,7 @@ const VoiceRecordButton = (props: Props) => {
           </Animated.View>
         ) : null}
       </View>
-      <Pressable onPressIn={onStart} onPressOut={onStop}>
+      <GestureDetector gesture={recordAndDragGesture}>
         <Animated.View
           className="items-center justify-center"
           style={{
@@ -101,12 +171,8 @@ const VoiceRecordButton = (props: Props) => {
             <Animated.View
               className="h-full w-full rounded-full"
               style={{
-                animationDelay: pulseDelay,
-                animationDirection: "alternate",
-                animationDuration: recordPulseDuration,
-                animationIterationCount: pulseIterationCount,
-                animationName: hazeAnimation,
-                animationTimingFunction: "ease-in-out",
+                ...pulseStyle,
+                animationName: isListening ? recordHazePulse : "none",
               }}
             />
           </Animated.View>
@@ -115,12 +181,8 @@ const VoiceRecordButton = (props: Props) => {
               isListening ? "bg-pink" : errorMessage ? "bg-red-600" : "bg-black"
             }`}
             style={{
-              animationDelay: pulseDelay,
-              animationDirection: "alternate",
-              animationDuration: recordPulseDuration,
-              animationIterationCount: pulseIterationCount,
-              animationName: pulseAnimation,
-              animationTimingFunction: "ease-in-out",
+              ...pulseStyle,
+              animationName: isListening ? recordPulse : "none",
               height: buttonSize,
               transitionDuration: recordTransitionDuration,
               transitionProperty: ["height", "width"],
@@ -128,15 +190,11 @@ const VoiceRecordButton = (props: Props) => {
               width: buttonSize,
             }}
           >
-            <Icon
-              name="mic-sharp"
-              size={isListening ? sizes.icon.xl : sizes.icon.md}
-              color={colors.white}
-            />
+            <Icon name="mic-sharp" size={iconSize} color={colors.white} />
           </Animated.View>
         </Animated.View>
-      </Pressable>
-    </View>
+      </GestureDetector>
+    </Animated.View>
   );
 };
 
