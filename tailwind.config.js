@@ -1,4 +1,4 @@
-const theme = require("./src/constants/theme-values.json");
+const theme = require("./src/constants/theme/theme-values.json");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
