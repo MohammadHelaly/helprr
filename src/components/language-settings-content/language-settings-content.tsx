@@ -10,7 +10,8 @@ const LanguageSettingsContent = () => {
   return (
     <View className="flex-1 items-center justify-center">
       {supportedLanguages.map((languageOption) => {
-        const disabled = languageOption.locale === languageOptions.arabic.locale;
+        const disabled =
+          languageOption.locale === languageOptions.arabic.locale;
 
         return (
           <SettingsOption

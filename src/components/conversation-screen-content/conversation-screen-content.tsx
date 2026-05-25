@@ -18,7 +18,6 @@ import {
   openAppSettings,
   requestSpeechPermission,
 } from "@/lib/permissions/app-permissions";
-import { keyboardAvoidingBehavior } from "@/lib/platform/keyboard-avoiding-behavior";
 import { formatDate, isSameDate } from "@/lib/utils/date-time";
 
 type Props = {
@@ -79,8 +78,11 @@ const ConversationScreenContent = (props: Props) => {
       />
       <KeyboardAvoidingView
         className="flex-1 bg-light-grey"
-        behavior={keyboardAvoidingBehavior}
-        keyboardVerticalOffset={sizes.spacing.xxxl}
+        behavior="padding"
+        // Same height as the header to ensure the input is fully visible when the keyboard is open
+        // This value means: how far from the top of the screen your app content starts before keyboard avoidance should begin
+        // It is usually the header height
+        keyboardVerticalOffset={sizes.sizing.xxxl}
       >
         {hasSpeechPermission === false ? (
           <Warning

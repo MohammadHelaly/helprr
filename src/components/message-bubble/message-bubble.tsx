@@ -57,13 +57,12 @@ const MessageBubble = (props: Props) => {
         {isEditing ? (
           <TextInput
             autoFocus
-            className={`p-0 font-bold ${
+            className={`py-auto p-0 font-bold ${
               isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
             } ${message.direction === "rtl" ? "text-end" : "text-start"}`}
             multiline
             onChangeText={setDraftBody}
             onEndEditing={saveBody}
-            returnKeyType="done"
             value={draftBody}
           />
         ) : (

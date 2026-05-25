@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, TextInput, View } from "react-native";
+import { Platform, Pressable, TextInput, View } from "react-native";
 
 import { Icon } from "@/components/icon";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -49,7 +49,7 @@ const ConversationInput = (props: Props) => {
       />
       <LanguageToggle language={language} onToggle={onToggleLanguage} />
       <TextInput
-        className={`min-h-10 flex-1 rounded-3xl border border-light-grey bg-light-grey px-4 py-0 text-base text-black ${languageOption.direction === "rtl" ? "text-end" : "text-start"}`}
+        className={`min-h-10 flex-1 rounded-3xl border border-light-grey bg-light-grey px-4 ${Platform.OS === "ios" ? "py-auto" : "py-0"} text-base text-black ${languageOption.direction === "rtl" ? "text-end" : "text-start"}`}
         multiline
         value={message}
         onChangeText={setMessage}

@@ -8,7 +8,7 @@ const ListenLayout = () => {
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.white,
-          height: sizes.sizing.xxxxl,
+          height: sizes.sizing.xxxl,
         },
         headerShadowVisible: false,
         headerTitleAlign: "left",
@@ -18,7 +18,6 @@ const ListenLayout = () => {
           fontSize: sizes.font.xxxl,
           lineHeight: sizes.font.xxxxl,
           fontWeight: "bold",
-          paddingBottom: sizes.spacing.xs,
         },
         headerBackButtonDisplayMode: "minimal",
       }}

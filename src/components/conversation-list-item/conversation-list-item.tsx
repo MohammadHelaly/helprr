@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
@@ -64,7 +71,7 @@ const ConversationListItem = (props: Props) => {
               <TextInput
                 autoFocus
                 // min-w-1 prevents blurring when deleting the last character
-                className="min-w-1 flex-1 p-0 text-lg font-bold text-black"
+                className={`min-w-1 flex-1 p-0 text-lg font-bold text-black ${Platform.OS === "ios" ? "-mt-3 h-10" : ""}`}
                 maxLength={32}
                 onChangeText={setTitle}
                 onEndEditing={saveTitle}
