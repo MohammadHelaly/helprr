@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
 import { SettingsOption } from "@/components/settings-option";
-import { supportedLanguages } from "@/constants/language";
+import { languageOptions, supportedLanguages } from "@/constants/language";
 import { useAppLanguage } from "@/hooks/use-language-preferences";
 
 const LanguageSettingsContent = () => {
@@ -9,16 +9,22 @@ const LanguageSettingsContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center">
-      {supportedLanguages.map((languageOption) => (
-        <SettingsOption
-          key={languageOption.locale}
-          label={languageOption.label}
-          trailingIcon={
-            language === languageOption.locale ? "checkmark-sharp" : null
-          }
-          onPress={() => selectLanguage(languageOption.locale)}
-        />
-      ))}
+      {supportedLanguages.map((languageOption) => {
+        const disabled = languageOption.locale === languageOptions.arabic.locale;
+
+        return (
+          <SettingsOption
+            key={languageOption.locale}
+            label={languageOption.label}
+            disabled={disabled}
+            trailingIcon={
+              language === languageOption.locale ? "checkmark-sharp" : null
+            }
+            trailingText={disabled ? "Coming soon!" : undefined}
+            onPress={() => selectLanguage(languageOption.locale)}
+          />
+        );
+      })}
     </View>
   );
 };
