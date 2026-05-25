@@ -1,5 +1,5 @@
 import { useIsFocused } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import {
   initExecutorch,
@@ -16,7 +16,7 @@ import {
   useFrameOutput,
   type Frame,
 } from "react-native-vision-camera";
-import { scheduleOnRN } from "react-native-worklets";
+import { createSynchronizable, scheduleOnRN } from "react-native-worklets";
 
 import { Button } from "@/components/button";
 import { DetectionLabel } from "@/components/detection-label";
@@ -25,7 +25,9 @@ import { Warning } from "@/components/warning";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import { openAppSettings } from "@/lib/permissions/app-permissions";
 
-const MIN_SCORE = 0.7;
+const MIN_SCORE = 0.75;
+const OBJECT_DETECTION_INTERVAL_SECONDS = 1;
+const OBJECT_DETECTION_INTERVAL_MS = OBJECT_DETECTION_INTERVAL_SECONDS * 1000;
 
 initExecutorch({
   resourceFetcher: ExpoResourceFetcher,
@@ -44,6 +46,7 @@ const SeeScreenContent = () => {
   const { canRequestPermission, hasPermission, requestPermission } =
     useCameraPermission();
   const { speak, stop } = useSpeechSynthesis();
+  const lastObjectDetectionTime = useMemo(() => createSynchronizable(0), []);
   const objectDetection = useObjectDetection({
     model: SSDLITE_320_MOBILENET_V3_LARGE,
     preventLoad: !isExecutorchAvailable,
@@ -134,6 +137,15 @@ const SeeScreenContent = () => {
             return;
           }
 
+          const now = performance.now();
+          const lastDetectionTime = lastObjectDetectionTime.getDirty();
+
+          if (now - lastDetectionTime < OBJECT_DETECTION_INTERVAL_MS) {
+            return;
+          }
+
+          lastObjectDetectionTime.setBlocking(now);
+
           const detections = runObjectDetection(frame, false, {
             detectionThreshold: MIN_SCORE,
           });
@@ -152,7 +164,12 @@ const SeeScreenContent = () => {
           frame.dispose();
         }
       },
-      [isObjectDetectionReady, runObjectDetection, updateDetections],
+      [
+        isObjectDetectionReady,
+        lastObjectDetectionTime,
+        runObjectDetection,
+        updateDetections,
+      ],
     ),
   });
 
