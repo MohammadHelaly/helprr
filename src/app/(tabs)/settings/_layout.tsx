@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack } from "expo-router/js-stack";
 
 import { colors, sizes } from "@/constants/theme";
 
@@ -6,14 +6,19 @@ const SettingsLayout = () => {
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.white },
+        headerStyle: {
+          backgroundColor: colors.white,
+          height: sizes.sizing.xxxxl,
+        },
         headerShadowVisible: false,
         headerTitleAlign: "left",
         headerTintColor: colors.black,
         headerTitleStyle: {
           color: colors.black,
           fontSize: sizes.font.xxxl,
+          lineHeight: sizes.font.xxxxl,
           fontWeight: "bold",
+          paddingBottom: sizes.spacing.xs,
         },
         headerBackButtonDisplayMode: "minimal",
       }}
@@ -40,6 +45,7 @@ const SettingsLayout = () => {
           headerTitleStyle: {
             color: colors.black,
             fontSize: sizes.font.lg,
+            lineHeight: sizes.font.xl,
             fontWeight: "bold",
           },
         }}

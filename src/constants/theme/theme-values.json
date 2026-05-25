@@ -18,13 +18,17 @@
     },
     "font": {
       "lg": 18,
-      "xxxl": 36
+      "xl": 24,
+      "xxxl": 36,
+      "xxxxl": 52
     },
     "sizing": {
       "none": 0,
-      "xxxl": 96
+      "xxxl": 96,
+      "xxxxl": 112
     },
     "spacing": {
+      "xs": 8,
       "sm": 12,
       "md": 16,
       "xxxl": 88
