@@ -1,0 +1,33 @@
+{
+  "colors": {
+    "white": "#ffffff",
+    "black": "#000000",
+    "grey": "grey",
+    "light-grey": "#eeeeee",
+    "pink": "#ff69b4",
+    "cyan": "#00cccc"
+  },
+  "sizes": {
+    "icon": {
+      "xxs": 14,
+      "xs": 18,
+      "sm": 24,
+      "md": 32,
+      "lg": 44,
+      "xl": 48
+    },
+    "font": {
+      "lg": 18,
+      "xxxl": 36
+    },
+    "sizing": {
+      "none": 0,
+      "xxxl": 96
+    },
+    "spacing": {
+      "sm": 12,
+      "md": 16,
+      "xxxl": 88
+    }
+  }
+}
