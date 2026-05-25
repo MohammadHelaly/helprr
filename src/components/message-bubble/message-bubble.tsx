@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
+import { EditableText } from "@/components/editable-text";
 import { Icon } from "@/components/icon";
 import { colors, sizes } from "@/constants/theme";
 import type { Message } from "@/lib/db/schema";
@@ -44,6 +45,9 @@ const MessageBubble = (props: Props) => {
     setDraftBody(message.body);
     setIsEditing(true);
   };
+  const textClassName = `font-bold ${
+    isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
+  } ${message.direction === "rtl" ? "text-end" : "text-start"}`;
 
   return (
     <Animated.View
@@ -62,26 +66,16 @@ const MessageBubble = (props: Props) => {
               : "-right-3 border-l-[24px] border-l-white"
           }`}
         />
-        {isEditing ? (
-          <TextInput
-            autoFocus
-            className={`py-auto p-0 font-bold ${
-              isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
-            } ${message.direction === "rtl" ? "text-end" : "text-start"}`}
-            multiline
-            onChangeText={setDraftBody}
-            onEndEditing={saveBody}
-            value={draftBody}
-          />
-        ) : (
-          <Text
-            className={`font-bold ${
-              isSpeechToText ? "text-2xl text-pink" : "text-lg text-black"
-            } ${message.direction === "rtl" ? "text-end" : "text-start"}`}
-          >
-            {message.body}
-          </Text>
-        )}
+        <EditableText
+          className={textClassName}
+          editClassName={`py-auto p-0 ${textClassName}`}
+          inputProps={{ multiline: true }}
+          isEditing={isEditing}
+          onChangeText={setDraftBody}
+          onSave={saveBody}
+          text={message.body}
+          value={draftBody}
+        />
         <View className="flex flex-row items-end justify-end gap-2">
           <Pressable
             className="flex h-5 w-5 items-center justify-center"
